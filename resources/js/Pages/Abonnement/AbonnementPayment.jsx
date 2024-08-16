@@ -4,39 +4,50 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function AbonnementPayment({ auth, stripeKey }) {
     const stripePromise = loadStripe(stripeKey);
+    const [error, setError] = useState(null);
 
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="AbonnementPayment" />
             <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
                 <h2 className="text-gray-800 text-2xl font-bold mb-6">Devenez Membre Particulier+</h2>
-                <p className="text-gray-800 mb-6">En devenant membre Particulier+, vous aurez accès à tous les services de l'association pour seulement 5.99 euros par an.</p>
+                <p className="text-gray-800 mb-6">
+                    En devenant membre Particulier+, vous aurez accès à tous les services de l'association pour seulement 5.99 euros par an.
+                </p>
 
-                <Elements stripe={stripePromise}>
-                    <PaymentForm />
-                </Elements>
+                {error ? (
+                    <p className="text-red-600 text-lg font-semibold text-center">{error}</p>
+                ) : (
+                    <Elements stripe={stripePromise}>
+                        <PaymentForm setError={setError} />
+                    </Elements>
+                )}
             </div>
         </AuthenticatedLayout>
     );
 }
 
-function PaymentForm() {
+function PaymentForm({ setError }) {
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
 
     useEffect(() => {
-        // Utiliser axios pour récupérer le clientSecret
         axios.post(route('abonnement.payment.intent'))
             .then(response => {
                 setClientSecret(response.data.clientSecret);
             })
             .catch(error => {
-                console.error('Error fetching clientSecret:', error);
+                if (error.response && error.response.status === 400) {
+                    setError(error.response.data.error);
+                } else {
+                    setError("Une erreur est survenue lors de la création de l'intention de paiement.");
+                    console.error('Error fetching clientSecret:', error);
+                }
             });
     }, []);
 
@@ -56,10 +67,14 @@ function PaymentForm() {
         });
 
         if (error) {
-            console.error(error);
+            setError(`Erreur de paiement : ${error.message}`);
+            console.error('Payment error:', error);
         } else if (paymentIntent.status === 'succeeded') {
             // Payment succeeded, handle it with Inertia
             Inertia.post(route('abonnement.handlePayment'));
+        } else {
+            setError("Le paiement n'a pas pu être complété. Veuillez réessayer.");
+            console.error('Payment intent status:', paymentIntent.status);
         }
     };
 
