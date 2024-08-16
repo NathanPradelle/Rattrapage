@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BenevoleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
@@ -38,9 +39,19 @@ Route::middleware('auth')->group(function () {
         });
 
     });
+
     Route::get('/benevolat', function () {
         return Inertia::render('Candidature/CandidatureInfo');
     })->name('benevolat');
+
+    Route::get('/abonnement', function () {
+        return Inertia::render('Abonnement/AbonnementIndex');
+    })->name('abonnement');
+
+    Route::get('/abonnement/payment', [StripeController::class, 'showPaymentPage'])->name('abonnement.payment.page');
+    Route::post('/abonnement/payment/intent', [StripeController::class, 'createPaymentIntent'])->name('abonnement.payment.intent');
+    Route::post('/abonnement/payment/handle', [StripeController::class, 'handlePayment'])->name('abonnement.handlePayment');
+
 
     Route::resource('candidature', BenevoleController::class);
 

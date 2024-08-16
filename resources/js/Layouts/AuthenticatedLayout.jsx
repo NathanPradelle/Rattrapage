@@ -15,7 +15,7 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )}
 
-            <main className="flex-1 w-full max-w-2xl px-6 py-10 lg:max-w-7xl mx-auto flex ">
+            <main className="flex-1 w-full max-w-2xl px-6 py-10 lg:max-w-7xl mx-auto flex">
                 <div className="w-full h-full bg-light flex-col items-center">
                     {children}
                 </div>

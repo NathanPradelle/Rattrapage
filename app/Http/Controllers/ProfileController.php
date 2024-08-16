@@ -27,6 +27,7 @@ class ProfileController extends Controller
 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'abonnement' => $user->abonnement,
             'status' => session('status'),
             'candidature' => $candidature ? [
                 'date_derniere_candidature' => $candidature->date_derniere_candidature,

@@ -4,7 +4,7 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
 
-export default function Edit({ auth, mustVerifyEmail, status, candidature  }) {
+export default function Edit({ auth, mustVerifyEmail, status, candidature, abonnement }) {
     const getStatusStyle = (validation) => {
         switch (validation) {
             case 1:
@@ -40,6 +40,16 @@ export default function Edit({ auth, mustVerifyEmail, status, candidature  }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+
+                        {abonnement ? (
+                            <p className="text-gray-800 text-2xl font-bold text-center">Particulier+</p>
+                        ) : (
+                            <p className="text-gray-800 text-2xl font-bold text-center">Particulier</p>
+                        )}
+
+
+                    </div>
 
                     {/* Affichage des informations de candidature uniquement si elles existent */}
                     {candidature && (
