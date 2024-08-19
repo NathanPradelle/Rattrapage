@@ -1,0 +1,202 @@
+{
+  "appName": "No More Waste",
+  "appLongName": "Grand Paris Caretaker Service",
+  "common": {
+    "address": "Address",
+    "back": "Back",
+    "cancel": "Cancel",
+    "client": "Client",
+    "confirm": "Confirm",
+    "connection": "Login",
+    "dateStart": "Start Date",
+    "dateEnd": "End Date",
+    "delete": "Delete",
+    "description": "Description",
+    "details": "Details",
+    "edit": "Edit",
+    "email": "Email Address",
+    "errorOccurred": "An error occurred",
+    "isActivated": "Is active",
+    "isNotActivated": "Is inactive",
+    "lang": "Language",
+    "modify": "Modify",
+    "name": "Name",
+    "other": "Other",
+    "password": "Password",
+    "proceedToPayment": "Proceed to payment",
+    "postalCode": "Postal Code",
+    "price": "Price",
+    "reason": "Reason",
+    "save": "Save",
+    "status": "Status",
+    "street": "Street",
+    "success": "Action successful",
+    "successCreation": "Item created",
+    "title": "Title",
+    "unvalidate": "UnValidate",
+    "validate": "Validate"
+  },
+  "civility": {
+    "F": "Ms.",
+    "f": "Miss",
+    "M": "Mr.",
+    "m": "Mister"
+  },
+  "profile": {
+    "admin": "Administrator",
+    "lessor": "Lessor",
+    "management": "Manager",
+    "provider": "Provider",
+    "traveler": "Traveler"
+  },
+  "chart": {
+    "sign": "Sign the charter",
+    "confirm": "I, the undersigned {{name}}, commit:",
+    "error": "The charter is not signed",
+    "firtsPara": "Your application to this service has been pre-selected to join No More Waste and thus become a partner.",
+    "firtscommitment": "To participate in the various No More Waste workshops to boost my search",
+    "success": "The charter has been signed"
+  },
+  "travelers": {
+    "a": "a"
+  },
+  "date": {
+    "calendar": "Calendar",
+    "year": "Year",
+    "month": {
+      "label": "Month",
+      "1": "Jan.",
+      "2": "Feb.",
+      "3": "Mar.",
+      "4": "Apr.",
+      "5": "May",
+      "6": "Jun.",
+      "7": "Jul.",
+      "8": "Aug.",
+      "9": "Sep.",
+      "10": "Oct.",
+      "11": "Nov.",
+      "12": "Dec."
+    },
+      "day": {
+      "0": "Monday",
+      "1": "Tuesday",
+      "2": "Wednesday",
+      "3": "Thursday",
+      "4": "Friday",
+      "5": "Saturday",
+      "6": "Sunday"
+    }
+  },
+  "emailVerified": {
+    "accessAccount": "Access your account",
+    "description": "You can now log in and complete the creation of your No More Waste account.",
+    "goToLogin": "Return to the login page"
+  },
+  "fileTypes": {
+    "doc": "Doc",
+    "pdf": "PDF",
+    "url": "Link",
+    "video": "Video"
+  },
+  "signIn": {
+    "label": "Sign up",
+    "alreadyRegistered": "Already connected? Click here",
+    "password": {
+      "label": "Password",
+      "confirmLabel": "Confirm Password",
+      "info": "At least 8 characters, including 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+    }
+  },
+  "login": {
+    "forgottenPassword": "Forgot Password",
+    "rememberMe": "Remember me"
+  },
+  "menu": {
+    "home": "Home",
+    "myApartments": "View my apartments",
+    "myReservations": "My reservations",
+    "myServices": "My Services",
+    "unauthenticated": {
+      "login": "Login",
+      "signIn": "Sign up"
+    },
+    "admin": {
+      "apartments": "Apartments",
+      "reservations": "Réservations",
+      "services": "Services",
+      "tags": "Tag List",
+      "demandes": "Requests",
+      "users": "User List",
+      "managers": "List of Managers"
+    }
+  },
+  "user": {
+    "label": "User",
+    "list": "Client List",
+    "lastname": "Last Name",
+    "firstname": "First Name",
+    "profiles": "User Profiles",
+    "search": "Search by firstname or email...",
+    "services": "User Services",
+    "ban": {
+      "never": "This user was never banned"
+    }
+  },
+  "apartment": {
+    "label": "Apartment",
+    "apartmentsToVerify": "Apartments to verify",
+    "askYours": "What about proposing yours?",
+    "nbPeople": "Number of people",
+    "noApartmentAvailable": "No apartment available...",
+    "noPictureAvailable": "No image available",
+    "perNight": "per night",
+    "priceMin": "Minimum price",
+    "priceMax": "Maximum price",
+    "rent": "Book",
+    "rentedBy": "Rented by"
+  },
+  "myApartment": {
+    "title": "My apartments",
+    "reservationOnMyApartment": "Reservation on my apartment",
+    "noApartments": "You have no apartment..."
+  },
+  "reservation": {
+    "label": "Reservations",
+    "recap": "Summary of my reservations",
+    "noReservationAdmin": "This client has made no reservations",
+    "noReservation": "You have no reservations at the moment"
+  },
+  "service": {
+    "list": "Services List",
+    "category": "Catégorie",
+    "create": "Create a service",
+    "datePriceChange": "Price change date",
+    "newService": "New Service",
+    "noServices": "No existing services",
+    "regularPrice": "Regular Price",
+    "saveService": "Save new service",
+    "type": "Service type"
+  },
+  "myService": {
+    "title": "My Services",
+    "prices": {
+        "default": "Prix par défault",
+        "winter": "Prix d'hiver",
+        "spring": "Prix de printemps",
+        "summer": "Prix d'été",
+        "autumn": "Prix d'automne",
+        "holiday": "Prix durant les vacances"
+      }
+  },
+  "tag": {
+    "create": "Create a tag",
+    "manage": "Manage tags",
+    "noTags": "There are no tags yet"
+  },
+  "request": {
+    "accepted": "Accepted",
+    "awaited": "In progress"
+  }
+}
+  

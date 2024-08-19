@@ -1,21 +1,36 @@
 import './bootstrap';
 import '../css/app.css';
+import '@/theme/Fonts.less';
+import '@/theme/Main.less';
+import 'flatpickr/dist/flatpickr.min.css';
+import '@/translation/i18n';
 
-import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createRoot } from 'react-dom/client';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import ToastWrapper from './Components/ToastWrapper';
+
+const appName = import.meta.env.VITE_APP_NAME || 'No More Waste';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
+  title: (title) => `${title} - ${appName}`,
+  resolve: (name) =>
+    resolvePageComponent(
+      `./Pages/${name}.jsx`,
+      import.meta.glob('./Pages/**/*.jsx')
+    ),
+  setup({ el, App, props }) {
+    const root = createRoot(el);
 
-        root.render(<App {...props} />);
-    },
-    progress: {
-        color: '#4B5563',
-    },
+    root.render(
+      <>
+        <App {...props} />
+        <ToastWrapper />
+      </>
+    );
+  },
+  progress: {
+    color: '#4B5563',
+  },
 });

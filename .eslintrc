@@ -1,0 +1,89 @@
+{
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["resources"]
+      }
+    }
+  },
+  "env": {
+    "node": true,
+    "jest": true,
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier", "import", "simple-import-sort"],
+  "ignorePatterns": [
+    "**/*.css",
+    "**/*.less",
+    "**/*.svg",
+    "**/*.png",
+    "**/*.jpeg",
+    "**/*.json",
+    "**/scripts"
+  ],
+  "rules": {
+    "curly": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-unused-vars": "warn",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/forbid-prop-types": "off",
+    "react/button-has-type": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+    ],
+    "react-hooks/exhaustive-deps": "warn",
+    "simple-import-sort/imports": "error",
+    "import/prefer-default-export": "off",
+    "no-param-reassign": "off",
+    "prefer-destructuring": "off",
+    "no-promise-executor-return": "off",
+    "consistent-return": "off",
+    "default-param-last": "off",
+    "radix": "off",
+    "no-restricted-globals": "off",
+    "no-nested-ternary": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/aria-role": "off",
+    "no-plusplus": "off",
+    "import/no-cycle": "off",
+    "no-restricted-syntax": "off",
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
+    "no-shadow": "warn",
+    "no-console": ["warn", { "allow": ["error"] }]
+  }
+}

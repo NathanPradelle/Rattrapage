@@ -1,0 +1,128 @@
+@import '@/theme/Colors.less';
+@import '@/theme/Mixins.less';
+
+.MuiLink-root {
+  cursor: pointer;
+}
+.MuiButton-root {
+  font-weight: 400;
+  &.MuiButton-outlined.MuiButton-outlinedPrimary {
+    border-color: white;
+    &.bordered {
+      border-color: black;
+      color: white;
+      * {
+        text-decoration: none;
+        color: white;
+      }
+    }
+    &.important {
+      background-color: @warning;
+    }
+    &:hover {
+      border-color: black;
+    }
+  }
+}
+.MuiFormHelperText-root {
+  color: #737375;
+}
+
+.MuiInputBase-input::placeholder {
+  color: white;
+  #FiraCode();
+  font-size: 12px;
+}
+
+.MuiDisabled {
+  opacity: 0.4;
+}
+
+.MuiFormControl-root
+  .MuiOutlinedInput-root.MuiInputBase-root.Mui-disabled.MuiInputBase-formControl {
+  background-color: @greyBright;
+}
+.MuiFormControl-root.MuiDisabled {
+  opacity: 1;
+
+  .MuiInputBase-formControl {
+    background-color: @greyBright;
+  }
+
+  .MuiInputBase-primary {
+    color: white;
+  }
+
+  .MuiInputBase-input {
+    -webkit-text-fill-color: @grey;
+    #FiraCode500();
+    font-size: 0.75rem;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border-color: @grey;
+  }
+}
+
+.MuiMenu-root.MuiModal-root {
+  max-height: 300px;
+}
+
+.MuiDataGrid-footerContainer.no-pagination {
+  display: none;
+}
+
+.MuiLoadingButton-root.MuiButton-outlinedPrimary.bordered {
+  border: 2px solid black;
+}
+
+.MuiLoadingButton-root.save {
+  color: white !important;
+  svg {
+    color: white !important;
+    margin-left: 5px;
+  }
+}
+
+.MuiFormControl-root > .label {
+  .with-legend {
+    display: flex;
+    flex-direction: column;
+    > .legend {
+      color: @grey;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.MuiAvatar-root.counter-badge {
+  background-color: @secondary;
+  color: white;
+  font-size: 0.875rem;
+  #JostBold();
+  height: 30px;
+  width: 30px;
+}
+
+.MuiModal-root.MuiDialog-root {
+  &.primary .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
+    background: grey;
+    * {
+      color: white;
+    }
+  }
+  &.secondary .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
+    background: @secondary;
+    * {
+      color: white;
+    }
+  }
+  &.white .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
+    background: white;
+    border-bottom: 1px solid black;
+    *,
+    .dialog-title {
+      color: white !important;
+    }
+  }
+}
