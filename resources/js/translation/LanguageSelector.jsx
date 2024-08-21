@@ -6,35 +6,18 @@ import { useTranslation } from 'react-i18next';
 
 import SimpleList from '@/Components/SimpleList';
 
-import { LanguageENUM } from './i18n';
-const profilesOptions = [
-  {
-    value: LanguageENUM.FR,
-    label: 'Français',
-  },
-  {
-    value: LanguageENUM.EN,
-    label: 'English',
-  },
-];
+import { fileNames } from './i18n';
+
+const profilesOptions = fileNames?.map((e) => ({ value: e, label: e }));
+
 const LanguageSelector = () => {
   const { t, i18n } = useTranslation();
   const [currentLang, setCurrentLang] = useState(i18n.language);
   const changeLanguage = useCallback((event) => {
     const language = event.value;
-    switch (language) {
-      case LanguageENUM.EN:
-        setCurrentLang(LanguageENUM.EN);
-        i18n.changeLanguage(LanguageENUM.EN);
+    setCurrentLang(language);
+    i18n.changeLanguage(language);
 
-        break;
-      case LanguageENUM.FR:
-      default:
-        setCurrentLang(LanguageENUM.FR);
-        i18n.changeLanguage(LanguageENUM.FR);
-
-        break;
-    }
     Inertia.reload();
   }, []);
 

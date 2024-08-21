@@ -1,0 +1,58 @@
+@import '@/theme/Colors.less';
+@import '@/theme/Mixins.less';
+
+.redirection-button-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+button.gpcs-button,
+a.gpcs-button {
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 10.5px 32px;
+  font-size: 1rem;
+  #PierSansRegular;
+  display: flex;
+  align-items: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  justify-content: center;
+
+  &.loading {
+    position: relative;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  > *:not(:nth-last-child(-n + 2)) {
+    margin-right: 0.5rem;
+  }
+
+  &.text {
+    #PierSansLight;
+    text-decoration: underline;
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  &.beige {
+    background-color: @beige;
+
+    &:hover:not(.disabled) {
+      background-color: @beigeDark;
+      border-color: @warning;
+      > svg,
+      > span,
+      > a {
+        font-weight: bold;
+      }
+    }
+  }
+}

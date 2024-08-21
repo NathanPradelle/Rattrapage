@@ -2,39 +2,44 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import translationEN from './languages/en.json';
-import translationFR from './languages/fr.json';
+import langs from './langs.json';
 
-export const LanguageENUM = {
-  FR: 'fr',
-  EN: 'en',
+export const fileNames = []; // Exportation nominale de fileNames
+
+const importAllLanguages = async () => {
+  const resources = {};
+
+  for (const file of langs) {
+    const fileName = file.split('.')[0];
+    const module = await import(`./languages/${fileName}.json`);
+
+    resources[fileName?.toUpperCase()] = module.default || module;
+    fileNames.push(fileName);
+  }
+
+  return { resources, fileNames };
 };
 
-// the translations
-const resources = {
-  fr: {
-    translation: translationFR,
-  },
-  en: {
-    translation: translationEN,
-  },
-};
+importAllLanguages().then((languages) => {
+  const firstLang =
+    languages?.fileNames?.find((e) => e === 'FR') || languages?.fileNames[0];
 
-i18n
-  .use(LanguageDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
-  .init({
-    resources,
-    lng: localStorage.i18nextLng || LanguageENUM.FR,
-    fallbackLng: LanguageENUM.FR,
+  i18n
+    .use(LanguageDetector)
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
+      resources: languages?.resources,
+      lng: localStorage.i18nextLng || firstLang,
+      fallbackLng: firstLang,
 
-    keySeparator: '.', // to support nested translations
+      keySeparator: '.', // to support nested translations
 
-    transSupportBasicHtmlNodes: true,
-    transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
-    interpolation: {
-      escapeValue: false, // react already safes from xss
-    },
-  });
+      transSupportBasicHtmlNodes: true,
+      transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
+      interpolation: {
+        escapeValue: false, // react already safes from xss
+      },
+    });
+});
 
 export default i18n;

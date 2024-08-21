@@ -4,7 +4,8 @@
     "scripts": {
         "install-all": "npm install | composer install",
         "dev": "vite",
-        "build": "vite build"
+        "build": "node scripts/setLang | vite build",
+        "lang": "node scripts/setLang"
     },
     "devDependencies": {
         "eslint": "^8.57.0",
