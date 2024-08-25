@@ -1,29 +1,43 @@
+import { Head } from '@inertiajs/react';
+import clsx from 'clsx';
 import { useState } from 'react';
+
 import Navbar from '@/Components/Navbar';
 
-export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+import ApiLayout from './ApiLayout';
 
-    return (
-        <div className="bg-gray-50 text-black/50 dark:bg-gray-900/80 dark:text-white/100 h-full flex flex-col">
+const AuthenticatedLayout = ({ headTitle, header, className, children }) => {
+  const [showingNavigationDropdown, setShowingNavigationDropdown] =
+    useState(false);
 
-            <Navbar user={user}/>
+  ApiLayout();
+  return (
+    <div className='bg-gray-50 text-black/50 dark:bg-gray-900/80 dark:text-white/100 h-full flex flex-col'>
+      <Head title={headTitle} />
+      <nav className='bg-white border-b border-gray-100'>
+        <Navbar />
+      </nav>
 
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
+      {header && (
+        <header className='bg-white shadow'>
+          <div className='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
+            {header}
+          </div>
+        </header>
+      )}
 
-            <main className="flex-1 w-full max-w-2xl px-6 py-10 lg:max-w-7xl mx-auto flex">
-                <div className="w-full h-full bg-light flex-col items-center">
-                    {children}
-                </div>
-            </main>
+      <main
+        id='content'
+        className={clsx('py-12  max-w-7xl mx-auto', className)}
+      >
+        {children}
+      </main>
 
-            <footer className="w-full py-16 text-center text-sm text-black dark:text-white/70">
-                Nathan Pradelle
-            </footer>
-        </div>
-    );
-}
+      <footer className='w-full py-16 text-center text-sm text-black dark:text-white/70'>
+        Nathan Pradelle
+      </footer>
+    </div>
+  );
+};
+
+export default AuthenticatedLayout;

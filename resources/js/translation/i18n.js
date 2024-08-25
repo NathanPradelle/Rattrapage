@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 
 import langs from './langs.json';
 
-export const fileNames = []; // Exportation nominale de fileNames
+export const fileNames = [];
 
 const importAllLanguages = async () => {
   const resources = {};
@@ -13,7 +13,7 @@ const importAllLanguages = async () => {
     const fileName = file.split('.')[0];
     const module = await import(`./languages/${fileName}.json`);
 
-    resources[fileName?.toUpperCase()] = module.default || module;
+    resources[fileName] = { translation: module.default || module };
     fileNames.push(fileName);
   }
 

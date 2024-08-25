@@ -55,7 +55,7 @@ class Tour extends Model
             'id' => isset($vm?->id) ? $vm->id : null,
             'name' => isset($vm?->name) ? $vm->name : null,
             'country' => isset($vm?->country) ? $vm->country : null,
-            'city' => isset($vm?->priceWinter) ? $vm->city : null,
+            'city' => isset($vm?->city) ? $vm->city : null,
             'postal_code' => isset($vm?->postalCode) ? $vm->postalCode : null,
             'street' => isset($vm?->street) ? $vm->street : null,
             'description' => isset($vm?->description) ? $vm->description : null,

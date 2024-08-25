@@ -3,19 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tour;
-use App\Models\ApartmentImage;
-use App\Models\ClosedPeriod;
-use App\Models\Reservation;
-use App\Models\Service;
-use App\Models\Tag;
-use Carbon\Carbon;
-use FilePaths;
+use App\Utils\FilePaths;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ApartmentController extends Controller
+class TourController extends Controller
 {
+    #region Pages
+
+    public function creationPage()
+    {
+        return Inertia::render(FilePaths::TOUR_CREATION);
+    }
+
+    public function calendarPage()
+    {
+        $tours = $this->getAll();
+
+        $toursVm = $tours->map(function ($tour) {
+            return $tour->modelSetter();
+        });
+        
+        return Inertia::render(FilePaths::TOURS, [
+            'tours' => $toursVm
+        ]);
+    }
+
+    #endregion
+
     #region Get
 
     /// <summary>
@@ -39,13 +55,7 @@ class ApartmentController extends Controller
             ->latest()
             ->get();
 
-        $toursVm = $tours->map(function ($tour) {
-            return $tour->modelSetter();
-        });
-
-        return Inertia::render(FilePaths::APARTMENT_TO_VERIFY, [
-            'tours' => $toursVm
-        ]);
+        return $tours;
     }
 
     /// <summary>
@@ -73,7 +83,7 @@ class ApartmentController extends Controller
             return $tour->modelSetter();
         });
 
-        return Inertia::render(FilePaths::APARTMENT_TO_VERIFY, [
+        return Inertia::render(FilePaths::TOURS, [
             'tours' => $toursVm
         ]);
     }
@@ -99,16 +109,42 @@ class ApartmentController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        return Inertia::render(FilePaths::APARTMENT, [
+        return Inertia::render(FilePaths::TOUR, [
             'tour' => $tour->modelSetter(),
         ]);
     }
 
     #endregion
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    #region Post
+
+    /// <summary>
+    /// create new Tour.
+    /// </summary>
+    public function create(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'country' => ['required', 'max:255'],
+            'city' => ['required', 'max:255'],
+            'postalCode' => ['required', 'numeric'],
+            'street' => ['required', 'max:255'],
+            'description' => ['required', 'max:255'],
+            'dateStart' => ['required', 'date', 'after_or_equal:today'],
+            'dateEnd' => ['required', 'date', 'after:dateStart'],
+        ]);
+
+        $tour = (new Tour())->modelGetter((object) $validatedData);
+
+        $tour->save();
+
+        return redirect()->route("page.tours")
+        ->with('success', "Tour successfully validated");
+    }
+
+    /// <summary>
+    /// Remove the specified resource from storage.
+    /// </summary>
     public function destroy($id): RedirectResponse
     {
         $tour = Tour::findOrFail($id);
@@ -118,9 +154,10 @@ class ApartmentController extends Controller
         return redirect()->back()->with('success', 'Tour deleted successfully');
     }
 
+    #endregion
+
     public function validate($id)
     {
-
         $tour = Tour::findOrFail($id);
 
         $tour->is_validated = 1;

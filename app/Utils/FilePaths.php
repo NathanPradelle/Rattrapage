@@ -1,13 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
+namespace App\Utils;
 
 class FilePaths
 {
     /* Unauthenticated */
     const WELCOME = 'Unauthenticated/Welcome/Welcome';
-    const APARTMENTS = 'Unauthenticated/ApartmentsPage/ApartmentsPage';
-    const APARTMENT = 'Unauthenticated/ApartmentPage/ApartmentPage';
     const LOGIN = "Unauthenticated/Login/Login";
     const REGISTER = "Unauthenticated/Register/Register";
     const CALENDAR = "Unauthenticated/CalendarPage/CalendarPage";
@@ -33,8 +31,6 @@ class FilePaths
     const TAGS = 'Admin/TagsPage/TagsPage';
     const USERS = 'Admin/UsersPage/UsersPage';
     const USER = 'Admin/UserPage/UserPage';
-    const APARTMENT_TO_VERIFY = 'Admin/ApartmentsToVerifyPage/ApartmentsToVerifyPage';
-    const APARTMENT_VERIFICATION = 'Admin/ApartmentVerificationPage/ApartmentVerificationPage';
 
     const RESERVATION_MANAGEMENT = "Admin/ReservationManagementPage/ReservationManagementPage";
 
@@ -45,22 +41,11 @@ class FilePaths
     const SERVICES = "Admin/ServicesPage/ServicesPage";
     const SERVICE_CREATE = "Admin/ServiceCreationPage/ServiceCreationPage";
 
-    const TOURS = "Admin/ToursPage/ToursPage";
-    const TOURS_CREATION = "Admin/TourCreationPage/TourCreationPage";
-
-    /* Lessor */
-    const APARTMENT_CREATION = 'Lessor/ApartmentCreationPage/ApartmentCreationPage';
-    const MY_APARTMENT = 'Lessor/MyApartmentPage/MyApartmentPage';
-    const MY_APARTMENTS = 'Lessor/MyApartmentsPage/MyApartmentsPage';
-
-    /* Traveler */
-    const MY_RESERVATION = 'Traveler/MyReservationPage/MyReservationPage';
-    const MY_RESERVATIONS = 'Traveler/MyReservationsPage/MyReservationsPage';
+    const TOURS = "ToursPage/ToursPage";
+    const TOUR = "TourPage/TourPage";
+    const TOUR_CREATION = "TourCreationPage/TourCreationPage";
 
     const PAYMENT = 'Traveler/PaymentPage/PaymentPage';
-
-    /* Images */
-    const IMAGE_URL = "http://127.0.0.1:8000/Storage/imagesAppart/";
 
     /* Provider */
     const SERVICE_FEE = "Provider/ServiceFeePage/ServiceFeePage";

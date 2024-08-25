@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import InputLabel from '@/Components/InputLabel';
 
 import DropdownButton from '../Buttons/DropdownButton';
+import InputText from '../InputText';
 
 const SimpleList = ({
   id,
@@ -16,8 +17,18 @@ const SimpleList = ({
   options,
   disabled,
   styles,
+  autocomplete,
 }) => {
   const [selectedOption, setSelectedOption] = useState();
+  const [input, setInput] = useState(selectedOption?.label || '');
+
+  const filteredOptions = useMemo(
+    () =>
+      autocomplete
+        ? options?.filter((e) => e?.value?.includes(input))
+        : options,
+    [options, input]
+  );
 
   useEffect(() => {
     setSelectedOption(options?.find((option) => option?.value === value));
@@ -26,6 +37,7 @@ const SimpleList = ({
   const onClickChange = useCallback(
     (selected) => {
       setSelectedOption(selected);
+      setInput(selected.value);
       setdata && setdata(id, selected.value);
       onChange && onChange(selected);
     },
@@ -38,17 +50,20 @@ const SimpleList = ({
       trigger={
         <>
           <InputLabel htmlFor={id} value={label} className={styles?.label} />
-          <button id={id} type='button'>
-            {selectedOption?.label || placeholder || '...'}
-          </button>
+          <InputText
+            onChange={setInput}
+            value={input}
+            placeholder={placeholder || '...'}
+            disabled={disabled}
+          />
         </>
       }
-      content={options.map((option) => (
+      content={filteredOptions?.map((option) => (
         <button
           key={option?.value}
           value={option?.value}
           onClick={!disabled && (() => onClickChange(option))}
-          className={clsx('p-0_5', styles?.option)}
+          className={clsx('p-0_5 border-1-grey', styles?.option)}
           type='button'
         >
           {option?.label || placeholder || '...'}

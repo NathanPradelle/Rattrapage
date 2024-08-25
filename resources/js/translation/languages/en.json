@@ -1,6 +1,5 @@
 {
   "appName": "No More Waste",
-  "appLongName": "Grand Paris Caretaker Service",
   "common": {
     "address": "Address",
     "back": "Back",
@@ -114,16 +113,12 @@
   },
   "menu": {
     "home": "Home",
-    "myApartments": "View my apartments",
-    "myReservations": "My reservations",
     "myServices": "My Services",
     "unauthenticated": {
       "login": "Login",
       "signIn": "Sign up"
     },
     "admin": {
-      "apartments": "Apartments",
-      "reservations": "Réservations",
       "services": "Services",
       "tags": "Tag List",
       "demandes": "Requests",
@@ -142,30 +137,6 @@
     "ban": {
       "never": "This user was never banned"
     }
-  },
-  "apartment": {
-    "label": "Apartment",
-    "apartmentsToVerify": "Apartments to verify",
-    "askYours": "What about proposing yours?",
-    "nbPeople": "Number of people",
-    "noApartmentAvailable": "No apartment available...",
-    "noPictureAvailable": "No image available",
-    "perNight": "per night",
-    "priceMin": "Minimum price",
-    "priceMax": "Maximum price",
-    "rent": "Book",
-    "rentedBy": "Rented by"
-  },
-  "myApartment": {
-    "title": "My apartments",
-    "reservationOnMyApartment": "Reservation on my apartment",
-    "noApartments": "You have no apartment..."
-  },
-  "reservation": {
-    "label": "Reservations",
-    "recap": "Summary of my reservations",
-    "noReservationAdmin": "This client has made no reservations",
-    "noReservation": "You have no reservations at the moment"
   },
   "service": {
     "list": "Services List",

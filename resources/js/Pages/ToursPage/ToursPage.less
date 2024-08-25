@@ -1,0 +1,28 @@
+.calendar{
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(24, 1fr);
+  }
+  
+  .hour-cell {
+    width: 5rem;
+    grid-column: 1;
+    padding: 5px;
+    border: solid white 1px;
+  }
+  
+  .day-cell {
+    width: 8rem;
+    grid-row: span 0; /* Span all 7 days */
+    padding: 5px;
+    border: solid white 1px;
+  }
+  
+  .event {
+    position: relative;
+    background-color: lightblue;
+    border: 1px solid blue;
+    border-radius: 5px;
+  }
+}

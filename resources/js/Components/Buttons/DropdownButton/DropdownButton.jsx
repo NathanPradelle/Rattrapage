@@ -11,7 +11,9 @@ const DropdownButton = ({
 }) => {
   return (
     <Dropdown2 className={buttonClass}>
-      <Dropdown2.Trigger disabled={disabled}>{trigger}</Dropdown2.Trigger>
+      <Dropdown2.Trigger className={buttonClass} disabled={disabled}>
+        {trigger}
+      </Dropdown2.Trigger>
 
       {!disabled && (
         <Dropdown2.Content className={contentClass}>

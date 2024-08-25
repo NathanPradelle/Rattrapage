@@ -20,15 +20,13 @@ const Dropdown2 = ({ className, children }) => {
   );
 };
 
-const Trigger = ({ disabled, children }) => {
+const Trigger = ({ className, disabled, children }) => {
   const { toggleOpen } = !disabled && useContext(DropDownContext);
 
   return (
-    <>
-      <div onClick={toggleOpen}>{children}</div>
-
-      {/* open && <div onClick={() => setOpen(false)}></div> close when you click eslewhere, to fix*/}
-    </>
+    <div className={className} onClick={toggleOpen}>
+      {children}
+    </div>
   );
 };
 

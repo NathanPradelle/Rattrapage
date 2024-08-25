@@ -3,6 +3,7 @@
 use App\Http\Controllers\BenevoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\TourController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
             Route::patch('{id}/Validees', [BenevoleController::class, 'updateValidees'])->name('candidatures.update.validees');
             Route::get('{id}/Details', [BenevoleController::class, 'show'])->name('candidature.details');
         });
+
+        Route::get('/tours', [TourController::class, 'calendarPage'])->name('page.tours');
+        Route::get('/tour/creation', [TourController::class, 'creationPage'])->name('page.tour.creation');
+        Route::post('/tour/create', [TourController::class, 'create'])->name('tour.create');
 
     });
 

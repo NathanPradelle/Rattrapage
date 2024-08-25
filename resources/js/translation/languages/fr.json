@@ -1,13 +1,14 @@
 {
   "appName": "No More Waste",
-  "appLongName": "Grand Paris Caretaker Service",
   "common": {
     "address": "Adresse",
     "back": "Retour",
     "cancel": "Annuler",
     "client": "Client",
+    "city": "Ville",
     "confirm": "Confirmer",
     "connection": "Se Connecter",
+    "country": "Pays",
     "dateStart": "Date de début",
     "dateEnd": "Date de fin",
     "delete": "Supprimer",
@@ -114,16 +115,13 @@
   },
   "menu": {
     "home": "Home",
-    "myApartments": "Voir mes appartements",
-    "myReservations": "Mes réservations",
     "myServices": "Mes Services",
     "unauthenticated": {
       "login": "Se Connecter",
       "signIn": "S'inscrire"
     },
     "admin": {
-      "apartments": "Appartements",
-      "reservation": "Réservations",
+      "tours": "Tournées",
       "services": "Services",
       "tags": "Liste des Tags",
       "demandes": "Demandes",
@@ -143,30 +141,10 @@
       "never": "Cette utilisateur n'a jamais été banni"
     }
   },
-  "apartment": {
-    "label": "Apartement",
-    "apartmentsToVerify": "Appartements à vérifier",
-    "askYours": "Et si vous proposiez le vôtre ?",
-    "nbPeople": "Nombre de personnes",
-    "noApartmentAvailable": "Aucun appartement disponible...",
-    "noPictureAvailable": "Aucune image disponible",
-    "perNight": "par nuit",
-    "priceMin": "Prix minimum",
-    "priceMax": "Prix maximum",
-    "rent": "Réserver",
-    "rentedBy": "Mise en réservation par"
-  },
-  "myApartment": {
-    "title": "Mes appartements",
-    "add": "Ajouter un appartement",
-    "reservationOnMyApartment": "Réservation sur mon appartement",
-    "noApartments": "Vous n'avez aucun appartement..."
-  },
-  "reservation": {
-    "label": "Réservations",
-    "recap": "Récapitulatif de mes réservations",
-    "noReservationAdmin": "Ce client n'a fait aucune réservation",
-    "noReservation": "Vous n'avez aucune réservation pour le moment"
+  "tours": {
+    "label": "Tournées",
+    "toCreate": "Créer une tournée",
+    "create": "Créer une tournée"
   },
   "service": {
     "list": "Liste des Services",
