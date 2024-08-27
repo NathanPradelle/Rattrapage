@@ -28,34 +28,6 @@ Route::get('/', function () {
 Route::get('/contact', [TicketController::class, 'contact'])->name('contact.show');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/benevolat', function () {
-        return Inertia::render('Candidature/Info');
-    })->name('benevolat');
-
-    Route::get('/abonnement', function () {
-        return Inertia::render('Abonnement/Index');
-    })->name('abonnement');
-
-    Route::get('/abonnement/payment', [StripeController::class, 'showPaymentPage'])->name('abonnement.payment.page');
-    Route::post('/abonnement/payment/intent', [StripeController::class, 'createPaymentIntent'])->name('abonnement.payment.intent');
-    Route::post('/abonnement/payment/handle', [StripeController::class, 'handlePayment'])->name('abonnement.handlePayment');
-
-    Route::resource('candidature', BenevoleController::class);
-
-    Route::get('/harvest-requests/create', [HarvestRequestController::class, 'create'])->name('harvest-requests.create');
-    Route::post('/harvest-requests', [HarvestRequestController::class, 'store'])->name('harvest-requests.store');
-    Route::get('/harvest-requests', [HarvestRequestController::class, 'index'])->name('harvest-requests.index');
-
-    Route::get('/ticket/create', [TicketController::class, 'create'])->name('ticket.create');
-    Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
-    Route::get('/tickets/{Id}', [TicketController::class, 'customerIndex'])->name('tickets.index');
-    Route::get('/ticket/{id}', [TicketController::class, 'show'])->name('ticket.show');
-    Route::put('/ticket/{id}', [TicketController::class, 'update'])->name('ticket.update');
-
     Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
         Route::get('/', [UserController::class, 'admin'])->name('admin');
 
@@ -82,11 +54,39 @@ Route::middleware('auth')->group(function () {
 
     });
 
-    Route::middleware([BenevoleMiddleware::class])->prefix('benevole')->group(function () {
-        Route::get('/schedule', [VolunteerScheduleController::class, 'index'])->name('benevole.schedule');
-        Route::resource('stock', StockController::class);
-    });
+    Route::middleware('verified')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+        Route::get('/benevolat', function () {
+            return Inertia::render('Candidature/Info');
+        })->name('benevolat');
+
+        Route::get('/abonnement', function () {
+            return Inertia::render('Abonnement/Index');
+        })->name('abonnement');
+
+        Route::get('/abonnement/payment', [StripeController::class, 'showPaymentPage'])->name('abonnement.payment.page');
+        Route::post('/abonnement/payment/intent', [StripeController::class, 'createPaymentIntent'])->name('abonnement.payment.intent');
+        Route::post('/abonnement/payment/handle', [StripeController::class, 'handlePayment'])->name('abonnement.handlePayment');
+
+        Route::resource('candidature', BenevoleController::class);
+
+        Route::get('/harvest-requests/create', [HarvestRequestController::class, 'create'])->name('harvest-requests.create');
+        Route::post('/harvest-requests', [HarvestRequestController::class, 'store'])->name('harvest-requests.store');
+
+        Route::get('/ticket/create', [TicketController::class, 'create'])->name('ticket.create');
+        Route::post('/ticket', [TicketController::class, 'store'])->name('ticket.store');
+        Route::get('/tickets/{Id}', [TicketController::class, 'customerIndex'])->name('tickets.index');
+        Route::get('/ticket/{id}', [TicketController::class, 'show'])->name('ticket.show');
+        Route::put('/ticket/{id}', [TicketController::class, 'update'])->name('ticket.update');
+
+        Route::middleware([BenevoleMiddleware::class])->prefix('benevole')->group(function () {
+            Route::get('/schedule', [VolunteerScheduleController::class, 'index'])->name('benevole.schedule');
+            Route::resource('stock', StockController::class);
+        });
+    });
 });
 
 require __DIR__.'/auth.php';
