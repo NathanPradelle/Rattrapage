@@ -2,7 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
-export default function CandidatureForm({ auth }) {
+export default function Form({ auth }) {
     const { data, setData, post, errors } = useForm({
         user_id: auth.user.id,
         phone: '',
@@ -39,7 +39,7 @@ export default function CandidatureForm({ auth }) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="CandidatureForm" />
+            <Head title="Form" />
 
             {/* Affichage des erreurs globales de candidature */}
             {validationErrors.candidature && (

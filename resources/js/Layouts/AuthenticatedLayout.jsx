@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import Navbar from '@/Components/Navbar';
 
-export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
+export default function AuthenticatedLayout({ user, header, children }) {
     return (
         <div className="bg-gray-50 text-black/50 dark:bg-gray-900/80 dark:text-white/100 h-full flex flex-col">
 

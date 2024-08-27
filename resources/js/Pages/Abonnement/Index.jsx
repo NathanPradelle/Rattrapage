@@ -1,10 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import { Head, Link } from '@inertiajs/react';
 
-export default function AbonnementIndex({ auth }) {
+export default function Index({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="AbonnementIndex"/>
+            <Head title="Index"/>
             <div className="flex flex-col min-h-screen">
                 {/* Contenu principal */}
                 <div className="flex-grow flex justify-around items-center space-x-8">

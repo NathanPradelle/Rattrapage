@@ -2,10 +2,10 @@ import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout.jsx';
 import { Head } from '@inertiajs/react';
 import {Inertia} from "@inertiajs/inertia";
-import CandidatureModal from "@/Pages/Candidature/CandidatureModal.jsx";
+import Modal from "@/Pages/Candidature/Modal.jsx";
 
 
-export default function CandidatureShow({ auth, candidature }) {
+export default function Show({ auth, candidature }) {
     const handleVerifiedClick = (id) => {
         Inertia.patch(route('candidatures.update.validees', id));
     };
@@ -68,7 +68,7 @@ export default function CandidatureShow({ auth, candidature }) {
             </div>
 
             {/* Modal pour refuser la candidature */}
-            <CandidatureModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} candidatureId={candidature.id} />
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} candidatureId={candidature.id} />
 
         </AdminLayout>
     );

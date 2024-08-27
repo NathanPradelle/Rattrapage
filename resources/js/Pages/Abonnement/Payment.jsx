@@ -6,13 +6,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Inertia } from "@inertiajs/inertia";
 
-export default function AbonnementPayment({ auth, stripeKey }) {
+export default function Payment({ auth, stripeKey }) {
     const stripePromise = loadStripe(stripeKey);
     const [error, setError] = useState(null);
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="AbonnementPayment" />
+            <Head title="Payment" />
             <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
                 <h2 className="text-gray-800 text-2xl font-bold mb-6">Devenez Membre Particulier+</h2>
                 <p className="text-gray-800 mb-6">

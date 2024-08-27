@@ -24,7 +24,7 @@ class BenevoleController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Candidature/CandidatureForm');
+        return Inertia::render('Candidature/Form');
     }
 
     /**
@@ -102,7 +102,7 @@ class BenevoleController extends Controller
     {
         $candidature = Benevole::with(['service1', 'service2', 'service3', 'user'])->findOrFail($id);
 
-        return Inertia::render("Candidature/CandidatureShow", [
+        return Inertia::render("Candidature/Show", [
             'candidature' => [
                 'id' => $candidature->id,
                 'name' => $candidature->user->name,

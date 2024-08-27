@@ -12,7 +12,7 @@ class StripeController extends Controller
 {
     public function showPaymentPage()
     {
-        return Inertia::render('Abonnement/AbonnementPayment', [
+        return Inertia::render('Abonnement/Payment', [
             'stripeKey' => env('STRIPE_KEY'),
         ]);
     }
