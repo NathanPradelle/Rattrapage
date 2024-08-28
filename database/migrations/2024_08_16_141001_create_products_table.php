@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('barcode')->nullable();
-            $table->integer('quantity');
+            $table->float('weight')->nullable();
+            $table->string('brand')->nullable();
+            $table->foreignId('warehouse_id')->constrained()->onDelete('cascade');
             $table->date('expiry_date')->nullable();
-            $table->string('location')->nullable();
             $table->timestamps();
         });
     }

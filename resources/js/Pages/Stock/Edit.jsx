@@ -1,31 +1,34 @@
 import React from 'react';
-import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/inertia-react';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
+import { format } from 'date-fns'; // Utilisation de date-fns pour le formatage
 
-export default function Edit({ product, auth }) {
+export default function Edit({ product, warehouses, auth }) {
+    const formatExpirationDate = (date) => {
+        return date ? format(new Date(date), 'yyyy-MM-dd') : '';
+    };
+
     const { data, setData, put, errors } = useForm({
         name: product.name || '',
         barcode: product.barcode || '',
-        quantity: product.quantity || 0,
-        expiry_date: product.expiry_date || '',
-        location: product.location || '',
+        weight: product.weight || '',
+        brand: product.brand || '',
+        expiration_date: formatExpirationDate(product.expiry_date), // Utilisation de la fonction utilitaire
+        warehouse_id: product.warehouse_id || '',
     });
 
     function handleSubmit(e) {
         e.preventDefault();
         put(route('stock.update', product.id));
     }
-    console.log(product);
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}>
-            <div className="h-screen">
-                <h1>Edit Product</h1>
+        <AuthenticatedLayout user={auth.user}>
+            <div className="h-screen p-6">
+                <h1 className="text-2xl mb-4">Edit Product</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group mb-4">
-                        <label>Name</label>
+                        <label className="block text-sm font-medium text-white">Name</label>
                         <input
                             type="text"
                             value={data.name}
@@ -36,7 +39,7 @@ export default function Edit({ product, auth }) {
                     </div>
 
                     <div className="form-group mb-4">
-                        <label>Barcode</label>
+                        <label className="block text-sm font-medium text-white">Barcode</label>
                         <input
                             type="text"
                             value={data.barcode}
@@ -47,36 +50,56 @@ export default function Edit({ product, auth }) {
                     </div>
 
                     <div className="form-group mb-4">
-                        <label>Quantity</label>
+                        <label className="block text-sm font-medium text-white">Weight (kg)</label>
                         <input
                             type="number"
-                            value={data.quantity}
-                            onChange={(e) => setData('quantity', e.target.value)}
+                            step="0.01"
+                            value={data.weight}
+                            onChange={(e) => setData('weight', e.target.value)}
                             className="form-control text-black bg-white border border-gray-300 rounded p-2"
                         />
-                        {errors.quantity && <div className="text-danger">{errors.quantity}</div>}
+                        {errors.weight && <div className="text-danger">{errors.weight}</div>}
                     </div>
 
                     <div className="form-group mb-4">
-                        <label>Expiry Date</label>
-                        <input
-                            type="date"
-                            value={data.expiry_date}
-                            onChange={(e) => setData('expiry_date', e.target.value)}
-                            className="form-control text-black bg-white border border-gray-300 rounded p-2"
-                        />
-                        {errors.expiry_date && <div className="text-danger">{errors.expiry_date}</div>}
-                    </div>
-
-                    <div className="form-group mb-4">
-                        <label>Location</label>
+                        <label className="block text-sm font-medium text-white">Brand</label>
                         <input
                             type="text"
-                            value={data.location}
-                            onChange={(e) => setData('location', e.target.value)}
+                            value={data.brand}
+                            onChange={(e) => setData('brand', e.target.value)}
                             className="form-control text-black bg-white border border-gray-300 rounded p-2"
                         />
-                        {errors.location && <div className="text-danger">{errors.location}</div>}
+                        {errors.brand && <div className="text-danger">{errors.brand}</div>}
+                    </div>
+
+                    <div className="form-group mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Expiry Date</label>
+                        <input
+                            type="date"
+                            value={data.expiration_date}
+                            onChange={(e) => setData('expiration_date', e.target.value)}
+                            className="form-control text-black bg-white border border-gray-300 rounded p-2"
+                            min={new Date().toISOString().split('T')[0]} // Bloque les dates passées
+                        />
+                        {errors.expiration_date && <div className="text-danger">{errors.expiration_date}</div>}
+                    </div>
+
+
+                    <div className="form-group mb-4">
+                        <label className="block text-sm font-medium text-white">Warehouse Location</label>
+                        <select
+                            value={data.warehouse_id}
+                            onChange={(e) => setData('warehouse_id', e.target.value)}
+                            className="form-control text-black bg-white border border-gray-300 rounded p-2"
+                        >
+                            <option value="">Select a warehouse</option>
+                            {warehouses.map(warehouse => (
+                                <option key={warehouse.id} value={warehouse.id}>
+                                    {warehouse.name} - {warehouse.fullAddress}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.warehouse_id && <div className="text-danger">{errors.warehouse_id}</div>}
                     </div>
 
                     <button type="submit" className="btn btn-primary">Update Product</button>
@@ -85,3 +108,4 @@ export default function Edit({ product, auth }) {
         </AuthenticatedLayout>
     );
 }
+

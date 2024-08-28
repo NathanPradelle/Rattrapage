@@ -16,24 +16,35 @@ class HarvestRequestController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'address' => 'required|string|max:255',
-            'product_type' => 'required|string|max:255',
+            'building_number' => 'required|string|max:255',
+            'street' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:10',
+            'country' => 'required|string|max:255',
             'quantity' => 'required|integer|min:1',
-            'preferred_date' => 'required|date',
+            'preferred_date' => 'required|date|after_or_equal:today', // Validation pour bloquer les dates passées
+            'preferred_time' => 'required', // Vérifier que l'heure est fournie
             'note' => 'nullable|string',
         ]);
 
+        // Combine date and time before storing
+        $combinedDateTime = $request->preferred_date . ' ' . $request->preferred_time;
+
         HarvestRequest::create([
             'user_id' => auth()->id(),
-            'address' => $request->address,
-            'product_type' => $request->product_type,
+            'building_number' => $request->building_number,
+            'street' => $request->street,
+            'city' => $request->city,
+            'postal_code' => $request->postal_code,
+            'country' => $request->country,
             'quantity' => $request->quantity,
-            'preferred_date' => $request->preferred_date,
+            'preferred_date' => $combinedDateTime,
             'note' => $request->note,
         ]);
 
         return redirect()->route('welcome')->with('success', 'Harvest request submitted successfully.');
     }
+
 
     public function index()
     {

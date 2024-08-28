@@ -4,32 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\StockMovement;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class StockController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $search = $request->input('search');
+        $warehouse_id = $request->input('warehouse_id');
+        $date_from = $request->input('date_from');
+        $date_to = $request->input('date_to');
+
+        $productsQuery = Product::query()->with('warehouse');
+
+        // Filtrage par recherche (nom ou code barre)
+        if ($search) {
+            $productsQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('barcode', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Filtrage par bâtiment de stockage
+        if ($warehouse_id) {
+            $productsQuery->where('warehouse_id', $warehouse_id);
+        }
+
+        // Filtrage par date d'expiration
+        if ($date_from && $date_to) {
+            $productsQuery->whereBetween('expiry_date', [$date_from, $date_to]);
+        }
+
+        // Pagination (25 par page)
+        $products = $productsQuery->paginate(25);
+
+        $warehouses = Warehouse::all();
+
         return Inertia::render('Stock/Index', [
             'products' => $products,
+            'warehouses' => $warehouses,
+            'filters' => $request->only(['search', 'warehouse_id', 'date_from', 'date_to']),
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Stock/Create');
+        $warehouses = Warehouse::all();
+        return Inertia::render('Stock/Create', [
+            'warehouses' => $warehouses,
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'barcode' => 'nullable|string|max:255',
-            'quantity' => 'required|integer',
-            'expiry_date' => 'nullable|date',
-            'location' => 'nullable|string|max:255',
+            'barcode' => 'required|string|max:255|unique:products,barcode',
+            'weight' => 'required|numeric|min:0',
+            'brand' => 'nullable|string|max:255',
+            'expiration_date' => 'nullable|date|after_or_equal:today', // Validation pour bloquer les dates passées
+            'warehouse_id' => 'required|exists:warehouses,id',
         ]);
 
         $product = Product::create($request->all());
@@ -37,10 +73,10 @@ class StockController extends Controller
         // Créer un mouvement de stock pour l'ajout
         StockMovement::create([
             'product_id' => $product->id,
-            'user_id' => auth()->id(), // Le bénévole qui fait l'ajout
+            'user_id' => auth()->id(),
             'movement_type' => 'incoming',
-            'quantity' => $product->quantity,
-            'note' => 'Récolte de produits ajoutée au stock',
+            'quantity' => 1,
+            'note' => 'Produit ajouté au stock',
         ]);
 
         return redirect()->route('stock.index')->with('success', 'Product added successfully.');
@@ -48,65 +84,50 @@ class StockController extends Controller
 
     public function edit($id)
     {
-
         $product = Product::find($id);
 
         if (!$product) {
             return redirect()->route('stock.index')->with('error', 'Product not found.');
         }
 
+        $warehouses = Warehouse::all();
+
         return Inertia::render('Stock/Edit', [
             'product' => $product,
+            'warehouses' => $warehouses,
         ]);
     }
 
     public function update(Request $request, $id)
     {
-
         $product = Product::find($id);
+
+        if (!$product) {
+            return redirect()->route('stock.index')->with('error', 'Product not found.');
+        }
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'barcode' => 'nullable|string|max:255',
-            'quantity' => 'required|integer',
-            'expiry_date' => 'nullable|date',
-            'location' => 'nullable|string|max:255',
+            'barcode' => 'required|string|max:255|unique:products,barcode,' . $product->id,
+            'weight' => 'required|numeric|min:0',
+            'brand' => 'nullable|string|max:255',
+            'expiration_date' => 'nullable|date|after_or_equal:today', // Validation pour bloquer les dates passées
+            'warehouse_id' => 'required|exists:warehouses,id',
         ]);
 
-        // Calculer la différence entre l'ancienne quantité et la nouvelle
-        $oldQuantity = $product->quantity;
-        $newQuantity = $request->quantity;
-        $difference = $oldQuantity - $newQuantity;
-
         $product->update($request->all());
-
-        if ($difference > 0) {
-            // Si la quantité diminue, c'est une distribution (sortie)
-            StockMovement::create([
-                'product_id' => $product->id,
-                'user_id' => auth()->id(), // Le bénévole qui fait la mise à jour
-                'movement_type' => 'outgoing',
-                'quantity' => $difference,
-                'note' => 'Distribution de produits retirée du stock',
-            ]);
-        } elseif ($difference < 0) {
-            // Si la quantité augmente (par erreur), c'est une correction ou une nouvelle entrée
-            StockMovement::create([
-                'product_id' => $product->id,
-                'user_id' => auth()->id(),
-                'movement_type' => 'incoming',
-                'quantity' => abs($difference),
-                'note' => 'Ajustement du stock après correction',
-            ]);
-        }
 
         return redirect()->route('stock.index')->with('success', 'Product updated successfully.');
     }
 
     public function destroy($id)
     {
-
         $product = Product::find($id);
+
+        if (!$product) {
+            return redirect()->route('stock.index')->with('error', 'Product not found.');
+        }
+
         $product->delete();
 
         return redirect()->route('stock.index')->with('success', 'Product deleted successfully.');

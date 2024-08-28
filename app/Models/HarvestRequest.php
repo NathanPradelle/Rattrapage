@@ -11,12 +11,15 @@ class HarvestRequest extends Model
 
     protected $fillable = [
         'user_id',
-        'address',
-        'product_type',
+        'building_number',
+        'street',
+        'city',
+        'postal_code',
+        'country',
         'quantity',
         'preferred_date',
+        'note',
         'status',
-        'note'
     ];
 
     public function user()

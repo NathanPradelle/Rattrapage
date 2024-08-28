@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('harvest_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // L'utilisateur qui fait la demande
-            $table->string('address');
-            $table->string('product_type');
+            $table->string('building_number')->nullable(); // Numéro de bâtiment
+            $table->string('street')->nullable(); // Rue
+            $table->string('city')->nullable(); // Ville
+            $table->string('postal_code')->nullable(); // Code postal
+            $table->string('country')->nullable(); // Pays
             $table->integer('quantity');
             $table->date('preferred_date');
-            $table->enum('status', ['pending', 'assigned', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'assigned', 'completed'])->default('pending'); // Retirer 'cancelled'
             $table->text('note')->nullable();
             $table->timestamps();
         });

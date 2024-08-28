@@ -12,12 +12,18 @@ class Product extends Model
     protected $fillable = [
         'name',
         'barcode',
-        'quantity',
+        'weight',
+        'brand',
         'expiry_date',
-        'location',
+        'warehouse_id',
     ];
     public function stockMovements()
     {
         return $this->hasMany(StockMovement::class);
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 }
