@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stripe\Stripe;
@@ -12,7 +13,7 @@ class StripeController extends Controller
 {
     public function showPaymentPage()
     {
-        return Inertia::render('Abonnement/AbonnementPayment', [
+        return Inertia::render('Abonnement/Payment', [
             'stripeKey' => env('STRIPE_KEY'),
         ]);
     }
@@ -46,9 +47,18 @@ class StripeController extends Controller
     public function handlePayment(Request $request)
     {
         $user = Auth::user();
-        $user->abonnement = 1;
+
+        $currentExpiryDate = $user->abonnement;
+
+        if ($currentExpiryDate) {
+            $newExpiryDate = Carbon::parse($currentExpiryDate)->addYear();
+        } else {
+            $newExpiryDate = Carbon::now()->addYear();
+        }
+
+        $user->abonnement = $newExpiryDate;
         $user->save();
 
-        return redirect()->route('profile.edit')->with('success', 'Payment successful! You are now a Particulier+ member.');
+        return redirect()->route('profile.edit')->with('success', 'Paiement réussi ! Vous êtes maintenant membre Particulier+ jusqu\'au ' . $newExpiryDate->format('d-m-Y') . '.');
     }
 }

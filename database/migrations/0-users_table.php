@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,10 +20,43 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role');
-            $table->boolean('abonnement')->nullable();
+            $table->date('abonnement')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::table('users')->insert([
+            [
+                'name' => 'François',
+                'email' => 'user@test.fr',
+                'email_verified_at' => '2024-08-25 00:00:00',
+                'password' => Hash::make('password'),
+                'role' => 0,
+                'abonnement' => '2024-08-30',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Nathan',
+                'email' => 'admin@test.fr',
+                'email_verified_at' => '2024-08-25 00:00:00',
+                'password' => Hash::make('password'),
+                'role' => 2,
+                'abonnement' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Héloïse',
+                'email' => 'benevole@test.fr',
+                'email_verified_at' => '2024-08-25 00:00:00',
+                'password' => Hash::make('password'),
+                'role' => 1,
+                'abonnement' => '',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

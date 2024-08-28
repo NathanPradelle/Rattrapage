@@ -19,12 +19,16 @@ export default function Authenticated({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
 
-                                {/*<NavLink href={route('candidatures.index.enattente')} active={route().current('candidatures.index.enattente')}>*/}
-                                {/*    Candidatures*/}
-                                {/*</NavLink>*/}
-
                                 <NavLink href={route('candidatures.index.enattente')} active={route().current('candidatures.index.enattente')}>
                                     Candidatures
+                                </NavLink>
+
+                                <NavLink href={route('stock-movements.index')} active={route().current('stock-movements.index')}>
+                                    Manage Stock Movements
+                                </NavLink>
+
+                                <NavLink href={route('harvest-requests.index')} active={route().current('stock-movements.index')}>
+                                    Manage Harvest Requests
                                 </NavLink>
                             </div>
                         </div>

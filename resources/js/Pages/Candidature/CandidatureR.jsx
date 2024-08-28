@@ -1,5 +1,5 @@
 import AdminLayout from '@/Layouts/AdminLayout.jsx';
-import CandidatureNavBar from "@/Pages/Candidature/CandidatureNavBar.jsx";
+import NavBar from "@/Pages/Candidature/NavBar.jsx";
 import {Link} from "@inertiajs/react";
 import {Inertia} from "@inertiajs/inertia";
 
@@ -9,7 +9,7 @@ export default function CandidatureR({ auth, candidatures }) {
     };
     return (
         <AdminLayout user={auth.user}>
-            <CandidatureNavBar />
+            <NavBar />
 
             <div className="mt-8">
                 <table className="min-w-full bg-white">

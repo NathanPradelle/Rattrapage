@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.jsx';
 
-export default function CandidatureForm({ auth }) {
+const CandidatureForm = ({ auth }) => {
   const { data, setData, post, errors } = useForm({
     user_id: auth.user.id,
     phone: '',
@@ -48,7 +48,7 @@ export default function CandidatureForm({ auth }) {
 
   return (
     <AuthenticatedLayout user={auth.user}>
-      <Head title='CandidatureForm' />
+      <Head title='Form' />
 
       {/* Affichage des erreurs globales de candidature */}
       {validationErrors.candidature && (
@@ -203,4 +203,6 @@ export default function CandidatureForm({ auth }) {
       </form>
     </AuthenticatedLayout>
   );
-}
+};
+
+export default CandidatureForm;

@@ -1,15 +1,11 @@
 import { Head } from '@inertiajs/react';
 import clsx from 'clsx';
-import { useState } from 'react';
 
 import Navbar from '@/Components/Navbar';
 
 import ApiLayout from './ApiLayout';
 
 const AuthenticatedLayout = ({ headTitle, header, className, children }) => {
-  const [showingNavigationDropdown, setShowingNavigationDropdown] =
-    useState(false);
-
   ApiLayout();
   return (
     <div className='bg-gray-50 text-black/50 dark:bg-gray-900/80 dark:text-white/100 h-full flex flex-col'>

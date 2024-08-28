@@ -1,10 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import { Head, Link } from '@inertiajs/react';
 
-export default function CandidatureInfo({ auth }) {
+export default function Info({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="CandidatureInfo" />
+            <Head title="Info" />
 
             <div className="h-full w-full flex flex-col px-6 space-y-6 text-lg leading-relaxed text-gray-800 dark:text-gray-200">
 
