@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
 
         });
 
+        Route::post('/user/exclude/{user}', [UserController::class, 'RGPDUser'])->name('user.exclude');
+        Route::get('/customers', [UserController::class, 'customersPage'])->name('page.customers');
+
         Route::get('/tours', [TourController::class, 'calendarPage'])->name('page.tours');
         Route::get('/tour/creation', [TourController::class, 'creationPage'])->name('page.tour.creation');
         Route::post('/tour/create', [TourController::class, 'create'])->name('tour.create');

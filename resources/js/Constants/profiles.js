@@ -1,0 +1,11 @@
+export const PROFILE = {
+  CUSTOMERS: 0,
+  VOLUNTEER: 1,
+  ADMIN: 2,
+};
+
+export const ALL_PROFILES = [
+  PROFILE.CUSTOMERS,
+  PROFILE.VOLUNTEER,
+  PROFILE.ADMIN,
+];

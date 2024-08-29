@@ -26,19 +26,14 @@ class FilePaths
     const CHAT = "ChatPage/ChatPage";
 
     /* Admin */
+    const CUSTOMERS = 'Admin/CustomersPage/CustomersPage';
+    const USER = 'Admin/UserPage/UserPage';
+
     const ADMIN_CREATION = 'Admin/AdminCreationPage/AdminCreationPage';
     const ADMINS_PAGE = 'Admin/AdminsPage/AdminsPage';
     const TAG_CREATION = 'Admin/TagCreationPage/TagCreationPage';
     const TAG_EDITION = 'Admin/TagEditionPage/TagEditionPage';
     const TAGS = 'Admin/TagsPage/TagsPage';
-    const USERS = 'Admin/UsersPage/UsersPage';
-    const USER = 'Admin/UserPage/UserPage';
-
-    const RESERVATION_MANAGEMENT = "Admin/ReservationManagementPage/ReservationManagementPage";
-
-    const DEMANDES_MENU = 'Admin/DemandesMenu/DemandesMenu';
-    const DEMANDES_PRESTATAIRE = 'Admin/DemandesPrestataire/DemandesPrestataire';
-    const DEMANDES_PRESTATAIRE_LIST = 'Admin/DemandesPrestataireList/DemandesPrestataireList';
 
     const SERVICES = "Admin/ServicesPage/ServicesPage";
     const SERVICE_CREATE = "Admin/ServiceCreationPage/ServiceCreationPage";

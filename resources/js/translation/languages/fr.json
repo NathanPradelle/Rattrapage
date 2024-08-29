@@ -132,15 +132,20 @@
   },
   "user": {
     "label": "Utilisateur",
-    "list": "Liste des clients",
-    "lastname": "Nom",
-    "firstname": "Prénom",
     "profiles": "Profiles de l'utilisateur",
     "search": "Recherche par nom ou par e-mail...",
     "services": "Services de l'utilisateur",
     "ban": {
       "never": "Cette utilisateur n'a jamais été banni"
     }
+  },
+  "customer": {
+    "list": "Particuliers",
+    "services": "Services de l'utilisateur"
+  },
+  "volunteer": {
+    "list": "Particuliers",
+    "services": "Services du volontaire"
   },
   "tours": {
     "label": "Tournées",
@@ -170,9 +175,9 @@
     }
   },
   "chat": {
+    "list": "Chats",
     "label": "Chat",
-    "with": "Discussion avec {{name}}",
-    "noTags": "Il n'y a pas encore de tags"
+    "with": "Discussion avec {{name}}"
   },
   "request": {
     "accepted": "Accepté",

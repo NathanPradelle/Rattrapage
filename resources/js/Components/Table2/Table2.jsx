@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const Table = ({ seachInput, columns, data, pagination, placeholder }) => {
+const Table2 = ({ seachInput, columns, data, pagination, placeholder }) => {
   const cols = useMemo(() => columns, [columns, data]);
 
   return (
@@ -74,4 +74,4 @@ const Table = ({ seachInput, columns, data, pagination, placeholder }) => {
   );
 };
 
-export default Table;
+export default Table2;

@@ -16,7 +16,7 @@ class ChatController extends Controller
     public function chatsPage()
     {
         $userController = new UserController();
-        $usersList = $userController->getAllForChat();
+        $usersList = $userController->getAllForChatP();
 
         return Inertia::render(FilePaths::CHATS, [
             'users' => $usersList['users'],
@@ -34,7 +34,7 @@ class ChatController extends Controller
         $user = $userController->getName($id);
 
         return Inertia::render(FilePaths::CHAT, [
-            'interlocutor' => $user
+            'interlocutor' => $user->modelSetter()
         ]);
     }
 

@@ -23,7 +23,7 @@ const ChatsPage = ({ users, pagination }) => {
 
   return (
     <AuthenticatedLayout
-      headTitle='CustomerIndex'
+      headTitle='Chats'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
           {t('user.list')}

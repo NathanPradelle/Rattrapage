@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('abonnement')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->boolean('deleted')->default(false);
         });
 
         DB::table('users')->insert([

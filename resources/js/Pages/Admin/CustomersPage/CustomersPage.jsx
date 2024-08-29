@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import { useState } from 'react';
 
-import Table from '@/Components/Table';
+import Table2 from '@/Components/Table2';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 import useColumns from './useColumns';
@@ -9,6 +9,7 @@ import useColumns from './useColumns';
 const CustomersPage = ({ users, pagination }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const columns = useColumns();
+
   // Fonction pour filtrer les utilisateurs par nom ou par e-mail
   const filteredUsers = users?.filter(
     (user) =>
@@ -23,7 +24,7 @@ const CustomersPage = ({ users, pagination }) => {
 
   return (
     <AuthenticatedLayout
-      headTitle='CustomerIndex'
+      headTitle='Customers'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
           {t('user.list')}
@@ -31,7 +32,7 @@ const CustomersPage = ({ users, pagination }) => {
       }
     >
       <div className='bg-white overflow-hidden shadow-sm sm:rounded-lg'>
-        <Table
+        <Table2
           seachInput={
             <input
               type='text'
