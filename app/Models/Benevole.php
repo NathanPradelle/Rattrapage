@@ -19,40 +19,29 @@ class Benevole extends Model
         'phone',
         'validation',
         'motif',
-        'service_1',
-        'service_2',
-        'service_3',
+        'service_id',
+        'warehouse_id',
         'nationalite',
         'date_derniere_candidature',
         'age',
+        'refus',
     ];
 
-    /**
-     * Get the first service the volunteer is associated with.
-     */
-    public function service1()
-    {
-        return $this->belongsTo(Service::class, 'service_1');
-    }
-
-    /**
-     * Get the second service the volunteer is associated with.
-     */
-    public function service2()
-    {
-        return $this->belongsTo(Service::class, 'service_2');
-    }
-
-    /**
-     * Get the third service the volunteer is associated with.
-     */
-    public function service3()
-    {
-        return $this->belongsTo(Service::class, 'service_3');
-    }
-
+    // Relation avec le modèle User
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
+    }
+
+    // Relation avec le modèle Service
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
+
+    // Relation avec le modèle Warehouse
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'warehouse_id');
     }
 }

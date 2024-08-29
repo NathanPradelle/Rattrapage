@@ -17,13 +17,12 @@ return new class extends Migration
             $table->string('phone'); // Numéro de téléphone
             $table->boolean('validation')->default(0); // Status de validation, par défaut à 0 (non validé)
             $table->text('motif'); // Motif de la candidature
-            $table->foreignId('service_1')->constrained('services'); // Premier service, non nullable
-            $table->foreignId('service_2')->nullable()->constrained('services'); // Deuxième service, nullable
-            $table->foreignId('service_3')->nullable()->constrained('services'); // Troisième service, nullable
+            $table->foreignId('service_id')->constrained()->onDelete('cascade'); // Un seul service
+            $table->foreignId('warehouse_id')->constrained()->onDelete('cascade'); // Warehouse associé
             $table->string('nationalite'); // Nationalité
             $table->date('date_derniere_candidature'); // Date de dernière candidature
             $table->integer('age'); // Âge du bénévole
-            $table->text('refus')->nullable();
+            $table->text('refus')->nullable(); // Motif de refus
             $table->timestamps();
         });
     }

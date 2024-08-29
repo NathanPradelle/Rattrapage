@@ -18,13 +18,22 @@ class HarvestRequest extends Model
         'country',
         'quantity',
         'preferred_date',
-        'note',
+        'period',
+        'warehouse_id',
         'status',
+        'note',
     ];
 
+    // Relation avec le modèle User
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Relation avec le modèle Warehouse
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 
     public function volunteers()

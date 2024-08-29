@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 
-export default function CreateHarvestRequest({ auth }) {
+export default function CreateHarvestRequest({ auth, warehouses }) {
     const { data, setData, post, errors } = useForm({
         building_number: '',
         street: '',
@@ -11,22 +11,15 @@ export default function CreateHarvestRequest({ auth }) {
         country: '',
         quantity: '',
         preferred_date: '',
-        preferred_time: '',
+        period: '',
+        warehouse_id: '', // Utiliser l'ID de l'entrepôt
         note: '',
     });
 
     function handleSubmit(e) {
         e.preventDefault();
-
-        // Combine date and time before sending
-        const combinedDateTime = `${data.preferred_date} ${data.preferred_time}`;
-        setData('preferred_date', combinedDateTime);
-
         post(route('harvest-requests.store'));
     }
-
-    // Get today's date in YYYY-MM-DD format for min attribute
-    const today = new Date().toISOString().split('T')[0];
 
     return (
         <AuthenticatedLayout
@@ -110,21 +103,42 @@ export default function CreateHarvestRequest({ auth }) {
                         type="date"
                         value={data.preferred_date}
                         onChange={(e) => setData('preferred_date', e.target.value)}
-                        min={today} // Sets the minimum date to today
+                        min={new Date().toISOString().split('T')[0]}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                     {errors.preferred_date && <div className="text-red-500 text-xs mt-2">{errors.preferred_date}</div>}
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Preferred Time</label>
-                    <input
-                        type="time"
-                        value={data.preferred_time}
-                        onChange={(e) => setData('preferred_time', e.target.value)}
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Preferred Period</label>
+                    <select
+                        value={data.period}
+                        onChange={(e) => setData('period', e.target.value)}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                    {errors.preferred_time && <div className="text-red-500 text-xs mt-2">{errors.preferred_time}</div>}
+                    >
+                        <option value="">Select a period</option>
+                        <option value="morning">Morning (8h-12h)</option>
+                        <option value="afternoon">Afternoon (14h-18h)</option>
+                        <option value="evening">Evening (19h-23h)</option>
+                    </select>
+                    {errors.period && <div className="text-red-500 text-xs mt-2">{errors.period}</div>}
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Select Sector (City)</label>
+                    <select
+                        value={data.warehouse_id}
+                        onChange={(e) => setData('warehouse_id', e.target.value)}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option value="">Select a sector</option>
+                        {warehouses.map((warehouse) => (
+                            <option key={warehouse.id} value={warehouse.id}>
+                                {warehouse.city}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.warehouse_id && <div className="text-red-500 text-xs mt-2">{errors.warehouse_id}</div>}
                 </div>
 
 

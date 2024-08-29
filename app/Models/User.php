@@ -50,4 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Benevole::class, 'user_id');
     }
+
+    public function harvestRequests()
+    {
+        return $this->hasMany(HarvestRequest::class);
+    }
 }

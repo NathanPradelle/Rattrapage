@@ -19,7 +19,7 @@ export default function CandidatureA({ auth, candidatures }) {
                         <th className="py-2 px-4 border-b">Nom</th>
                         <th className="py-2 px-4 border-b">Email</th>
                         <th className="py-2 px-4 border-b">Date de dernière candidature</th>
-                        <th className="py-2 px-4 border-b">Services demandés</th>
+                        <th className="py-2 px-4 border-b">Service demandé</th>
                         <th className="py-2 px-4 border-b">Statut</th>
                         <th className="py-2 px-4 border-b">Action</th>
                     </tr>
@@ -31,7 +31,7 @@ export default function CandidatureA({ auth, candidatures }) {
                             <td className="py-2 px-4 border-b text-center">{candidature.email}</td>
                             <td className="py-2 px-4 border-b text-center">{candidature.date_derniere_candidature}</td>
                             <td className="py-2 px-4 border-b text-center">
-                                {[candidature.service_1, candidature.service_2, candidature.service_3].filter(Boolean).join(', ')}
+                                {candidature.service}
                             </td>
                             <td className="py-2 px-4 border-b text-center">En attente</td>
                             <td className="py-2 px-4 border-b text-center">

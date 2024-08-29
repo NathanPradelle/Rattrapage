@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::get('/harvest-requests', [HarvestRequestController::class, 'index'])->name('harvest-requests.index');
+        Route::post('/harvest-requests/{id}/refuse', [HarvestRequestController::class, 'refuse'])->name('harvest-requests.refuse');
         Route::get('/harvest-requests/{id}/assign', [HarvestAssignmentController::class, 'assign'])->name('harvest-requests.assign');
         Route::post('/harvest-requests/{id}/assign', [HarvestAssignmentController::class, 'storeAssignment'])->name('harvest-requests.assign.store');
         Route::get('/harvest-requests/{id}/complete', [HarvestRequestController::class, 'complete'])->name('harvest-requests.complete');

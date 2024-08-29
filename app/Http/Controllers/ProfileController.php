@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         // Récupérer les informations de la candidature du bénévole si elles existent
-        $candidature = Benevole::where('user_id', $user->id)->with(['service1', 'service2', 'service3'])->first();
+        $candidature = Benevole::where('user_id', $user->id)->with(['service'])->first();
 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -32,9 +32,7 @@ class ProfileController extends Controller
             'candidature' => $candidature ? [
                 'date_derniere_candidature' => $candidature->date_derniere_candidature,
                 'validation' => $candidature->validation,
-                'service_1' => $candidature->service1 ? $candidature->service1->name : null,
-                'service_2' => $candidature->service2 ? $candidature->service2->name : null,
-                'service_3' => $candidature->service3 ? $candidature->service3->name : null,
+                'service' => $candidature->service ? $candidature->service->name : null,
                 'refus' => $candidature->refus,
             ] : null,
         ]);

@@ -14,7 +14,7 @@ export default function CandidatureE({ auth, candidatures }) {
                         <th className="py-2 px-4 border-b">Nom</th>
                         <th className="py-2 px-4 border-b">Email</th>
                         <th className="py-2 px-4 border-b">Date de dernière candidature</th>
-                        <th className="py-2 px-4 border-b">Services demandés</th>
+                        <th className="py-2 px-4 border-b">Service demandé</th>
                         <th className="py-2 px-4 border-b">Statut</th>
                         <th className="py-2 px-4 border-b">Action</th>
                     </tr>
@@ -26,11 +26,12 @@ export default function CandidatureE({ auth, candidatures }) {
                             <td className="py-2 px-4 border-b text-center">{candidature.email}</td>
                             <td className="py-2 px-4 border-b text-center">{candidature.date_derniere_candidature}</td>
                             <td className="py-2 px-4 border-b text-center">
-                                {[candidature.service_1, candidature.service_2, candidature.service_3].filter(Boolean).join(', ')}
+                                {candidature.service}
                             </td>
-                            <td className="py-2 px-4 border-b text-center">En attente</td>
+                            <td className="py-2 px-4 border-b text-center">En cours d'Examen</td>
                             <td className="py-2 px-4 border-b text-center">
-                                <Link href={route('candidature.details', candidature.id)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                                <Link href={route('candidature.details', candidature.id)}
+                                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                                     Examiner
                                 </Link>
                             </td>
@@ -40,7 +41,7 @@ export default function CandidatureE({ auth, candidatures }) {
                 </table>
 
                 <div className="mt-4">
-                    {candidatures.links && (
+                {candidatures.links && (
                         <div className="flex justify-center">
                             {candidatures.links.map(link => (
                                 <Link

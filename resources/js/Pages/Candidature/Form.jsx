@@ -1,61 +1,44 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
-import { Head, useForm, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
 
-export default function Form({ auth }) {
-    const { data, setData, post, errors } = useForm({
+
+export default function Form({ auth, services, warehouses }) {
+    const { data, setData, post, processing, errors } = useForm({
         user_id: auth.user.id,
         phone: '',
         validation: 0,
         motif: '',
-        service_1: '',
-        service_2: '',
-        service_3: '',
+        service_id: '',
+        warehouse_id: '',
         nationalite: '',
         age: '',
     });
 
-    const services = [
-        { id: 1, name: 'Routier' },
-        { id: 2, name: 'Cuisinier' },
-        { id: 3, name: 'Prof' },
-    ];
-
-    const [filteredService2, setFilteredService2] = useState(services);
-    const [filteredService3, setFilteredService3] = useState(services);
-
-    useEffect(() => {
-        setFilteredService2(services.filter(service => service.id !== parseInt(data.service_1)));
-        setFilteredService3(services.filter(service => service.id !== parseInt(data.service_1) && service.id !== parseInt(data.service_2)));
-    }, [data.service_1, data.service_2]);
-
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(data);
         post(route('candidature.store'));
     };
 
-    const { props } = usePage();
-    const validationErrors = props.errors;
+    useEffect(() => {
+        console.log(errors); // Affiche les erreurs dans la console pour débogage
+    }, [errors]);
 
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Form" />
 
             {/* Affichage des erreurs globales de candidature */}
-            {validationErrors.candidature && (
-                <div className="mb-4 p-4 text-white bg-red-500 rounded" dangerouslySetInnerHTML={{ __html: validationErrors.candidature }}></div>
+            {errors.candidature && (
+                <div className="mb-4 p-4 text-white bg-red-500 rounded" dangerouslySetInnerHTML={{ __html: errors.candidature }}></div>
             )}
 
             <form
                 onSubmit={handleSubmit}
                 className="w-full max-w-3xl mx-auto mt-8 p-5 bg-white rounded-lg shadow-lg space-y-4 border border-gray-300"
             >
-                {/* Champ caché pour l'ID de l'utilisateur */}
-                <input
-                    type="hidden"
-                    value={data.user_id}
-                    name="user_id"
-                />
+                <input type="hidden" value={data.user_id} name="user_id" />
 
                 <div>
                     <label className="block text-lg font-medium text-gray-700">Numéro de téléphone</label>
@@ -79,10 +62,10 @@ export default function Form({ auth }) {
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-gray-700">Service 1 (obligatoire)</label>
+                    <label className="block text-lg font-medium text-gray-700">Service (obligatoire)</label>
                     <select
-                        value={data.service_1}
-                        onChange={e => setData('service_1', e.target.value)}
+                        value={data.service_id}
+                        onChange={e => setData('service_id', e.target.value)}
                         className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500"
                         required
                     >
@@ -91,37 +74,23 @@ export default function Form({ auth }) {
                             <option key={service.id} value={service.id}>{service.name}</option>
                         ))}
                     </select>
-                    {errors.service_1 && <div className="text-red-600 text-sm mt-1">{errors.service_1}</div>}
+                    {errors.service_id && <div className="text-red-600 text-sm mt-1">{errors.service_id}</div>}
                 </div>
 
                 <div>
-                    <label className="block text-lg font-medium text-gray-700">Service 2 (optionnel)</label>
+                    <label className="block text-lg font-medium text-gray-700">Entrepôt (Warehouse)</label>
                     <select
-                        value={data.service_2}
-                        onChange={e => setData('service_2', e.target.value)}
+                        value={data.warehouse_id}
+                        onChange={e => setData('warehouse_id', e.target.value)}
                         className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+                        required
                     >
-                        <option value="">Aucun</option>
-                        {filteredService2.map(service => (
-                            <option key={service.id} value={service.id}>{service.name}</option>
+                        <option value="">Sélectionner un entrepôt</option>
+                        {warehouses.map(warehouse => (
+                            <option key={warehouse.id} value={warehouse.id}>{warehouse.city}</option>
                         ))}
                     </select>
-                    {errors.service_2 && <div className="text-red-600 text-sm mt-1">{errors.service_2}</div>}
-                </div>
-
-                <div>
-                    <label className="block text-lg font-medium text-gray-700">Service 3 (optionnel)</label>
-                    <select
-                        value={data.service_3}
-                        onChange={e => setData('service_3', e.target.value)}
-                        className="mt-2 block w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                        <option value="">Aucun</option>
-                        {filteredService3.map(service => (
-                            <option key={service.id} value={service.id}>{service.name}</option>
-                        ))}
-                    </select>
-                    {errors.service_3 && <div className="text-red-600 text-sm mt-1">{errors.service_3}</div>}
+                    {errors.warehouse_id && <div className="text-red-600 text-sm mt-1">{errors.warehouse_id}</div>}
                 </div>
 
                 <div>
@@ -154,6 +123,7 @@ export default function Form({ auth }) {
                     <button
                         type="submit"
                         className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-colors duration-300"
+                        disabled={processing}
                     >
                         Soumettre la candidature
                     </button>
