@@ -20,8 +20,10 @@ class FilePaths
     const CONTACT = "Authenticated/Contact/Contact";
     const TICKET_CREATION = "Authenticated/TicketCreationPage/TicketCreationPage";
     const TICKET_INDEX = "Authenticated/TicketIndex/TicketIndex";
-    const CHAT = "Authenticated/Chat/Chat";
     const TICKET_SHOW = "Authenticated/TicketShow/TicketShow";
+
+    const CHATS = "ChatsPage/ChatsPage";
+    const CHAT = "ChatPage/ChatPage";
 
     /* Admin */
     const ADMIN_CREATION = 'Admin/AdminCreationPage/AdminCreationPage';

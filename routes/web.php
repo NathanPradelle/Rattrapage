@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BenevoleController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HarvestAssignmentController;
 use App\Http\Controllers\HarvestRequestController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,12 @@ Route::get('/', function () {
 Route::get('/contact', [TicketController::class, 'contact'])->name('contact.show');
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/chats', [ChatController::class, 'chatsPage'])->name('page.chats');
+    Route::get('/chat/{user}', [ChatController::class, 'chatPage'])->name('page.chat');
+    Route::get('/chat/messages/{user}', [ChatController::class, 'getMessages'])->name('chat.messages');
+    Route::post('/chat/message', [ChatController::class, 'sendMessage'])->name('chat.messages.create');
+
     Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
         Route::get('/', [UserController::class, 'admin'])->name('admin');
 

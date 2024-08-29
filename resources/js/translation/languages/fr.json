@@ -29,6 +29,7 @@
     "price": "Prix",
     "reason": "Raison",
     "save": "Enregistrer",
+    "send": "Envoyer",
     "status": "Statut",
     "street": "Rue",
     "success": "Action réussi",
@@ -168,9 +169,9 @@
       "holiday": "Prix durant les vacances"
     }
   },
-  "tag": {
-    "create": "Créer un tag",
-    "manage": "Gérer les tags",
+  "chat": {
+    "label": "Chat",
+    "with": "Discussion avec {{name}}",
     "noTags": "Il n'y a pas encore de tags"
   },
   "request": {

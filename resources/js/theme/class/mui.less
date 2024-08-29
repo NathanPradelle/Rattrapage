@@ -10,10 +10,8 @@
     border-color: white;
     &.bordered {
       border-color: black;
-      color: white;
       * {
         text-decoration: none;
-        color: white;
       }
     }
     &.important {
@@ -77,9 +75,7 @@
 }
 
 .MuiLoadingButton-root.save {
-  color: white !important;
   svg {
-    color: white !important;
     margin-left: 5px;
   }
 }
@@ -97,7 +93,6 @@
 
 .MuiAvatar-root.counter-badge {
   background-color: @secondary;
-  color: white;
   font-size: 0.875rem;
   #JostBold();
   height: 30px;
@@ -107,22 +102,13 @@
 .MuiModal-root.MuiDialog-root {
   &.primary .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
     background: grey;
-    * {
-      color: white;
-    }
+
   }
   &.secondary .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
     background: @secondary;
-    * {
-      color: white;
-    }
   }
   &.white .MuiPaper-root.MuiDialog-paper .MuiDialogTitle-root#customized-modal {
     background: white;
     border-bottom: 1px solid black;
-    *,
-    .dialog-title {
-      color: white !important;
-    }
   }
 }

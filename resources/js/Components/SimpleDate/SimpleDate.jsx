@@ -27,7 +27,7 @@ const SimpleDate = ({
       <InputText
         id={id}
         name={id}
-        type='date'
+        type='datetime-local'
         value={value}
         placeholder={placeholder}
         setdata={setdata}

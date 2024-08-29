@@ -42,7 +42,6 @@ class TourController extends Controller
         $tours = Tour::query()
             ->select([
                 'id',
-                'name',
                 'country',
                 'city',
                 'postal_code',
@@ -66,7 +65,6 @@ class TourController extends Controller
         $tours = Tour::query()
             ->select([
                 'id',
-                'name',
                 'country',
                 'city',
                 'postal_code',
@@ -96,7 +94,6 @@ class TourController extends Controller
         $tour = Tour::query()
             ->select([
                 'id',
-                'name',
                 'country',
                 'city',
                 'postal_code',
@@ -124,7 +121,6 @@ class TourController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
             'country' => ['required', 'max:255'],
             'city' => ['required', 'max:255'],
             'postalCode' => ['required', 'numeric'],

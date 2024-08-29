@@ -50,4 +50,46 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Benevole::class, 'user_id');
     }
+
+    /// <summary>
+    /// Fonction to set user to return
+    /// </summary>
+    /// <return> a formatted user </return>
+    public function modelSetter()
+    {
+        $user = [
+            'id' => $this?->user ?? $this?->id,
+            'name' => $this?->name,
+            'email' => $this?->email,
+            'role' => $this?->role,
+            'abonnement' => $this?->abonnement,
+        ];
+
+        return array_filter($user, function ($value) {
+            return !is_null($value);
+        });
+    }
+
+    /// <summary>
+    /// Fonction to set UserVm to User.
+    /// </summary>
+    /// <return>User.</return>
+    public function modelGetter($vm)
+    {
+        $userData = [
+            'id' => isset($vm?->id) ? $vm->id : null,
+            'name' => isset($vm?->name) ? $vm->name : null,
+            'email' => isset($vm?->email) ? $vm->email : null,
+            'role' => isset($vm?->role) ? $vm->role : null,
+            'abonnement' => isset($vm?->abonnement) ? $vm->abonnement : null,
+        ];
+
+        $user = new User($userData);
+
+        // if (isset($vm?->profiles)) {
+        //     $user->userProfiles = $vm->profiles;
+        // }
+
+        return $user;
+    }
 }

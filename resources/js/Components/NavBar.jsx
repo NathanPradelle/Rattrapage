@@ -18,7 +18,7 @@ const Navbar = () => {
           Accueil
         </Link>
 
-        {user && user?.role === 0 && (
+        {user?.role === 0 && (
           <>
             <Link
               href={route('benevolat')}
@@ -43,7 +43,7 @@ const Navbar = () => {
           </>
         )}
 
-        {user && user.role === 1 && (
+        {user?.role === 1 && (
           <>
             <Link
               href={route('stock.index')}
@@ -67,6 +67,7 @@ const Navbar = () => {
         >
           Nous Contactez !
         </Link>
+
         {user?.role === 2 && (
           <>
             <Link
@@ -95,6 +96,7 @@ const Navbar = () => {
       {/* Conteneur pour le dropdown aligné à droite */}
       <div className='flex items-center'>
         <LanguageSelector />
+
         {user ? (
           <Dropdown>
             <Dropdown.Trigger>
@@ -125,6 +127,7 @@ const Navbar = () => {
               <Dropdown.Link href={route('profile.edit')}>
                 Profile
               </Dropdown.Link>
+              <Dropdown.Link href={route('page.chats')}>Messages</Dropdown.Link>
               <Dropdown.Link href={route('logout')} method='post' as='button'>
                 Log Out
               </Dropdown.Link>

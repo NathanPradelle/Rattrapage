@@ -29,7 +29,6 @@ class Tour extends Model
     {
         $tour = [
             'id' => $this?->id,
-            'name' => $this?->name,
             'country' => $this?->country,
             'city' => $this?->city,
             'postalCode' => $this?->postal_code,
@@ -53,7 +52,6 @@ class Tour extends Model
     {
         $tourData = [
             'id' => isset($vm?->id) ? $vm->id : null,
-            'name' => isset($vm?->name) ? $vm->name : null,
             'country' => isset($vm?->country) ? $vm->country : null,
             'city' => isset($vm?->city) ? $vm->city : null,
             'postal_code' => isset($vm?->postalCode) ? $vm->postalCode : null,
