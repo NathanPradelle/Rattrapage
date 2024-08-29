@@ -20,7 +20,7 @@ const ChatPage = ({ interlocutor }) => {
     axios.get(route('chat.messages', interlocutor)).then((res) => {
       setMessages(res?.data);
     });
-  });
+  }, [interlocutor]); // Ajout de `interlocutor` dans les dépendances
 
   const handleSubmit = useCallback(
     (e) => {
@@ -29,13 +29,17 @@ const ChatPage = ({ interlocutor }) => {
 
       axios.post(route('chat.messages.create'), data);
     },
-    [data]
+    [data, interlocutor]
   );
 
   useEffect(() => {
     getMessage();
-    setInterval(getMessage, 5000);
-  }, []);
+    const messageInterval = setInterval(getMessage, 5000);
+
+    return () => {
+      clearInterval(messageInterval);
+    };
+  }, [getMessage]);
 
   return (
     <AuthenticatedLayout

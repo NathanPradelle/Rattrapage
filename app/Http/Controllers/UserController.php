@@ -18,10 +18,12 @@ class UserController extends Controller
     /// <summary>
     /// Get all Users name.
     /// </summary>
-    public function getAllName()
+    public function getAllForChat()
     {
+        $authUserId = auth()->id();
         $users = User::query()
             ->select(['id', 'name'])
+            ->whereNot('id', $authUserId)
             ->distinct()
             ->paginate(10);
 
