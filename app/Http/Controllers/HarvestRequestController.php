@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HarvestRequest;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -10,8 +11,15 @@ class HarvestRequestController extends Controller
 {
     public function create()
     {
-        return Inertia::render('Harvest/CreateHarvestRequest');
+        // Récupérer tous les entrepôts disponibles
+        $warehouses = Warehouse::all();
+
+        // Renvoyer la vue avec les entrepôts
+        return Inertia::render('Harvest/CreateHarvestRequest', [
+            'warehouses' => $warehouses,
+        ]);
     }
+
 
     public function store(Request $request)
     {
@@ -22,13 +30,11 @@ class HarvestRequestController extends Controller
             'postal_code' => 'required|string|max:10',
             'country' => 'required|string|max:255',
             'quantity' => 'required|integer|min:1',
-            'preferred_date' => 'required|date|after_or_equal:today', // Validation pour bloquer les dates passées
-            'preferred_time' => 'required', // Vérifier que l'heure est fournie
+            'preferred_date' => 'required|date|after_or_equal:today',
+            'period' => 'required|in:morning,afternoon,evening',
+            'warehouse_id' => 'required|exists:warehouses,id', // Validation pour l'ID de l'entrepôt
             'note' => 'nullable|string',
         ]);
-
-        // Combine date and time before storing
-        $combinedDateTime = $request->preferred_date . ' ' . $request->preferred_time;
 
         HarvestRequest::create([
             'user_id' => auth()->id(),
@@ -38,7 +44,9 @@ class HarvestRequestController extends Controller
             'postal_code' => $request->postal_code,
             'country' => $request->country,
             'quantity' => $request->quantity,
-            'preferred_date' => $combinedDateTime,
+            'preferred_date' => $request->preferred_date,
+            'period' => $request->period,
+            'warehouse_id' => $request->warehouse_id, // Stocker l'ID de l'entrepôt
             'note' => $request->note,
         ]);
 
@@ -46,18 +54,59 @@ class HarvestRequestController extends Controller
     }
 
 
-    public function index()
+
+    public function index(Request $request)
     {
-        if (auth()->user()->role === 2) { // Administrateur
-            $requests = HarvestRequest::with('user')->orderBy('preferred_date', 'asc')->get();
-        } else { // Particulier/Commerçant
-            $requests = HarvestRequest::where('user_id', auth()->id())->orderBy('preferred_date', 'asc')->get();
+        // Récupérer les filtres du query string
+        $search = $request->input('search');
+        $warehouseId = $request->input('warehouse_id');
+        $period = $request->input('period');
+        $status = $request->input('status');
+
+        // Récupérer toutes les demandes de récolte avec les relations nécessaires
+        $query = HarvestRequest::with(['user', 'warehouse']);
+
+        // Filtrer par recherche de nom d'utilisateur ou de ville
+        if ($search) {
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            })->orWhere('city', 'like', '%' . $search . '%');
         }
 
+        // Filtrer par entrepôt
+        if ($warehouseId) {
+            $query->where('warehouse_id', $warehouseId);
+        }
+
+        // Filtrer par période
+        if ($period) {
+            $query->where('period', $period);
+        }
+
+        // Filtrer par statut
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        // Paginer les résultats
+        $requests = $query->paginate(25);
+
+        // Récupérer tous les entrepôts pour le filtrage
+        $warehouses = Warehouse::all();
+
+        // Renvoyer les résultats à la vue avec les filtres appliqués
         return Inertia::render('Harvest/HarvestRequestsIndex', [
             'requests' => $requests,
+            'warehouses' => $warehouses,
+            'filters' => [
+                'search' => $search,
+                'warehouse_id' => $warehouseId,
+                'period' => $period,
+                'status' => $status,
+            ],
         ]);
     }
+
 
     public function complete($id)
     {
@@ -126,5 +175,14 @@ class HarvestRequestController extends Controller
         $harvestRequest->delete();
 
         return redirect()->route('admin.harvest-requests.index')->with('success', 'Harvest request deleted successfully.');
+    }
+
+    public function refuse($id)
+    {
+        $request = HarvestRequest::findOrFail($id);
+        $request->status = 'refused';
+        $request->save();
+
+        return redirect()->route('harvest-requests.index')->with('success', 'Harvest request refused successfully.');
     }
 }

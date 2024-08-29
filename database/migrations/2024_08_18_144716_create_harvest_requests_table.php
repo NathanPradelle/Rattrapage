@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('harvest_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // L'utilisateur qui fait la demande
-            $table->string('building_number')->nullable(); // Numéro de bâtiment
-            $table->string('street')->nullable(); // Rue
-            $table->string('city')->nullable(); // Ville
-            $table->string('postal_code')->nullable(); // Code postal
-            $table->string('country')->nullable(); // Pays
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('building_number')->nullable();
+            $table->string('street')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('country')->nullable();
             $table->integer('quantity');
             $table->date('preferred_date');
-            $table->enum('status', ['pending', 'assigned', 'completed'])->default('pending'); // Retirer 'cancelled'
+            $table->enum('period', ['morning', 'afternoon', 'evening']); // Période de la journée
+            $table->foreignId('warehouse_id')->constrained()->onDelete('cascade'); // Secteur basé sur la ville du bâtiment de stockage
+            $table->enum('status', ['pending', 'assigned', 'completed', 'refused'])->default('pending');
             $table->text('note')->nullable();
             $table->timestamps();
         });

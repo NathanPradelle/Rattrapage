@@ -27,4 +27,9 @@ class Warehouse extends Model
     {
         return "{$this->building_number} {$this->street}, {$this->city}, {$this->postal_code}, {$this->country}";
     }
+
+    public function harvestRequests()
+    {
+        return $this->hasMany(HarvestRequest::class);
+    }
 }

@@ -44,6 +44,11 @@ class HandleInertiaRequests extends Middleware
                 'code' => $request->session()->get('code'),
                 'id' => uniqid(),
             ],
+            'errors' => function () use ($request) {
+                return $request->session()->get('errors')
+                    ? $request->session()->get('errors')->getBag('default')->getMessages()
+                    : (object) [];
+            },
         ];
     }
 }

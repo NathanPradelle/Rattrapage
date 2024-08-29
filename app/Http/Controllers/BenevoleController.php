@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Benevole;
+use App\Models\Service;
+use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,9 +24,16 @@ class BenevoleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
-        return Inertia::render('Candidature/Form');
+        // Récupérer les services et les entrepôts depuis la base de données
+        $services = Service::all(); // Modèle Service
+        $warehouses = Warehouse::all(); // Modèle Warehouse
+
+        return Inertia::render('Candidature/Form', [
+            'services' => $services,
+            'warehouses' => $warehouses,
+        ]);
     }
 
     /**
@@ -33,12 +42,6 @@ class BenevoleController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $user = $request->user();
-
-        // Validation des services pour éviter les doublons
-        $services = array_filter([$request->input('service_1'), $request->input('service_2'), $request->input('service_3')]);
-        if (count($services) !== count(array_unique($services))) {
-            return back()->withErrors(['candidature' => 'Vous ne pouvez pas sélectionner le même service plusieurs fois.']);
-        }
 
         $existingCandidature = Benevole::where('user_id', $user->id)->first();
 
@@ -68,12 +71,12 @@ class BenevoleController extends Controller
             return $this->update($request, $existingCandidature);
         }
 
+        // Validation des champs
         $validated = $request->validate([
             'phone' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
             'motif' => ['required', 'string', 'max:255'],
-            'service_1' => ['required', 'integer', 'exists:services,id'],
-            'service_2' => ['nullable', 'integer', 'exists:services,id'],
-            'service_3' => ['nullable', 'integer', 'exists:services,id'],
+            'service_id' => ['required', 'integer', 'exists:services,id'], // Un seul service
+            'warehouse_id' => ['required', 'integer', 'exists:warehouses,id'], // L'entrepôt associé
             'nationalite' => ['required', 'string', 'max:100'],
             'age' => ['required', 'integer', 'min:18'],
         ]);
@@ -83,9 +86,8 @@ class BenevoleController extends Controller
             'phone' => $validated['phone'],
             'validation' => 0, // Par défaut non validé
             'motif' => $validated['motif'],
-            'service_1' => $validated['service_1'],
-            'service_2' => $validated['service_2'],
-            'service_3' => $validated['service_3'],
+            'service_id' => $validated['service_id'],
+            'warehouse_id' => $validated['warehouse_id'],
             'nationalite' => $validated['nationalite'],
             'date_derniere_candidature' => now(),
             'age' => $validated['age'],
@@ -95,12 +97,14 @@ class BenevoleController extends Controller
     }
 
 
+
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
-        $candidature = Benevole::with(['service1', 'service2', 'service3', 'user'])->findOrFail($id);
+        $candidature = Benevole::with(['service', 'warehouse', 'user'])->findOrFail($id);
 
         return Inertia::render("Candidature/Show", [
             'candidature' => [
@@ -110,9 +114,8 @@ class BenevoleController extends Controller
                 'phone' => $candidature->phone,
                 'date_derniere_candidature' => $candidature->date_derniere_candidature,
                 'motif' => $candidature->motif,
-                'service_1' => $candidature->service1 ? $candidature->service1->name : null,
-                'service_2' => $candidature->service2 ? $candidature->service2->name : null,
-                'service_3' => $candidature->service3 ? $candidature->service3->name : null,
+                'service' => $candidature->service ? $candidature->service->name : null,
+                'warehouse' => $candidature->warehouse ? $candidature->warehouse->city : null,
                 'validation' => $candidature->validation,
                 'refus' => $candidature->refus,
             ],
@@ -129,14 +132,13 @@ class BenevoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, benevole $benevole)
+    public function update(Request $request, Benevole $benevole)
     {
         $validated = $request->validate([
             'phone' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
             'motif' => ['required', 'string', 'max:255'],
-            'service_1' => ['required', 'integer', 'exists:services,id'],
-            'service_2' => ['nullable', 'integer', 'exists:services,id'],
-            'service_3' => ['nullable', 'integer', 'exists:services,id'],
+            'service_id' => ['required', 'integer', 'exists:services,id'], // Un seul service
+            'warehouse_id' => ['required', 'integer', 'exists:warehouses,id'], // L'entrepôt associé
             'nationalite' => ['required', 'string', 'max:100'],
             'age' => ['required', 'integer', 'min:18'],
         ]);
@@ -145,15 +147,14 @@ class BenevoleController extends Controller
         $benevole->update([
             'phone' => $validated['phone'],
             'motif' => $validated['motif'],
-            'service_1' => $validated['service_1'],
-            'service_2' => $validated['service_2'],
-            'service_3' => $validated['service_3'],
+            'service_id' => $validated['service_id'], // Un seul service
+            'warehouse_id' => $validated['warehouse_id'], // ID de l'entrepôt associé
             'nationalite' => $validated['nationalite'],
             'date_derniere_candidature' => now(), // Mise à jour de la date de dernière candidature
             'age' => $validated['age'],
         ]);
 
-        return redirect()->route('candidature')->with('success', 'Candidature mise à jour avec succès!');
+        return redirect()->route('welcome')->with('success', 'Candidature mise à jour avec succès!');
     }
 
     /**
@@ -176,9 +177,8 @@ class BenevoleController extends Controller
                     'name' => $candidature->user->name,
                     'email' => $candidature->user->email,
                     'date_derniere_candidature' => Carbon::parse($candidature->date_derniere_candidature)->format('Y-m-d'),
-                    'service_1' => $candidature->service1->name,
-                    'service_2' => $candidature->service2->name ?? null,
-                    'service_3' => $candidature->service3->name ?? null,
+                    'service' => $candidature->service->name ?? null,
+                    'warehouse' => $candidature->warehouse->city ?? null, // Ville de l'entrepôt associé
                 ];
             });
 
@@ -199,9 +199,8 @@ class BenevoleController extends Controller
                     'name' => $candidature->user->name,
                     'email' => $candidature->user->email,
                     'date_derniere_candidature' => Carbon::parse($candidature->date_derniere_candidature)->format('Y-m-d'),
-                    'service_1' => $candidature->service1->name,
-                    'service_2' => $candidature->service2->name ?? null,
-                    'service_3' => $candidature->service3->name ?? null,
+                    'service' => $candidature->service->name ?? null,
+                    'warehouse' => $candidature->warehouse->city ?? null, // Ville de l'entrepôt associé
                 ];
             });
 
@@ -222,9 +221,8 @@ class BenevoleController extends Controller
                     'name' => $candidature->user->name,
                     'email' => $candidature->user->email,
                     'date_derniere_candidature' => Carbon::parse($candidature->date_derniere_candidature)->format('Y-m-d'),
-                    'service_1' => $candidature->service1->name,
-                    'service_2' => $candidature->service2->name ?? null,
-                    'service_3' => $candidature->service3->name ?? null,
+                    'service' => $candidature->service->name ?? null,
+                    'warehouse' => $candidature->warehouse->city ?? null, // Ville de l'entrepôt associé
                 ];
             });
 
@@ -250,6 +248,7 @@ class BenevoleController extends Controller
 
         return redirect()->route('candidatures.index.enexamen')->with('success', 'La candidature est maintenant en cours d\'examen.');
     }
+
     public function updateRefusees($id, Request $request)
     {
         $request->validate([
@@ -263,6 +262,7 @@ class BenevoleController extends Controller
 
         return redirect()->route('candidatures.index.refusees')->with('success', 'La candidature a été refusée avec le motif indiqué.');
     }
+
     public function updateValidees($id)
     {
         $candidature = Benevole::findOrFail($id);
@@ -271,7 +271,7 @@ class BenevoleController extends Controller
 
         // Mettre à jour le rôle de l'utilisateur candidat
         $user = $candidature->user;
-        $user->role = 1; // Nouveau rôle
+        $user->role = 1; // Nouveau rôle pour le bénévole
         $user->save();
 
         return redirect()->route('admin')->with('success', 'La candidature a été approuvée et le rôle du candidat a été mis à jour.');

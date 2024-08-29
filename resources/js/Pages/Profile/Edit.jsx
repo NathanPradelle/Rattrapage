@@ -59,11 +59,7 @@ export default function Edit({ auth, mustVerifyEmail, status, candidature, abonn
                                     <strong>Validation :</strong> {getStatusText(candidature.validation)}
                                 </p>
                                 <p className="text-gray-600">
-                                    <strong>Service(s) demandé(s) :</strong> {[
-                                    candidature.service_1,
-                                    candidature.service_2,
-                                    candidature.service_3
-                                ].filter(Boolean).join(', ')}
+                                    <strong>Service demandé :</strong> {candidature.service}
                                 </p>
                                 <p className="text-gray-600">
                                     <strong>Date de candidature :</strong> {candidature.date_derniere_candidature}

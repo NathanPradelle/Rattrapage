@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout.jsx';
 import { Head } from '@inertiajs/react';
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 import Modal from "@/Pages/Candidature/Modal.jsx";
-
 
 export default function Show({ auth, candidature }) {
     const handleVerifiedClick = (id) => {
@@ -37,12 +36,13 @@ export default function Show({ auth, candidature }) {
                             <strong>Motif de candidature:</strong> {candidature.motif}
                         </div>
                         <div>
-                            <strong>Services
-                                demandés:</strong> {[candidature.service_1, candidature.service_2, candidature.service_3].filter(Boolean).join(', ')}
+                            <strong>Service demandé:</strong> {candidature.service}
                         </div>
                         <div>
-                            <strong>Statut de
-                                validation:</strong> {candidature.validation === 1 ? 'Validée' : (candidature.validation === 2 ? 'Refusée' : (candidature.validation === 3 ? 'En cours d\'Examen' : 'En attente'))}
+                            <strong>Entrepôt associé:</strong> {candidature.warehouse}
+                        </div>
+                        <div>
+                            <strong>Statut de validation:</strong> {candidature.validation === 1 ? 'Validée' : (candidature.validation === 2 ? 'Refusée' : (candidature.validation === 3 ? 'En cours d\'Examen' : 'En attente'))}
                         </div>
                         {candidature.refus && (
                             <div>
@@ -69,7 +69,7 @@ export default function Show({ auth, candidature }) {
 
             {/* Modal pour refuser la candidature */}
             <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} candidatureId={candidature.id} />
-
         </AdminLayout>
     );
 }
+
