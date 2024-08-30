@@ -26,7 +26,7 @@ const ChatsPage = ({ users, pagination }) => {
       headTitle='Chats'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
-          {t('user.list')}
+          {t('chat.list')}
         </h2>
       }
     >

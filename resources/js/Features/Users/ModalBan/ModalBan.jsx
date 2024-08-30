@@ -7,7 +7,7 @@ import Modal from '@/Components/Modal';
 import SimpleDate from '@/Components/SimpleDate';
 import SimpleField from '@/Components/SimpleField';
 
-const BanUserForm = ({ userId, className = '' }) => {
+const ModalBan = ({ userId, className = '' }) => {
   const [confirmingUserBan, setConfirmingUserBan] = useState(false);
   const { data, setData, get, processing, reset, errors } = useForm({
     user_id: userId,
@@ -83,4 +83,4 @@ const BanUserForm = ({ userId, className = '' }) => {
   );
 };
 
-export default BanUserForm;
+export default ModalBan;

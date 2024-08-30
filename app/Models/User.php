@@ -21,7 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'deleted'
     ];
 
     /**
@@ -63,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function modelSetter()
     {
         $user = [
-            'id' => $this?->user ?? $this?->id,
+            'id' => $this?->id,
             'name' => $this?->name,
             'email' => $this?->email,
             'role' => $this?->role,

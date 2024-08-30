@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/react';
 import axios from 'axios';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
@@ -11,7 +11,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 import useColumns from './useColumns';
 
-const CustomersPage = ({ users, pagination }) => {
+const AdminsPage = ({ users, pagination }) => {
   const [userList, setUserList] = useState(users);
   const { data, setData } = useForm();
 
@@ -21,7 +21,7 @@ const CustomersPage = ({ users, pagination }) => {
     (e) => {
       e.preventDefault();
       axios
-        .post(route('users', PROFILE.CUSTOMERS), data)
+        .post(route('users', PROFILE.ADMIN), data)
         .then((res) => setUserList(res?.data?.users));
     },
     [setUserList, data]
@@ -29,10 +29,10 @@ const CustomersPage = ({ users, pagination }) => {
 
   return (
     <AuthenticatedLayout
-      headTitle='Customers'
+      headTitle='Admins'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
-          {t('customer.list')}
+          {t('admin.list')}
         </h2>
       }
     >
@@ -61,4 +61,4 @@ const CustomersPage = ({ users, pagination }) => {
   );
 };
 
-export default CustomersPage;
+export default AdminsPage;

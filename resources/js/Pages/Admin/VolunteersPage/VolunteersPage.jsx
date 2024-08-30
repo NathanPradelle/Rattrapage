@@ -11,7 +11,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 import useColumns from './useColumns';
 
-const CustomersPage = ({ users, pagination }) => {
+const VolunteersPage = ({ users, pagination }) => {
   const [userList, setUserList] = useState(users);
   const { data, setData } = useForm();
 
@@ -21,7 +21,7 @@ const CustomersPage = ({ users, pagination }) => {
     (e) => {
       e.preventDefault();
       axios
-        .post(route('users', PROFILE.CUSTOMERS), data)
+        .post(route('users', PROFILE.VOLUNTEER), data)
         .then((res) => setUserList(res?.data?.users));
     },
     [setUserList, data]
@@ -61,4 +61,4 @@ const CustomersPage = ({ users, pagination }) => {
   );
 };
 
-export default CustomersPage;
+export default VolunteersPage;

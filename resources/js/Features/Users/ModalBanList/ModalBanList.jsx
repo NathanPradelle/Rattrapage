@@ -6,7 +6,7 @@ import DangerButton from '@/Components/Buttons/DangerButton';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton';
 import Modal from '@/Components/Modal';
 
-const BanUserList = ({ userId }) => {
+const ModalBanList = ({ userId }) => {
   const [bans, setBans] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,4 +65,4 @@ const BanUserList = ({ userId }) => {
   );
 };
 
-export default BanUserList;
+export default ModalBanList;

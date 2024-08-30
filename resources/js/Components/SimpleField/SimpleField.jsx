@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import InputText from '@/Components/InputText';
@@ -17,11 +19,12 @@ const SimpleField = ({
   ...props
 }) => {
   return (
-    <div className={className}>
-      <InputLabel htmlFor={id} value={label} />
+    <div className={clsx('flex-col', className)}>
+      {label && <InputLabel htmlFor={id} value={label} />}
 
       <InputText
         id={id}
+        className='flex-1'
         type={type}
         setdata={setdata}
         onChange={onChange}
@@ -32,7 +35,7 @@ const SimpleField = ({
         {...props}
       />
 
-      <InputError message={errorMessage} />
+      {errorMessage && <InputError message={errorMessage} />}
     </div>
   );
 };

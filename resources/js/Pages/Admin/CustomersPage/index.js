@@ -1,3 +1,3 @@
-import UsersPage from './UsersPage';
+import CustomersPage from './CustomersPage';
 
-export default UsersPage;
+export default CustomersPage;

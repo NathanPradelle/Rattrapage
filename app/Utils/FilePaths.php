@@ -27,6 +27,8 @@ class FilePaths
 
     /* Admin */
     const CUSTOMERS = 'Admin/CustomersPage/CustomersPage';
+    const VOLUNTEERS = 'Admin/VolunteersPage/VolunteersPage';
+    const ADMINS = 'Admin/AdminsPage/AdminsPage';
     const USER = 'Admin/UserPage/UserPage';
 
     const ADMIN_CREATION = 'Admin/AdminCreationPage/AdminCreationPage';

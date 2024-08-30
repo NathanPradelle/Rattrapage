@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Utils\FilePaths;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -19,9 +20,29 @@ class UserController extends Controller
 
     public function customersPage()
     {
-        $usersList = $this->getAllCustomerP(0);
+        $usersList = $this->getAllCustomerP(0, new Request());
 
         return Inertia::render(FilePaths::CUSTOMERS, [
+            'users' => $usersList['users'],
+            'pagination' => $usersList['pagination'],
+        ]);
+    }
+
+    public function volunteersPage()
+    {
+        $usersList = $this->getAllCustomerP(1, new Request());
+
+        return Inertia::render(FilePaths::VOLUNTEERS, [
+            'users' => $usersList['users'],
+            'pagination' => $usersList['pagination'],
+        ]);
+    }
+
+    public function adminsPage()
+    {
+        $usersList = $this->getAllCustomerP(2, new Request());
+
+        return Inertia::render(FilePaths::ADMINS, [
             'users' => $usersList['users'],
             'pagination' => $usersList['pagination'],
         ]);
@@ -39,7 +60,7 @@ class UserController extends Controller
         $user = User::query()
             ->select(['id', 'name'])
             ->where('id', $id)
-            ->where('delete', false)
+            ->where('deleted', false)
             ->firstOrFail();
 
         return $user;
@@ -48,14 +69,22 @@ class UserController extends Controller
     /// <summary>
     /// Get all Users of a role.
     /// </summary>
-    public function getAllCustomerP(int $role)
+    public function getAllCustomerP(int $role, Request $request)
     {
         $users = User::query()
-            ->select(['id', 'name', 'email'])
-            ->where('role', 0)
-            ->where('delete', false)
-            ->distinct()
-            ->paginate(10);
+        ->select(['id', 'name', 'email'])
+        ->where('role', $role)
+        ->where('deleted', false);
+
+    if ($request->has('params')) {
+        $params = $request->input('params');
+        $users->where(function ($query) use ($params) {
+            $query->where('name', 'like', "%{$params}%")
+                  ->orWhere('email', 'like', "%{$params}%");
+        });
+    }
+
+    $users = $users->distinct()->paginate(10);
 
         $pagination = [
             'current_page' => $users->currentPage(),
@@ -91,7 +120,7 @@ class UserController extends Controller
         $users = User::query()
             ->select(['id', 'name'])
             ->whereNot('id', $authUserId)
-            ->where('delete', false)
+            ->where('deleted', false)
             ->distinct()
             ->paginate(10);
 
@@ -135,6 +164,7 @@ class UserController extends Controller
             'email' => 'RGPD',
             'password' => 'RGPD',
             'deleted' => true,
+            'role' => 162,
         ]);
 
         return response()->json(['success' => 'User removed successfully']);

@@ -3,10 +3,11 @@ import { t } from 'i18next';
 import { useMemo } from 'react';
 
 import SimpleButton from '@/Components/Buttons/SimpleButton';
-import BanUserForm from '@/Features/Users/ModalBan';
-import BanUserList from '@/Features/Users/ModalBanList';
+import { getCurrentUser } from '@/utils/user';
 
 const useColumns = () => {
+  const currentUser = getCurrentUser();
+
   const columns = useMemo(
     () => [
       {
@@ -33,25 +34,18 @@ const useColumns = () => {
       //   ),
       // },
       {
-        renderCell: (row) => (
-          <BanUserForm userId={row?.id} className='max-w-xl' />
-        ),
-      },
-      {
-        renderCell: (row) => <BanUserList userId={row?.id} />,
-      },
-      {
-        renderCell: (row) => (
-          <SimpleButton
-            className='text-red-600 hover:text-red-900'
-            onClick={() => axios.post(route('user.exclude', row?.id))}
-          >
-            RGPD
-          </SimpleButton>
-        ),
+        renderCell: (row) =>
+          currentUser?.id != row?.id && (
+            <SimpleButton
+              className='text-red-600 hover:text-red-900'
+              onClick={() => axios.post(route('user.exclude', row?.id))}
+            >
+              RGPD
+            </SimpleButton>
+          ),
       },
     ],
-    []
+    [currentUser]
   );
 
   return columns;

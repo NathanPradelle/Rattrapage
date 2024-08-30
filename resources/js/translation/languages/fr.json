@@ -126,7 +126,12 @@
       "services": "Services",
       "tags": "Liste des Tags",
       "demandes": "Demandes",
-      "users": "Liste d'utilisateur",
+      "users": {
+        "title": "Utilisateurs",
+        "customer": "Particuliers",
+        "volunteer": "Bénévoles",
+        "admin": "Administrateurs"
+      },
       "managers": "Liste des Gérants"
     }
   },
@@ -140,11 +145,15 @@
     }
   },
   "customer": {
-    "list": "Particuliers",
+    "list": "Liste des Particuliers",
     "services": "Services de l'utilisateur"
   },
   "volunteer": {
-    "list": "Particuliers",
+    "list": "Liste des Bénévoles",
+    "services": "Services du volontaire"
+  },
+  "admin": {
+    "list": "Liste des Administrateurs",
     "services": "Services du volontaire"
   },
   "tours": {
