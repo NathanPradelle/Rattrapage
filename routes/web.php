@@ -3,6 +3,7 @@
 use App\Http\Controllers\BenevoleController;
 use App\Http\Controllers\HarvestAssignmentController;
 use App\Http\Controllers\HarvestRequestController;
+use App\Http\Controllers\HarvestTourController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMovementController;
@@ -52,6 +53,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/harvest-requests/{id}/assign', [HarvestAssignmentController::class, 'storeAssignment'])->name('harvest-requests.assign.store');
         Route::get('/harvest-requests/{id}/complete', [HarvestRequestController::class, 'complete'])->name('harvest-requests.complete');
         Route::post('/harvest-requests/{id}/complete', [HarvestRequestController::class, 'storeComplete'])->name('harvest-requests.complete.store');
+        Route::get('/harvest-tour/create', [HarvestTourController::class, 'create'])->name('harvest.create');
+        Route::get('api/harvest-requests/filter', [HarvestRequestController::class, 'filter'])->name('api.harvest-requests.filter');
+        Route::get('api/volunteers/filter', [BenevoleController::class, 'filter'])->name('api.volunteers.filter');
+        Route::post('/harvest-tour/', [HarvestTourController::class, 'store'])->name('harvest-tours.store');
+
 
     });
 

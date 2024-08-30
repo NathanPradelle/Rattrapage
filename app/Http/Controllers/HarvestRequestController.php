@@ -185,4 +185,19 @@ class HarvestRequestController extends Controller
 
         return redirect()->route('harvest-requests.index')->with('success', 'Harvest request refused successfully.');
     }
+
+    public function filter(Request $request)
+    {
+        $warehouseId = $request->input('warehouse');
+        $date = $request->input('date');
+        $period = $request->input('period');
+
+        $harvestRequests = HarvestRequest::where('warehouse_id', $warehouseId)
+            ->where('preferred_date', $date)
+            ->where('period', $period)
+            ->where('status', 'pending') // Filtrer uniquement les demandes non encore assignées
+            ->get();
+
+        return response()->json($harvestRequests);
+    }
 }

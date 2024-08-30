@@ -55,4 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(HarvestRequest::class);
     }
+
+    public function harvestTours()
+    {
+        return HarvestTour::where('volunteer_driver_id', $this->id)
+            ->orWhereJsonContains('volunteer_assistants_ids', $this->id)
+            ->get();
+    }
 }
