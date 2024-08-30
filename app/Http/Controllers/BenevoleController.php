@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Benevole;
+use App\Models\HarvestTour;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -275,6 +278,52 @@ class BenevoleController extends Controller
         $user->save();
 
         return redirect()->route('admin')->with('success', 'La candidature a été approuvée et le rôle du candidat a été mis à jour.');
+    }
+
+    // VolunteerController
+    public function filter(Request $request)
+    {
+        $warehouseId = $request->warehouse;
+        $date = $request->date;
+        $period = $request->period;
+
+        // Récupérer toutes les tournées de récolte pour la date et la période spécifiées
+        $toursOnSameDateAndPeriod = HarvestTour::where('date', $date)
+            ->where('period', $period)
+            ->get();
+
+        // Récupérer tous les routiers disponibles dans l'entrepôt sélectionné
+        $availableDrivers = User::whereHas('benevole', function ($query) use ($warehouseId) {
+            $query->where('warehouse_id', $warehouseId)
+                ->where('service_id', 1); // Filtrer les routiers
+        })
+            ->get()
+            ->filter(function ($user) use ($toursOnSameDateAndPeriod) {
+                // Vérifier les tournées du conducteur
+                return !$toursOnSameDateAndPeriod->contains('volunteer_driver_id', $user->id);
+            });
+
+        // Récupérer tous les assistants bénévoles disponibles dans l'entrepôt sélectionné
+        $availableAssistants = User::whereHas('benevole', function ($query) use ($warehouseId) {
+            $query->where('warehouse_id', $warehouseId)
+                ->where('service_id', '!=', 1); // Exclure les routiers pour cette liste
+        })
+            ->get()
+            ->filter(function ($user) use ($toursOnSameDateAndPeriod) {
+                // Vérifier si le bénévole est déjà assigné comme routier ou assistant
+                $isAssignedAsDriver = $toursOnSameDateAndPeriod->contains('volunteer_driver_id', $user->id);
+
+                $isAssignedAsAssistant = $toursOnSameDateAndPeriod->contains(function ($tour) use ($user) {
+                    return in_array($user->id, json_decode($tour->volunteer_assistants_ids));
+                });
+
+                return !$isAssignedAsDriver && !$isAssignedAsAssistant;
+            });
+
+        return response()->json([
+            'drivers' => $availableDrivers->values(),
+            'assistants' => $availableAssistants->values(),
+        ]);
     }
 
 }

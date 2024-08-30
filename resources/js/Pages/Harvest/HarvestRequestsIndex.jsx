@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import AdminLayout from '@/Layouts/AdminLayout.jsx';
+import NavLink from "@/Components/NavLink.jsx";
+import {Link} from "@inertiajs/react";
 
 export default function HarvestRequestsIndex({ requests, warehouses, auth, filters }) {
     // Utiliser des valeurs par défaut si `filters` ou ses propriétés sont undefined
@@ -27,7 +29,9 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
         <AdminLayout user={auth.user}>
             <div className="p-6 bg-gray-100">
                 <h1 className="text-2xl font-bold mb-6">Harvest Requests</h1>
-
+                <Link href={route('harvest.create')} className="text-blue-600 hover:text-blue-800">
+                    Création de tournée de récolte
+                </Link>
                 <form onSubmit={handleSearch} className="mb-4 flex space-x-4">
                     <input
                         type="text"

@@ -74,7 +74,7 @@ const Navbar = () => {
           href={route('contact.show')}
           className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
         >
-          Nous Contactez !
+          Nous Contacter !
         </Link>
 
         {user?.role === 2 && (
@@ -88,19 +88,6 @@ const Navbar = () => {
             <DropMenu title={t('menu.admin.users.title')} options={userList} />
           </>
         )}
-
-        <Link
-          // href={route('about')}
-          className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
-        >
-          Stock
-        </Link>
-        <Link
-          // href={route('contact')}
-          className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
-        >
-          Contact
-        </Link>
       </div>
 
       {/* Conteneur pour le dropdown aligné à droite */}
