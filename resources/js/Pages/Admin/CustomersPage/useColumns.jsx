@@ -3,8 +3,8 @@ import { t } from 'i18next';
 import { useMemo } from 'react';
 
 import SimpleButton from '@/Components/Buttons/SimpleButton';
-import BanUserForm from '@/Features/Users/ModalBan';
-import BanUserList from '@/Features/Users/ModalBanList';
+import ModalBan from '@/Features/Users/ModalBan';
+import ModalBanList from '@/Features/Users/ModalBanList';
 
 const useColumns = () => {
   const columns = useMemo(
@@ -33,12 +33,10 @@ const useColumns = () => {
       //   ),
       // },
       {
-        renderCell: (row) => (
-          <BanUserForm userId={row?.id} className='max-w-xl' />
-        ),
+        renderCell: (row) => <ModalBan user={row} className='max-w-xl' />,
       },
       {
-        renderCell: (row) => <BanUserList userId={row?.id} />,
+        renderCell: (row) => <ModalBanList userId={row?.id} />,
       },
       {
         renderCell: (row) => (

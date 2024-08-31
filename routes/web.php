@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BanController;
 use App\Http\Controllers\BenevoleController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HarvestAssignmentController;
@@ -56,6 +57,9 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::post('/user/exclude/{user}', [UserController::class, 'RGPDUser'])->name('user.exclude');
+        Route::post('/users/ban', [BanController::class, 'ban'])->name('user.ban');
+        Route::get('/users/ban/list/{user}', [BanController::class, 'banlist'])->name('user.ban.list');
+
         Route::post('/users/{role}', [UserController::class, 'getAllCustomerP'])->name('users');
         Route::get('/customers', [UserController::class, 'customersPage'])->name('page.customers');
         Route::get('/volunteers', [UserController::class, 'volunteersPage'])->name('page.volunteers');

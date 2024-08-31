@@ -35,5 +35,5 @@ export const toSimpleFormat = (date) => {
   });
   const day = date?.getDate();
 
-  return date && `${year}-${month}-${day}`;
+  return date && `${year}-${month}-${day}T00:00`;
 };

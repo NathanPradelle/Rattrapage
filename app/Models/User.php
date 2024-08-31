@@ -57,6 +57,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(HarvestRequest::class);
     }
 
+    public function banLink(){
+        return $this->hasMany(Ban::class , 'user');
+    }
+
     /// <summary>
     /// Fonction to set user to return
     /// </summary>
@@ -69,6 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => $this?->email,
             'role' => $this?->role,
             'abonnement' => $this?->abonnement,
+            'ban' => $this?->banLink,
         ];
 
         return array_filter($user, function ($value) {

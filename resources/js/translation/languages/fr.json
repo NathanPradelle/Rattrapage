@@ -6,6 +6,7 @@
     "cancel": "Annuler",
     "client": "Client",
     "city": "Ville",
+    "close": "Fermer",
     "confirm": "Confirmer",
     "connection": "Se Connecter",
     "country": "Pays",
@@ -139,8 +140,9 @@
     "label": "Utilisateur",
     "profiles": "Profiles de l'utilisateur",
     "search": "Recherche par nom ou par e-mail...",
-    "services": "Services de l'utilisateur",
     "ban": {
+      "label": "Bannir",
+      "list": "Liste des bannissement",
       "never": "Cette utilisateur n'a jamais été banni"
     }
   },
