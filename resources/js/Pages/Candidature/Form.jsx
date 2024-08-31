@@ -22,7 +22,7 @@ const CandidatureForm = ({ auth, services, warehouses }) => {
   };
 
   useEffect(() => {
-    console.errors(errors); // Affiche les erreurs dans la console pour débogage
+    console.log(errors); // Affiche les erreurs dans la console pour débogage
   }, [errors]);
 
   return (

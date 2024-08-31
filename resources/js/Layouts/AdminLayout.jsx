@@ -14,7 +14,7 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('admin')} active={route().current('admin')}>
                                     Dashboard
                                 </NavLink>
@@ -33,7 +33,7 @@ export default function Authenticated({ user, header, children }) {
                             </div>
                         </div>
 
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
+                        <div className="sm:flex sm:items-center sm:ms-6">
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
