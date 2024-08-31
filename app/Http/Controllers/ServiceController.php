@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Utils\FilePaths;
+use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class ServiceController extends Controller
     public function get(int $id)
     {
         $user = Service::query()
-            ->select(['id', 'name', 'date_start', 'date_end'])
+            ->select(['id', 'name', 'description', 'date_start', 'date_end'])
             ->where('id', $id)
             ->firstOrFail();
 
@@ -59,7 +60,7 @@ class ServiceController extends Controller
     public function getAllP(Request $request)
     {
         $services = Service::query()
-        ->select(['id', 'name', 'date_start', 'date_end']);
+        ->select(['id', 'name', 'description', 'date_start', 'date_end']);
 
         if ($request->has('params')) {
         $params = $request->input('params');
@@ -111,12 +112,11 @@ class ServiceController extends Controller
             'dateEnd' => ['required', 'date', 'after:dateStart'],
         ]);
 
-        $tour = (new Service())->modelGetter((object) $validatedData);
+        $service = (new Service())->modelGetter((object) $validatedData);
 
-        $tour->save();
+        $service->save();
 
-        return redirect()->route("page.services")
-        ->with('success', "Service created successfully");
+        return response()->json(['success' => "Service created successfully"]);
     }
 
     /// <summary>
@@ -125,18 +125,18 @@ class ServiceController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
+            'id'=> ['required', 'integer'],
             'name' => ['required', 'max:255'],
             'description' => ['required'],
-            'dateStart' => ['required', 'date', 'after_or_equal:today'],
+            'dateStart' => ['required', 'date'],
             'dateEnd' => ['required', 'date', 'after:dateStart'],
         ]);
+    
+        $service = Service::findOrFail($validatedData['id']);
+        $newService = (new Service())->modelGetter((object) $validatedData);
+        $service->update($newService->getAttributes());
 
-        $tour = (new Service())->modelGetter((object) $validatedData);
-
-        $tour->update();
-
-        return redirect()->route("page.services")
-        ->with('success', "Service created successfully");
+        return redirect()->back()->with('success', "Service updated successfully");
     }
 
     #endregion

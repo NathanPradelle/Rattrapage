@@ -10,12 +10,13 @@ import useLogic from './useLogic';
 const ServiceCreationPage = () => {
   const { handleSubmit, setData, data, errors } = useLogic();
   const today = new Date();
+
   return (
     <AuthenticatedLayout
-      headTitle='Tour'
+      headTitle='Service'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
-          {t('tours.create')}
+          {t('service.create')}
         </h2>
       }
     >

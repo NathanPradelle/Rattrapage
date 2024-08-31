@@ -41,7 +41,7 @@ const ServicesPage = ({ services, pagination }) => {
     >
       {user?.role === 2 && (
         <div className='flex justify-end mb-1'>
-          <SimpleButton to={route('page.tour.creation')}>
+          <SimpleButton to={route('page.service.creation')}>
             {t('service.create')}
           </SimpleButton>
         </div>

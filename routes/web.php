@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/service/creation', [ServiceController::class, 'creationPage'])->name('page.service.creation');
         Route::post('/service/create', [ServiceController::class, 'create'])->name('service.create');
+        Route::post('/service/update', [ServiceController::class, 'update'])->name('service.update');
 
         Route::get('/harvest-requests', [HarvestRequestController::class, 'index'])->name('harvest-requests.index');
         Route::post('/harvest-requests/{id}/refuse', [HarvestRequestController::class, 'refuse'])->name('harvest-requests.refuse');

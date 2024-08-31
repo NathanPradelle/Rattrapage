@@ -11,14 +11,14 @@ const useColumns = () => {
       const endDate = service?.dateEnd && new Date(service?.dateEnd);
 
       if (today < startDate) {
-        return 'A Venir';
+        return t('service.toCome');
       }
 
       if (today < endDate) {
-        return 'En cours';
+        return t('service.inProgress');
       }
 
-      return 'A Planifier';
+      return t('service.done');
     },
     [today]
   );

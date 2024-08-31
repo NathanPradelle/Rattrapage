@@ -49,7 +49,7 @@ class Service extends Model
             'date_end' => isset($vm?->dateEnd) ? $vm->dateEnd : null,
         ];
 
-        $service = new Tour(array_filter($serviceData, function ($value) {
+        $service = new Service(array_filter($serviceData, function ($value) {
             return !is_null($value);
         }));
 

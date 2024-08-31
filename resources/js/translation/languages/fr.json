@@ -169,7 +169,10 @@
     "name": "Nom du service",
     "newService": "Créer un Service",
     "noServices": "Aucun services existant",
-    "plans": "Plannfication"
+    "plans": "Plannfication",
+    "toCome": "A Venir",
+    "inProgress": "En Cours",
+    "done": "Terminé"
   },
   "myService": {
     "title": "Mes Services",

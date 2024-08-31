@@ -1,31 +1,27 @@
-import { useForm } from '@inertiajs/react';
-import axios from 'axios';
 import { t } from 'i18next';
-import React, { useCallback, useState } from 'react';
 
+import SimpleButton from '@/Components/Buttons/SimpleButton';
+import SimpleDate from '@/Components/SimpleDate';
 import SimpleField from '@/Components/SimpleField';
 import ChatDisplay from '@/Features/ChatDisplay';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { getCurrentUser } from '@/utils/user';
+
+import useLogic from './useLogic';
 
 const ServicePage = ({ service }) => {
-  const { data, setData } = useForm({ service: service?.id });
-  const [messages, setMessages] = useState([]);
-
-  const getMessage = useCallback(() => {
-    axios.get(route('service.messages', service?.id)).then((res) => {
-      setMessages(res?.data);
-    });
-  }, [service]);
-
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      axios.post(route('service.messages.create'), data);
-    },
-    [data]
-  );
-
+  const currentUser = getCurrentUser();
+  const today = new Date();
+  const {
+    submitMessage,
+    submitChanges,
+    getMessage,
+    setData,
+    onReset,
+    data,
+    messages,
+    disabled,
+  } = useLogic({ service });
   return (
     <AuthenticatedLayout
       head='Welcome'
@@ -35,25 +31,52 @@ const ServicePage = ({ service }) => {
         </h2>
       }
     >
+      {currentUser?.role === 2 && (
+        <div className='flex justify-center gap-2 mb-1'>
+          <SimpleButton onClick={onReset}>
+            {disabled ? t('common.modify') : t('common.back')}
+          </SimpleButton>
+          <SimpleButton
+            type='submit'
+            onClick={submitChanges}
+            disabled={disabled}
+          >
+            {t('common.save')}
+          </SimpleButton>
+        </div>
+      )}
       <div className='bg-black p-1 flex-col gap-4 shadow-sm sm:rounded-lg'>
         <div>
           <h3>{t('common.description')}</h3>
-          {service?.description || 'Aucune description'}
+          {disabled ? (
+            service?.description || 'Aucune description'
+          ) : (
+            <SimpleField
+              id='description'
+              className='flex-col'
+              setdata={setData}
+              value={data.description}
+            />
+          )}
         </div>
         {service?.dateStart && service?.dateEnd && (
           <div className='flex-col gap-1'>
             <h3>{t('service.plans')}</h3>
-            <SimpleField
+            <SimpleDate
               id='dateStart'
-              value={service?.dateStart}
+              setdata={setData}
+              value={data?.dateStart}
               label={t('common.dateStart')}
-              disabled
+              disabled={disabled}
+              minDate={today}
             />
-            <SimpleField
+            <SimpleDate
               id='dateEnd'
-              value={service?.dateEnd}
+              setdata={setData}
+              value={data?.dateEnd}
               label={t('common.dateEnd')}
-              disabled
+              disabled={disabled}
+              minDate={data?.dateStart}
             />
           </div>
         )}
@@ -64,7 +87,7 @@ const ServicePage = ({ service }) => {
             id='message'
             setData={setData}
             getMessage={getMessage}
-            handleSubmit={handleSubmit}
+            handleSubmit={submitMessage}
             data={data}
             messages={messages}
           />

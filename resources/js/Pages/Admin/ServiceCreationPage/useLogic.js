@@ -8,7 +8,7 @@ const useLogic = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      Inertia.post(route('tour.create'), data);
+      Inertia.post(route('service.create'), data);
     },
     [data]
   );
