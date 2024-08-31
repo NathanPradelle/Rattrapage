@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use App\Utils\FilePaths;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -116,13 +116,13 @@ class ServiceController extends Controller
 
         $service->save();
 
-        return response()->json(['success' => "Service created successfully"]);
+        return redirect()->back()->with('success', "Service created successfully");
     }
 
     /// <summary>
     /// Update Service.
     /// </summary>
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             'id'=> ['required', 'integer'],
