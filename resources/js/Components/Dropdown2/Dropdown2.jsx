@@ -2,13 +2,11 @@ import './Dropdown.less';
 
 import { Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { createContext, Fragment, useContext, useState } from 'react';
+import { createContext, Fragment, useContext } from 'react';
 
 const DropDownContext = createContext();
 
-const Dropdown2 = ({ className, children }) => {
-  const [open, setOpen] = useState(false);
-
+const Dropdown2 = ({ className, setOpen, open, children }) => {
   const toggleOpen = () => {
     setOpen(!open);
   };

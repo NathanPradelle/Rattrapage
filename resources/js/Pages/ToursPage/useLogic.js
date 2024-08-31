@@ -67,6 +67,7 @@ const useLogic = (tours) => {
     newDate.setDate(newDate.getDate() - 7);
 
     setData({
+      ...data,
       year: newDate.getFullYear(),
       month: newDate.getMonth() + 1,
       day: newDate.getDate(),
@@ -78,6 +79,7 @@ const useLogic = (tours) => {
     newDate.setDate(newDate.getDate() + 7);
 
     setData({
+      ...data,
       year: newDate.getFullYear(),
       month: newDate.getMonth() + 1,
       day: newDate.getDate(),

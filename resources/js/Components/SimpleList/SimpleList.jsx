@@ -19,6 +19,8 @@ const SimpleList = ({
   styles,
   autocomplete,
 }) => {
+  const [open, setOpen] = useState(false);
+
   const [selectedOption, setSelectedOption] = useState();
   const [input, setInput] = useState(selectedOption?.label || '');
 
@@ -34,12 +36,19 @@ const SimpleList = ({
     setSelectedOption(options?.find((option) => option?.value === value));
   }, [value, options]);
 
+  useEffect(() => {
+    if (!open) {
+      setInput(value);
+    }
+  }, [open]);
+
   const onClickChange = useCallback(
     (selected) => {
       setSelectedOption(selected);
       setInput(selected.value);
       setdata && setdata(id, selected.value);
       onChange && onChange(selected);
+      setOpen(false);
     },
     [setdata]
   );
@@ -47,6 +56,8 @@ const SimpleList = ({
   return (
     <DropdownButton
       buttonClass={className}
+      setOpen={setOpen}
+      open={open}
       trigger={
         <>
           <InputLabel htmlFor={id} value={label} className={styles?.label} />

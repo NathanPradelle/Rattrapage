@@ -16,6 +16,7 @@ const SimpleListMultiple = ({
   disabled,
   styles,
 }) => {
+  const [open, setOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
@@ -52,6 +53,8 @@ const SimpleListMultiple = ({
     <>
       <DropdownButton
         disabled={disabled}
+        setOpen={setOpen}
+        open={open}
         trigger={
           <>
             <InputLabel htmlFor={id} value={label} className={styles?.label} />

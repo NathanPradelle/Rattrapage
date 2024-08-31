@@ -4,13 +4,15 @@ import Dropdown2 from '@/Components/Dropdown2';
 
 const DropdownButton = ({
   trigger,
+  setOpen,
+  open,
   buttonClass,
   content,
   contentClass,
   disabled,
 }) => {
   return (
-    <Dropdown2 className={buttonClass}>
+    <Dropdown2 className={buttonClass} setOpen={setOpen} open={open}>
       <Dropdown2.Trigger className={buttonClass} disabled={disabled}>
         {trigger}
       </Dropdown2.Trigger>
