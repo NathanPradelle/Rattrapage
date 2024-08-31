@@ -7,6 +7,8 @@ use App\Http\Controllers\HarvestAssignmentController;
 use App\Http\Controllers\HarvestRequestController;
 use App\Http\Controllers\HarvestTourController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceMessageController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\StripeController;
@@ -38,6 +40,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/messages/{user}', [ChatController::class, 'getMessages'])->name('chat.messages');
     Route::post('/chat/message', [ChatController::class, 'sendMessage'])->name('chat.messages.create');
 
+    Route::get('/services', [ServiceController::class, 'listPage'])->name('page.services');
+    Route::get('/service/{service}', [ServiceController::class, 'detailsPage'])->name('page.service');
+    Route::get('/service/messages/{service}', [ServiceMessageController::class, 'getMessages'])->name('service.messages');
+    Route::post('/service/message', [ServiceMessageController::class, 'sendMessage'])->name('service.messages.create');
+
     Route::middleware([AdminMiddleware::class])->prefix('admin')->group(function () {
         Route::get('/', [UserController::class, 'admin'])->name('admin');
 
@@ -68,6 +75,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/tours', [TourController::class, 'calendarPage'])->name('page.tours');
         Route::get('/tour/creation', [TourController::class, 'creationPage'])->name('page.tour.creation');
         Route::post('/tour/create', [TourController::class, 'create'])->name('tour.create');
+
+        Route::get('/service/creation', [ServiceController::class, 'creationPage'])->name('page.service.creation');
+        Route::post('/service/create', [ServiceController::class, 'create'])->name('service.create');
 
         Route::get('/harvest-requests', [HarvestRequestController::class, 'index'])->name('harvest-requests.index');
         Route::post('/harvest-requests/{id}/refuse', [HarvestRequestController::class, 'refuse'])->name('harvest-requests.refuse');

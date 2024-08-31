@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     #region Pages
     
     public function admin(): Response

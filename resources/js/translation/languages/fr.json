@@ -6,6 +6,7 @@
     "cancel": "Annuler",
     "client": "Client",
     "city": "Ville",
+    "chat": "Discussion",
     "close": "Fermer",
     "confirm": "Confirmer",
     "connection": "Se Connecter",
@@ -147,16 +148,13 @@
     }
   },
   "customer": {
-    "list": "Liste des Particuliers",
-    "services": "Services de l'utilisateur"
+    "list": "Liste des Particuliers"
   },
   "volunteer": {
-    "list": "Liste des Bénévoles",
-    "services": "Services du volontaire"
+    "list": "Liste des Bénévoles"
   },
   "admin": {
-    "list": "Liste des Administrateurs",
-    "services": "Services du volontaire"
+    "list": "Liste des Administrateurs"
   },
   "tours": {
     "label": "Tournées",
@@ -167,12 +165,11 @@
     "list": "Liste des Services",
     "category": "Catégorie",
     "create": "Créer un service",
-    "datePriceChange": "Date de changement du prix",
-    "newService": "Nouveau Service",
+    "details": "Details du Service",
+    "name": "Nom du service",
+    "newService": "Créer un Service",
     "noServices": "Aucun services existant",
-    "regularPrice": "Prix Régulier",
-    "saveService": "Enregistrer nouveau service",
-    "type": "Type de service"
+    "plans": "Plannfication"
   },
   "myService": {
     "title": "Mes Services",

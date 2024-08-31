@@ -25,20 +25,16 @@ class FilePaths
     const CHATS = "ChatsPage/ChatsPage";
     const CHAT = "ChatPage/ChatPage";
 
+    const SERVICES = "ServicesPage/ServicesPage";
+    const SERVICE = "ServicePage/ServicePage";
+    
     /* Admin */
     const CUSTOMERS = 'Admin/CustomersPage/CustomersPage';
     const VOLUNTEERS = 'Admin/VolunteersPage/VolunteersPage';
     const ADMINS = 'Admin/AdminsPage/AdminsPage';
     const USER = 'Admin/UserPage/UserPage';
 
-    const ADMIN_CREATION = 'Admin/AdminCreationPage/AdminCreationPage';
-    const ADMINS_PAGE = 'Admin/AdminsPage/AdminsPage';
-    const TAG_CREATION = 'Admin/TagCreationPage/TagCreationPage';
-    const TAG_EDITION = 'Admin/TagEditionPage/TagEditionPage';
-    const TAGS = 'Admin/TagsPage/TagsPage';
-
-    const SERVICES = "Admin/ServicesPage/ServicesPage";
-    const SERVICE_CREATE = "Admin/ServiceCreationPage/ServiceCreationPage";
+    const SERVICE_CREATION = "Admin/ServiceCreationPage/ServiceCreationPage";
 
     const TOURS = "ToursPage/ToursPage";
     const TOUR = "TourPage/TourPage";

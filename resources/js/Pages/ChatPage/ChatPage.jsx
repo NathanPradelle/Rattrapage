@@ -2,17 +2,13 @@ import './Chat.less';
 
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
-import clsx from 'clsx';
 import { t } from 'i18next';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import SimpleButton from '@/Components/Buttons/SimpleButton';
-import SimpleField from '@/Components/SimpleField';
+import ChatDisplay from '@/Features/ChatDisplay';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { getCurrentUser } from '@/utils/user';
 
 const ChatPage = ({ interlocutor }) => {
-  const currentUser = getCurrentUser();
   const { data, setData } = useForm();
   const [messages, setMessages] = useState([]);
 
@@ -20,7 +16,7 @@ const ChatPage = ({ interlocutor }) => {
     axios.get(route('chat.messages', interlocutor)).then((res) => {
       setMessages(res?.data);
     });
-  }, [interlocutor]); // Ajout de `interlocutor` dans les dépendances
+  }, [interlocutor]);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -32,15 +28,6 @@ const ChatPage = ({ interlocutor }) => {
     [data, interlocutor]
   );
 
-  useEffect(() => {
-    getMessage();
-    const messageInterval = setInterval(getMessage, 5000);
-
-    return () => {
-      clearInterval(messageInterval);
-    };
-  }, [getMessage]);
-
   return (
     <AuthenticatedLayout
       headTitle='Chat'
@@ -51,36 +38,14 @@ const ChatPage = ({ interlocutor }) => {
       }
       className='chat'
     >
-      <div className='messages-list'>
-        {messages?.map((message, index) => {
-          const isCurrentUserMessage =
-            currentUser?.id === message?.userFirst?.id;
-          const speaker = isCurrentUserMessage
-            ? message?.userFirst
-            : message?.userSecond;
-          return (
-            <div
-              className={clsx(
-                'p-1 w-fit rounded-lg bg-grey',
-                isCurrentUserMessage && 'my-message'
-              )}
-              key={index}
-            >
-              <strong>{speaker?.name}:</strong> {message.message}
-            </div>
-          );
-        })}
-      </div>
-      <div className='flex'>
-        <SimpleField
-          id='message'
-          setdata={setData}
-          value={data?.message}
-          placeholder='Type your message'
-          className='message-input'
-        />
-        <SimpleButton onClick={handleSubmit}>{t('common.send')}</SimpleButton>
-      </div>
+      <ChatDisplay
+        id='message'
+        setData={setData}
+        getMessage={getMessage}
+        handleSubmit={handleSubmit}
+        data={data}
+        messages={messages}
+      />
     </AuthenticatedLayout>
   );
 };

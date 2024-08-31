@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import clsx from 'clsx';
 
-import Navbar from '@/Components/Navbar';
+import NavBar from '@/Components/NavBar';
 
 import ApiLayout from './ApiLayout';
 
@@ -11,7 +11,7 @@ const AuthenticatedLayout = ({ headTitle, header, className, children }) => {
     <div className='bg-gray-50 text-black/50 dark:bg-gray-900/80 dark:text-white/100 h-full flex flex-col'>
       <Head title={headTitle} />
       <nav className='bg-white border-b border-gray-100'>
-        <Navbar />
+        <NavBar />
       </nav>
 
       {header && (

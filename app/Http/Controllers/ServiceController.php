@@ -3,63 +3,141 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Utils\FilePaths;
+use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    #region Pages
+    
+    public function listPage(): Response
     {
-        //
+        $serviceList = $this->getAllP(new Request());
+
+        return Inertia::render(FilePaths::SERVICES, [
+            'services' => $serviceList['services'],
+            'pagination' => $serviceList['pagination'],
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function creationPage(): Response
     {
-        //
+        return Inertia::render(FilePaths::SERVICE_CREATION);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function detailsPage(int $id): Response
     {
-        //
+        $service = $this->get($id);
+
+        return Inertia::render(FilePaths::SERVICE, [
+            'service' => $service->modelSetter(),
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Service $service)
+    #endregion
+
+    #region Get
+
+    /// <summary>
+    /// Get a Service.
+    /// </summary>
+    public function get(int $id)
     {
-        //
+        $user = Service::query()
+            ->select(['id', 'name', 'date_start', 'date_end'])
+            ->where('id', $id)
+            ->firstOrFail();
+
+        return $user;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Service $service)
+    /// <summary>
+    /// Get all Services.
+    /// </summary>
+    public function getAllP(Request $request)
     {
-        //
+        $services = Service::query()
+        ->select(['id', 'name', 'date_start', 'date_end']);
+
+        if ($request->has('params')) {
+        $params = $request->input('params');
+        $services->where(function ($query) use ($params) {
+            $query->where('name', 'like', "%{$params}%");
+        });
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Service $service)
-    {
-        //
+        $services = $services->distinct()->paginate(10);
+
+        $pagination = [
+            'current_page' => $services->currentPage(),
+            'first_page_url' => $services->url(1),
+            'from' => $services->firstItem(),
+            'last_page' => $services->lastPage(),
+            'last_page_url' => $services->url($services->lastPage()),
+            'links' => $services->linkCollection(),
+            'next_page_url' => $services->nextPageUrl(),
+            'path' => $services->path(),
+            'per_page' => $services->perPage(),
+            'prev_page_url' => $services->previousPageUrl(),
+            'to' => $services->lastItem(),
+            'total' => $services->total(),
+        ];
+
+        $formattedServices = $services->map(function ($service) {
+            return $service->modelSetter();
+        });
+
+        return [
+            'services' => $formattedServices,
+            'pagination' => $pagination
+        ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Service $service)
+    #endregion
+
+    #region Post
+
+    /// <summary>
+    /// create new Service.
+    /// </summary>
+    public function create(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'dateStart' => ['required', 'date', 'after_or_equal:today'],
+            'dateEnd' => ['required', 'date', 'after:dateStart'],
+        ]);
+
+        $tour = (new Service())->modelGetter((object) $validatedData);
+
+        $tour->save();
+
+        return redirect()->route("page.services")
+        ->with('success', "Service created successfully");
     }
+
+    /// <summary>
+    /// Update Service.
+    /// </summary>
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:255'],
+            'description' => ['required'],
+            'dateStart' => ['required', 'date', 'after_or_equal:today'],
+            'dateEnd' => ['required', 'date', 'after:dateStart'],
+        ]);
+
+        $tour = (new Service())->modelGetter((object) $validatedData);
+
+        $tour->update();
+
+        return redirect()->route("page.services")
+        ->with('success', "Service created successfully");
+    }
+
+    #endregion
 }

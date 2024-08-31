@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('service_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->dateTime('date_start');
-            $table->dateTime('date_end');
+            $table->foreignId('service')
+            ->constrained();
+            $table->foreignId('user')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->text('content');
             $table->timestamps();
+            $table->index(['service', 'user']);
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('chat_messages');
     }
 };

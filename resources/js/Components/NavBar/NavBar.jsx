@@ -79,13 +79,19 @@ const Navbar = () => {
 
         {user?.role === 2 && (
           <>
+            <DropMenu title={t('menu.admin.users.title')} options={userList} />
             <Link
               href={route('page.tours')}
               className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
             >
               Tournées
             </Link>
-            <DropMenu title={t('menu.admin.users.title')} options={userList} />
+            <Link
+              href={route('page.services')}
+              className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
+            >
+              Services
+            </Link>
           </>
         )}
       </div>
