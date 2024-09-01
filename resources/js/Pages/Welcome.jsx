@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 
-import Navbar from '@/Components/Navbar/NavBar.jsx';
+import Navbar from '@/Components/NavBar/NavBar.jsx';
 
 const Welcome = ({ auth }) => {
   const handleImageError = () => {
