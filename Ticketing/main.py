@@ -8,7 +8,7 @@ class TicketApp:
         self.root.title("Ticket Management System")
         self.root.geometry("800x600")  
 
-        self.base_url = "http://localhost:8000/api"
+        self.base_url = "http://51.75.162.62/api"
         self.token = None
 
         self.login_frame = tk.Frame(root, padx=20, pady=20)
