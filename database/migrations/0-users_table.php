@@ -43,7 +43,7 @@ return new class extends Migration
                 'email_verified_at' => '2024-08-25 00:00:00',
                 'password' => Hash::make('password'),
                 'role' => 2,
-                'abonnement' => '',
+                'abonnement' => null,  // Remplacer '' par null
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -53,11 +53,12 @@ return new class extends Migration
                 'email_verified_at' => '2024-08-25 00:00:00',
                 'password' => Hash::make('password'),
                 'role' => 1,
-                'abonnement' => '',
+                'abonnement' => null,  // Remplacer '' par null
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ]);
+
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
