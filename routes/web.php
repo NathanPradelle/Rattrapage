@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/messages/{user}', [ChatController::class, 'getMessages'])->name('chat.messages');
     Route::post('/chat/message', [ChatController::class, 'sendMessage'])->name('chat.messages.create');
 
+    Route::post('/services/list', [ServiceController::class, 'getAllP'])->name('services');
     Route::get('/services', [ServiceController::class, 'listPage'])->name('page.services');
     Route::get('/service/{service}', [ServiceController::class, 'detailsPage'])->name('page.service');
     Route::get('/service/messages/{service}', [ServiceMessageController::class, 'getMessages'])->name('service.messages');

@@ -3,7 +3,7 @@ import { t } from 'i18next';
 import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleDate from '@/Components/SimpleDate';
 import SimpleField from '@/Components/SimpleField';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 import useLogic from './useLogic';
 
@@ -12,7 +12,7 @@ const ServiceCreationPage = () => {
   const today = new Date();
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Service'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -66,7 +66,7 @@ const ServiceCreationPage = () => {
           {t('common.validate')}
         </SimpleButton>
       </form>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

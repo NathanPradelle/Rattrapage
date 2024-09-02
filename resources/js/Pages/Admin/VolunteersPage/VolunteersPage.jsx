@@ -7,7 +7,7 @@ import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleField from '@/Components/SimpleField';
 import Table2 from '@/Components/Table2';
 import { PROFILE } from '@/Constants/profiles';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 import useColumns from './useColumns';
 
@@ -28,7 +28,7 @@ const VolunteersPage = ({ users, pagination }) => {
   );
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Customers'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -57,7 +57,7 @@ const VolunteersPage = ({ users, pagination }) => {
           pagination={pagination}
         />
       </div>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

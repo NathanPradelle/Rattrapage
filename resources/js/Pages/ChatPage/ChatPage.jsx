@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import React, { useCallback, useState } from 'react';
 
 import ChatDisplay from '@/Features/ChatDisplay';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 const ChatPage = ({ interlocutor }) => {
   const { data, setData } = useForm();
@@ -29,7 +29,7 @@ const ChatPage = ({ interlocutor }) => {
   );
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Chat'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -46,7 +46,7 @@ const ChatPage = ({ interlocutor }) => {
         data={data}
         messages={messages}
       />
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

@@ -139,12 +139,24 @@
   },
   "user": {
     "label": "Utilisateur",
-    "profiles": "Profiles de l'utilisateur",
     "search": "Recherche par nom ou par e-mail...",
     "ban": {
       "label": "Bannir",
       "list": "Liste des bannissement",
       "never": "Cette utilisateur n'a jamais été banni"
+    },
+    "profil": {
+      "delete": "Supprimer le compte",
+      "deleteSubtitle": "Une fois votre compte supprimé, toute ses ressources et données seront perdu de manière permanante. Avant de supprimer votre compte, téléchargez toute donnée que vous souhaitez conserver",
+      "deleteComfirm": "Êtes vous sûr de le supprimer",
+      "deleteComfirmSubtitle": "Une fois votre compte supprimé, toute ses ressources et données seront perdu de manière permanante. Entrez votre mot de passe pour comfirmer la suppression permanante",
+      "emailUnverified": "Votre email n'a pas été vérifié",
+      "emailResend": "Cliquez ici pour renvoyé le mail de vérification",
+      "emailSent": "Un nouveau lien de vérification a été enoyé",
+      "info": "Information du profile",
+      "password": "Mettre à jour le mot de passe",
+      "passwordSubtitle": "Assurez vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé",
+      "updateAccount": "Mettre a jour les informations de votre profile ainsi que votre addresse email."
     }
   },
   "customer": {

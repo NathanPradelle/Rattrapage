@@ -7,15 +7,22 @@ import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleField from '@/Components/SimpleField';
 import Table2 from '@/Components/Table2';
 import { PROFILE } from '@/Constants/profiles';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { getCurrentUser } from '@/utils/user';
+import LayoutSelection from '@/Layouts/LayoutSelection';
+import { getCurrentUser, isSubscriptionExipred } from '@/utils/user';
 
 import useColumns from './useColumns';
 
 const ServicesPage = ({ services, pagination }) => {
-  const user = getCurrentUser();
+  const currentUser = getCurrentUser();
 
-  const [servicesList, setUserList] = useState(services);
+  if (
+    currentUser?.role === PROFILE.ADMIN ||
+    isSubscriptionExipred(currentUser)
+  ) {
+    return null;
+  }
+
+  const [servicesList, setServicesList] = useState(services);
   const { data, setData } = useForm();
 
   const columns = useColumns();
@@ -24,14 +31,14 @@ const ServicesPage = ({ services, pagination }) => {
     (e) => {
       e.preventDefault();
       axios
-        .post(route('users', PROFILE.ADMIN), data)
-        .then((res) => setUserList(res?.data?.users));
+        .post(route('services'), data)
+        .then((res) => setServicesList(res?.data?.services));
     },
-    [setUserList, data]
+    [setServicesList, data]
   );
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Services'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -39,7 +46,7 @@ const ServicesPage = ({ services, pagination }) => {
         </h2>
       }
     >
-      {user?.role === 2 && (
+      {currentUser?.role === 2 && (
         <div className='flex justify-end mb-1'>
           <SimpleButton to={route('page.service.creation')}>
             {t('service.create')}
@@ -67,7 +74,7 @@ const ServicesPage = ({ services, pagination }) => {
           pagination={pagination}
         />
       </div>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

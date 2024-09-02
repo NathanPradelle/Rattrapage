@@ -7,6 +7,13 @@ export const getCurrentUser = () => {
   return usePage().props?.auth?.user;
 };
 
+export const isSubscriptionExipred = (user) => {
+  const today = new Date();
+  const dateSubscription = new Date(user?.abonnement);
+
+  return today > dateSubscription;
+};
+
 export const getUserName = (user) => {
   return `${user?.firstname} ${user?.lastname}`;
 };

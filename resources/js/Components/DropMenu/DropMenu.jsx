@@ -11,7 +11,7 @@ const DropMenu = ({ className, title, options = [] }) => {
             type='button'
             className={clsx(
               className,
-              'inline-flex items-center px-3 py-2 hover:text-black/70 dark:hover:text-white/80 focus:outline-none transition ease-in-out duration-150'
+              'inline-flex items-center px-3 py-2 focus:outline-none transition ease-in-out duration-150'
             )}
           >
             {title}

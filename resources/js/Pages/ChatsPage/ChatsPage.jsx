@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { useState } from 'react';
 
 import Table from '@/Components/Table';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 import useColumns from './useColumns';
 
@@ -22,7 +22,7 @@ const ChatsPage = ({ users, pagination }) => {
   };
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Chats'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -46,7 +46,7 @@ const ChatsPage = ({ users, pagination }) => {
           pagination={pagination}
         />
       </div>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

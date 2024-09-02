@@ -3,14 +3,23 @@ import { t } from 'i18next';
 import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleDate from '@/Components/SimpleDate';
 import SimpleField from '@/Components/SimpleField';
+import { PROFILE } from '@/Constants/profiles';
 import ChatDisplay from '@/Features/ChatDisplay';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { getCurrentUser } from '@/utils/user';
+import LayoutSelection from '@/Layouts/LayoutSelection';
+import { getCurrentUser, isSubscriptionExipred } from '@/utils/user';
 
 import useLogic from './useLogic';
 
 const ServicePage = ({ service }) => {
   const currentUser = getCurrentUser();
+
+  if (
+    currentUser?.role === PROFILE.ADMIN ||
+    isSubscriptionExipred(currentUser)
+  ) {
+    return null;
+  }
+
   const today = new Date();
   const {
     submitMessage,
@@ -23,7 +32,7 @@ const ServicePage = ({ service }) => {
     disabled,
   } = useLogic({ service });
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       head='Welcome'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -93,7 +102,7 @@ const ServicePage = ({ service }) => {
           />
         </div>
       </div>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

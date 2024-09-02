@@ -1,21 +1,13 @@
 import { Link } from '@inertiajs/react';
-import { t } from 'i18next';
 import React from 'react';
 
 import Dropdown from '@/Components/Dropdown';
 import LanguageSelector from '@/translation/LanguageSelector';
-import { getCurrentUser } from '@/utils/user';
-
-import DropMenu from '../DropMenu';
-
-const userList = [
-  { label: t('menu.admin.users.customer'), link: 'page.customers' },
-  { label: t('menu.admin.users.volunteer'), link: 'page.volunteers' },
-  { label: t('menu.admin.users.admin'), link: 'page.admins' },
-];
+import { getCurrentUser, isSubscriptionExipred } from '@/utils/user';
 
 const Navbar = () => {
   const user = getCurrentUser();
+
   return (
     <nav className='flex w-full justify-between items-center px-6 py-4 bg-gray-100 dark:bg-gray-800'>
       {/* Conteneur pour les liens alignés à gauche */}
@@ -76,19 +68,7 @@ const Navbar = () => {
           Abonnement
         </Link>
 
-
-        {user?.role === 2 && (
-          <>
-            <DropMenu title={t('menu.admin.users.title')} options={userList} />
-            <Link
-              href={route('page.tours')}
-              className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
-            >
-              Tournées
-            </Link>
-          </>
-        )}
-        {user && (
+        {!isSubscriptionExipred(user) && (
           <Link
             href={route('page.services')}
             className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'

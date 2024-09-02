@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Message;
+use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -16,7 +16,7 @@ class MessageSent implements ShouldBroadcast
 
     public $message;
 
-    public function __construct(Message $message)
+    public function __construct(Chat $message)
     {
         $this->message = $message;
         Log::info('MessageSent event created: ', ['message' => $message]);
@@ -24,7 +24,7 @@ class MessageSent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        $channelName = 'chat.' . $this->message->user_id . '.' . $this->message->receiver_id;
+        $channelName = 'chat.' . $this->message->user_first . '.' . $this->message->user_second;
         Log::info('MessageSent event broadcast on channel: ', ['channel' => $channelName]);
         return new Channel($channelName);
     }

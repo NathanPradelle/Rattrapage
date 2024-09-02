@@ -3,7 +3,10 @@ import { useForm } from '@inertiajs/react';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 
+import { getCurrentUser } from '@/utils/user';
+
 const useLogic = ({ service }) => {
+  const currentUser = getCurrentUser();
   const { data, setData, reset } = useForm(service);
   const [messages, setMessages] = useState([]);
   const [disabled, setDisabled] = useState(true);
@@ -18,7 +21,11 @@ const useLogic = ({ service }) => {
     (e) => {
       e.preventDefault();
 
-      axios.post(route('service.messages.create'), data?.id);
+      axios.post(route('service.messages.create'), {
+        service: data?.id,
+        user: currentUser?.id,
+        message: data?.message,
+      });
     },
     [data]
   );

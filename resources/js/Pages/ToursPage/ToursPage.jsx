@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleField from '@/Components/SimpleField';
 import SimpleList from '@/Components/SimpleList';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 import EventHeight from './EventHeight';
 import useLogic from './useLogic';
@@ -23,7 +23,7 @@ const ToursPage = ({ tours }) => {
   } = useLogic(tours);
 
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Tours'
       className='calendar'
       header={
@@ -32,12 +32,6 @@ const ToursPage = ({ tours }) => {
         </h2>
       }
     >
-      <div className='flex justify-end'>
-        <SimpleButton to={route('page.tour.creation')}>
-          {t('tours.toCreate')}
-        </SimpleButton>
-      </div>
-
       <div className='flex-center'>
         <SimpleList
           id='country'
@@ -82,7 +76,7 @@ const ToursPage = ({ tours }) => {
         </div>
         <SimpleButton onClick={nextWeek}>{'>'}</SimpleButton>
       </div>
-      <div className='p-4 sm:p-8 bg-black shadow sm:rounded-lg'>
+      <div className='p-4 bg-white shadow sm:rounded-lg'>
         <div className='wrapper'>
           <div />
           {cellDays.map((day, index) => (
@@ -100,7 +94,7 @@ const ToursPage = ({ tours }) => {
           ))}
         </div>
       </div>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 

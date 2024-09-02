@@ -4,7 +4,7 @@ import SimpleButton from '@/Components/Buttons/SimpleButton';
 import SimpleDate from '@/Components/SimpleDate';
 import SimpleField from '@/Components/SimpleField';
 import SimpleList from '@/Components/SimpleList';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import LayoutSelection from '@/Layouts/LayoutSelection';
 
 import useLogic from './useLogic';
 
@@ -12,7 +12,7 @@ const TourCreationPage = () => {
   const { handleSubmit, setData, data, errors, contryList } = useLogic();
   const today = new Date();
   return (
-    <AuthenticatedLayout
+    <LayoutSelection
       headTitle='Tour'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
@@ -108,7 +108,7 @@ const TourCreationPage = () => {
           {t('common.validate')}
         </SimpleButton>
       </form>
-    </AuthenticatedLayout>
+    </LayoutSelection>
   );
 };
 
