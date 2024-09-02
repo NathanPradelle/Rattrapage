@@ -54,7 +54,7 @@ const ServicePage = ({ service }) => {
           </SimpleButton>
         </div>
       )}
-      <div className='bg-black p-1 flex-col gap-4 shadow-sm sm:rounded-lg'>
+      <div className='p-1 flex-col gap-4 shadow-sm sm:rounded-lg'>
         <div>
           <h3>{t('common.description')}</h3>
           {disabled ? (
@@ -72,20 +72,30 @@ const ServicePage = ({ service }) => {
           <div className='flex-col gap-1'>
             <h3>{t('service.plans')}</h3>
             <SimpleDate
-              id='dateStart'
+              id='date'
+              type='date'
               setdata={setData}
-              value={data?.dateStart}
-              label={t('common.dateStart')}
+              value={data?.date}
+              label={t('common.date')}
               disabled={disabled}
               minDate={today}
             />
             <SimpleDate
-              id='dateEnd'
+              id='timeStart'
+              type='time'
               setdata={setData}
-              value={data?.dateEnd}
-              label={t('common.dateEnd')}
+              value={data?.timeStart}
+              label={t('common.timeStart')}
               disabled={disabled}
-              minDate={data?.dateStart}
+            />
+            <SimpleDate
+              id='timeEnd'
+              type='time'
+              setdata={setData}
+              value={data?.timeEnd}
+              label={t('common.timeEnd')}
+              disabled={disabled}
+              minDate={data?.timeStart}
             />
           </div>
         )}

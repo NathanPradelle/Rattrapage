@@ -24,16 +24,37 @@ export const firstDayOfWeek = (date) => {
   return firstDay.getDate();
 };
 
-export const toSimpleFormat = (date) => {
+export const toSimpleFormat = (date, type) => {
   if (!(date instanceof Date)) {
     return date;
   }
 
-  const year = date?.getFullYear();
-  const month = (date?.getMonth() + 1).toLocaleString('en-US', {
+  const year = date?.getUTCFullYear().toLocaleString('en-US', {
+    minimumIntegerDigits: 4,
+  });
+  const month = (date?.getUTCMonth() + 1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
   });
-  const day = date?.getDate();
+  const day = date?.getUTCDate().toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+  });
+  const hours = date?.getUTCHours().toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+  });
+  const minutes = date?.getUTCMinutes().toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+  });
 
-  return date && `${year}-${month}-${day}T00:00`;
+  const formatDate = `${year}-${month}-${day}`;
+  const formatHours = `${hours}:${minutes}`;
+
+  if (type === 'time') {
+    return formatHours;
+  }
+
+  if (type === 'date') {
+    return formatDate;
+  }
+
+  return date && `${formatDate}T${formatHours}`;
 };

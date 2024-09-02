@@ -40,25 +40,34 @@ const ServiceCreationPage = () => {
           errorMessage={errors?.description}
         />
 
-        <div className='flex'>
+        <div className='flex gap-2'>
           <SimpleDate
-            id='dateStart'
-            className='flex-col'
+            id='date'
+            type='date'
             setdata={setData}
-            value={data?.dateStart}
-            label={t('common.dateStart')}
-            errorMessage={errors?.dateStart}
+            value={data?.date}
+            label={t('common.date')}
+            errorMessage={errors?.date}
             minDate={today}
             required
           />
           <SimpleDate
-            id='dateEnd'
-            className='flex-col'
+            id='timeStart'
+            type='time'
             setdata={setData}
-            value={data?.dateEnd}
-            label={t('common.dateEnd')}
-            errorMessage={errors?.dateEnd}
-            minDate={data?.dateStart}
+            value={data?.timeStart}
+            label={t('common.timeStart')}
+            errorMessage={errors?.timeStart}
+            required
+          />
+          <SimpleDate
+            id='timeEnd'
+            type='time'
+            setdata={setData}
+            value={data?.timeEnd}
+            label={t('common.timeEnd')}
+            errorMessage={errors?.timeEnd}
+            minDate={data?.timeStart}
             required
           />
         </div>

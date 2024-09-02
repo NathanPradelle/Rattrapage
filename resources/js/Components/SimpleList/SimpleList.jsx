@@ -38,14 +38,14 @@ const SimpleList = ({
 
   useEffect(() => {
     if (!open) {
-      setInput(value);
+      setInput(selectedOption?.label);
     }
   }, [open]);
 
   const onClickChange = useCallback(
     (selected) => {
       setSelectedOption(selected);
-      setInput(selected.value);
+      setInput(selected.name);
       setdata && setdata(id, selected.value);
       onChange && onChange(selected);
       setOpen(false);

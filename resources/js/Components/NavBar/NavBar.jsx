@@ -7,7 +7,7 @@ import { getCurrentUser, isSubscriptionExipred } from '@/utils/user';
 
 const Navbar = () => {
   const user = getCurrentUser();
-
+  console.log(user);
   return (
     <nav className='flex w-full justify-between items-center px-6 py-4 bg-gray-100 dark:bg-gray-800'>
       {/* Conteneur pour les liens alignés à gauche */}

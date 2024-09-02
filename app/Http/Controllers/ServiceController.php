@@ -60,7 +60,7 @@ class ServiceController extends Controller
     public function getAllP(Request $request)
     {
         $services = Service::query()
-        ->select(['id', 'name', 'description', 'date_start', 'date_end']);
+        ->select(['id', 'name', 'description', 'date', 'time_start', 'time_end']);
 
         if ($request->has('params')) {
         $params = $request->input('params');
@@ -108,8 +108,9 @@ class ServiceController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'max:255'],
             'description' => ['required'],
-            'dateStart' => ['required', 'date', 'after_or_equal:today'],
-            'dateEnd' => ['required', 'date', 'after:dateStart'],
+            'date' => ['required', 'date', 'after_or_equal:today'],
+            'timeStart' => ['required', 'regex:/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/'],
+            'timeEnd' => ['required', 'regex:/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/'],
         ]);
 
         $service = (new Service())->modelGetter((object) $validatedData);
@@ -128,8 +129,9 @@ class ServiceController extends Controller
             'id'=> ['required', 'integer'],
             'name' => ['required', 'max:255'],
             'description' => ['required'],
-            'dateStart' => ['required', 'date'],
-            'dateEnd' => ['required', 'date', 'after:dateStart'],
+            'date' => ['required', 'date'],
+            'timeStart' => ['required', 'regex:/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/'],
+            'timeEnd' => ['required', 'regex:/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/'],
         ]);
     
         $service = Service::findOrFail($validatedData['id']);

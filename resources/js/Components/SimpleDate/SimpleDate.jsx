@@ -6,6 +6,7 @@ import InputText from '../InputText';
 
 const SimpleDate = ({
   id,
+  type = 'datetime-local',
   value,
   setdata,
   label,
@@ -17,8 +18,8 @@ const SimpleDate = ({
   disabled,
   required,
 }) => {
-  minDate = toSimpleFormat(minDate);
-  maxDate = toSimpleFormat(maxDate);
+  minDate = toSimpleFormat(minDate, type);
+  maxDate = toSimpleFormat(maxDate, type);
 
   return (
     <div>
@@ -27,7 +28,7 @@ const SimpleDate = ({
       <InputText
         id={id}
         name={id}
-        type='datetime-local'
+        type={type}
         value={value}
         placeholder={placeholder}
         setdata={setdata}

@@ -12,8 +12,9 @@ class Service extends Model
     protected $fillable = [
         'name',
         'description',
-        'date_start',
-        'date_end'
+        'date',
+        'time_start',
+        'time_end'
     ];
 
     /// <summary>
@@ -26,8 +27,9 @@ class Service extends Model
             'id' => $this?->id,
             'name' => $this?->name,
             'description' =>  $this?->description,
-            'dateStart' => $this?->date_start,
-            'dateEnd' => $this?->date_end,
+            'date' => $this?->date,
+            'timeStart' => $this?->time_start,
+            'timeEnd' => $this?->time_end,
         ];
 
         return array_filter($service, function ($value) {
@@ -45,8 +47,9 @@ class Service extends Model
             'id' => isset($vm?->id) ? $vm->id : null,
             'name' => isset($vm?->name) ? $vm->name : null,
             'description' => isset($vm?->description) ? $vm->description : null,
-            'date_start' => isset($vm?->dateStart) ? $vm->dateStart : null,
-            'date_end' => isset($vm?->dateEnd) ? $vm->dateEnd : null,
+            'date' => isset($vm?->date) ? $vm->date : null,
+            'time_start' => isset($vm?->timeStart) ? $vm->timeStart : null,
+            'time_end' => isset($vm?->timeEnd) ? $vm->timeEnd : null,
         ];
 
         $service = new Service(array_filter($serviceData, function ($value) {

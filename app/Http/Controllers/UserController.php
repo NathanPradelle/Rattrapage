@@ -47,9 +47,28 @@ class UserController extends Controller
         ]);
     }
 
+    public function userPage(int $id)
+    {
+        $user = $this->getUserDetails($id);
+
+        return Inertia::render(FilePaths::USER, [
+            'user' => $user,
+        ]);
+    }
+
     #endregion
 
     #region Get
+
+    /// <summary>
+    /// Get a User name.
+    /// </summary>
+    public function getUserDetails(int $id)
+    {
+        $user = User::with(['benevole'])->findOrFail($id);
+
+        return $user;
+    }
 
     /// <summary>
     /// Get a User name.
@@ -61,7 +80,7 @@ class UserController extends Controller
             ->where('id', $id)
             ->where('deleted', false)
             ->firstOrFail();
-
+        
         return $user;
     }
 

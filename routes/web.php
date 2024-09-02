@@ -41,6 +41,7 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
     Route::get('/chat/messages/{user}', [ChatController::class, 'getMessages'])->name('chat.messages');
     Route::post('/chat/message', [ChatController::class, 'sendMessage'])->name('chat.messages.create');
 
+    Route::post('/service/get', [ServiceController::class, 'get'])->name('service');
     Route::post('/services/list', [ServiceController::class, 'getAllP'])->name('services');
     Route::get('/services', [ServiceController::class, 'listPage'])->name('page.services');
     Route::get('/service/{service}', [ServiceController::class, 'detailsPage'])->name('page.service');
@@ -65,6 +66,7 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
 
         });
 
+        Route::get('/user/{user}', [UserController::class, 'userPage'])->name('page.user');
         Route::post('/user/exclude/{user}', [UserController::class, 'RGPDUser'])->name('user.exclude');
         Route::post('/users/ban', [BanController::class, 'ban'])->name('user.ban');
         Route::get('/users/ban/list/{user}', [BanController::class, 'banlist'])->name('user.ban.list');
