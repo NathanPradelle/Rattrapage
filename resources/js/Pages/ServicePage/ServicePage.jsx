@@ -90,6 +90,21 @@ const ServicePage = ({ service }) => {
           </div>
         )}
 
+        {currentUser?.role === 2 && (
+          <div className='flex justify-center gap-2 mb-1'>
+            <SimpleButton onClick={onReset}>
+              {disabled ? t('common.modify') : t('common.back')}
+            </SimpleButton>
+            <SimpleButton
+              type='submit'
+              onClick={submitChanges}
+              disabled={disabled}
+            >
+              {t('common.save')}
+            </SimpleButton>
+          </div>
+        )}
+
         <div className='chat'>
           <h3>{t('common.chat')}</h3>
           <ChatDisplay

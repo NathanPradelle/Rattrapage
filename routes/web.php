@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VolunteerScheduleController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\BenevoleMiddleware;
+use App\Http\Middleware\UserStatusMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,7 +34,7 @@ Route::get('/', function () {
 
 Route::get('/contact', [TicketController::class, 'contact'])->name('contact.show');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
 
     Route::get('/chats', [ChatController::class, 'chatsPage'])->name('page.chats');
     Route::get('/chat/{user}', [ChatController::class, 'chatPage'])->name('page.chat');
