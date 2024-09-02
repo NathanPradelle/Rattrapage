@@ -22,14 +22,15 @@ const importAllLanguages = async () => {
 
 importAllLanguages().then((languages) => {
   const firstLang =
-    languages?.fileNames?.find((e) => e === 'FR') || languages?.fileNames[0];
+    languages?.fileNames?.find((e) => e === 'fr') || languages?.fileNames[0];
 
+  localStorage.appLanguage = localStorage?.i18nextLng || firstLang;
   i18n
     .use(LanguageDetector)
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
       resources: languages?.resources,
-      lng: localStorage.i18nextLng || firstLang,
+      lng: localStorage?.i18nextLng || firstLang,
       fallbackLng: firstLang,
 
       keySeparator: '.', // to support nested translations
