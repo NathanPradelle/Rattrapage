@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Table from '@/Components/Table';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import useColumns from './useColumns';
+import useColumns from './UseColumns.jsx';
 
 const Index = ({ tickets, pagination, auth }) => {
     const [searchTerm, setSearchTerm] = useState('');

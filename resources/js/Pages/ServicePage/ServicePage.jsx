@@ -14,7 +14,7 @@ const ServicePage = ({ service }) => {
   const currentUser = getCurrentUser();
 
   if (
-    currentUser?.role === PROFILE.ADMIN ||
+    currentUser?.role !== PROFILE.ADMIN &&
     isSubscriptionExipred(currentUser)
   ) {
     return null;

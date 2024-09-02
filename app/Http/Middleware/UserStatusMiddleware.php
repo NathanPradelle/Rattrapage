@@ -27,7 +27,7 @@ class UserStatusMiddleware
             }
 
             // Vérifier si l'utilisateur est banni
-            $ban = Ban::where('user_id', $user->id)
+            $ban = Ban::where('user', $user->id)
                 ->where('date_end', '>=', now())
                 ->first();
 
