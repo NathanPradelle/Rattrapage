@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->dateTime('date_start');
-            $table->dateTime('date_end');
+            $table->text('description')->nullable();
+            $table->dateTime('date_start')->nullable();
+            $table->dateTime('date_end')->nullable();
             $table->timestamps();
         });
     }

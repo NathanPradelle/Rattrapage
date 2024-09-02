@@ -13,6 +13,6 @@ class BenevoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Benevole::factory()->count(50)->create(); // Crée 50 bénévoles
+        Benevole::factory()->count(30)->create(); // Crée 50 bénévoles
     }
 }

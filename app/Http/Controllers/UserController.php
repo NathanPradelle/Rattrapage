@@ -71,19 +71,19 @@ class UserController extends Controller
     public function getAllCustomerP(int $role, Request $request)
     {
         $users = User::query()
-        ->select(['id', 'name', 'email'])
-        ->where('role', $role)
-        ->where('deleted', false);
+            ->select(['id', 'name', 'email'])
+            ->where('role', $role)
+            ->where('deleted', false);
 
-    if ($request->has('params')) {
-        $params = $request->input('params');
-        $users->where(function ($query) use ($params) {
-            $query->where('name', 'like', "%{$params}%")
-                  ->orWhere('email', 'like', "%{$params}%");
-        });
-    }
+        if ($request->has('params')) {
+            $params = $request->input('params');
+            $users->where(function ($query) use ($params) {
+                $query->where('name', 'like', "%{$params}%")
+                    ->orWhere('email', 'like', "%{$params}%");
+            });
+        }
 
-    $users = $users->distinct()->paginate(10);
+        $users = $users->distinct()->paginate(10);
 
         $pagination = [
             'current_page' => $users->currentPage(),

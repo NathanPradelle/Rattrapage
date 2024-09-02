@@ -22,7 +22,7 @@ class BenevoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Génère un nouvel utilisateur
+            'user_id' => User::factory()->state(['role' => 2]), // Génère un nouvel utilisateur
             'phone' => $this->faker->phoneNumber,
             'validation' => $this->faker->boolean(70), // 70% chance d'être validé
             'motif' => $this->faker->sentence,

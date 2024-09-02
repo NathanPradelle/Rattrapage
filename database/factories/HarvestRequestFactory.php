@@ -21,7 +21,7 @@ class HarvestRequestFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Génère un utilisateur associé
+            'user_id' => User::factory()->state(['role' => 0]), // Génère un utilisateur associé
             'building_number' => $this->faker->buildingNumber,
             'street' => $this->faker->streetName,
             'city' => $this->faker->city,

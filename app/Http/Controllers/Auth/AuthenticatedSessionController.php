@@ -34,18 +34,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Tenter de récupérer l'utilisateur sans l'authentifier
         $credentials = $request->only('email', 'password');
         $user = User::where('email', $credentials['email'])->first();
 
-        // Vérifier si l'utilisateur existe et s'il est désactivé
         if (!$user || $user->deleted) {
             return redirect()->route('login')->withErrors([
                 'email' => 'Votre compte a été désactivé ou n\'existe pas.',
             ]);
         }
 
-        // Vérifier si l'utilisateur est banni
         $ban = Ban::where('user_id', $user->id)
             ->where('date_end', '>=', now())
             ->first();
@@ -56,13 +53,10 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
-        // Authentifier l'utilisateur uniquement après les vérifications
         $request->authenticate();
 
-        // Regénérer la session
         $request->session()->regenerate();
 
-        // Vérifier le rôle de l'utilisateur pour la redirection
         if ($user->role != 2) {
             return redirect()->intended(route('welcome', absolute: false));
         }
