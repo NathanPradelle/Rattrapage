@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('benevoles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('phone'); // Numéro de téléphone
+            $table->string('phone_number'); // Numéro de téléphone
             $table->boolean('validation')->default(0); // Status de validation, par défaut à 0 (non validé)
             $table->text('motif'); // Motif de la candidature
             $table->foreignId('service_id')->constrained()->onDelete('cascade'); // Un seul service

@@ -22,6 +22,7 @@ class Benevole extends Model
         'service_id',
         'warehouse_id',
         'nationalite',
+        'phone_number',
         'date_derniere_candidature',
         'age',
         'refus',

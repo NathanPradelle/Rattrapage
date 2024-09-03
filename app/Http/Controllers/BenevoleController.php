@@ -78,7 +78,7 @@ class BenevoleController extends Controller
 
         // Validation des champs
         $validated = $request->validate([
-            'phone' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
+            'phone_number' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
             'motif' => ['required', 'string', 'max:255'],
             'service_id' => ['required', 'integer', 'exists:services,id'], // Un seul service
             'warehouse_id' => ['required', 'integer', 'exists:warehouses,id'], // L'entrepôt associé
@@ -88,7 +88,7 @@ class BenevoleController extends Controller
 
         Benevole::create([
             'user_id' => $user->id,
-            'phone' => $validated['phone'],
+            'phone_number' => $validated['phone_number'],
             'validation' => 0, // Par défaut non validé
             'motif' => $validated['motif'],
             'service_id' => $validated['service_id'],

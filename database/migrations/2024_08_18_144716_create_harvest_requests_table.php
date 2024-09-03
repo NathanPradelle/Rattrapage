@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('country')->nullable();
-            $table->string('phone_number')->nullable();
             $table->integer('quantity');
             $table->date('preferred_date');
             $table->enum('period', ['morning', 'afternoon', 'evening']); // Période de la journée
