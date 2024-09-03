@@ -294,25 +294,15 @@ class BenevoleController extends Controller
             ->where('period', $period)
             ->get();
 
-        // Récupérer toutes les demandes de récolte pour la date et la période spécifiées
-        $harvestRequestsOnSameDateAndPeriod = HarvestRequest::where('preferred_date', $date)
-            ->where('period', $period)
-            ->get();
-
         // Récupérer tous les routiers disponibles dans l'entrepôt sélectionné
         $availableDrivers = User::whereHas('benevole', function ($query) use ($warehouseId) {
             $query->where('warehouse_id', $warehouseId)
                 ->where('service_id', 1); // Filtrer les routiers
         })
             ->get()
-            ->filter(function ($user) use ($toursOnSameDateAndPeriod, $harvestRequestsOnSameDateAndPeriod) {
+            ->filter(function ($user) use ($toursOnSameDateAndPeriod) {
                 // Vérifier les tournées du conducteur
-                $hasTourConflict = $toursOnSameDateAndPeriod->contains('volunteer_driver_id', $user->id);
-
-                // Vérifier les demandes de récolte du conducteur
-                $hasHarvestRequestConflict = $harvestRequestsOnSameDateAndPeriod->contains('user_id', $user->id);
-
-                return !$hasTourConflict && !$hasHarvestRequestConflict;
+                return !$toursOnSameDateAndPeriod->contains('volunteer_driver_id', $user->id);
             });
 
         // Récupérer tous les assistants bénévoles disponibles dans l'entrepôt sélectionné
@@ -321,7 +311,7 @@ class BenevoleController extends Controller
                 ->where('service_id', '!=', 1); // Exclure les routiers pour cette liste
         })
             ->get()
-            ->filter(function ($user) use ($toursOnSameDateAndPeriod, $harvestRequestsOnSameDateAndPeriod) {
+            ->filter(function ($user) use ($toursOnSameDateAndPeriod) {
                 // Vérifier si le bénévole est déjà assigné comme routier ou assistant
                 $isAssignedAsDriver = $toursOnSameDateAndPeriod->contains('volunteer_driver_id', $user->id);
 
@@ -329,10 +319,7 @@ class BenevoleController extends Controller
                     return in_array($user->id, json_decode($tour->volunteer_assistants_ids));
                 });
 
-                // Vérifier les demandes de récolte de l'assistant
-                $hasHarvestRequestConflict = $harvestRequestsOnSameDateAndPeriod->contains('user_id', $user->id);
-
-                return !$isAssignedAsDriver && !$isAssignedAsAssistant && !$hasHarvestRequestConflict;
+                return !$isAssignedAsDriver && !$isAssignedAsAssistant;
             });
 
         return response()->json([
