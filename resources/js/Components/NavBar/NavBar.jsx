@@ -51,6 +51,13 @@ const Navbar = () => {
             >
               Mon planning
             </Link>
+
+            <Link
+              href={route('volunteer.assigned-tours')}
+              className='rounded-md px-3 py-2 self-center ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white'
+            >
+              Récap
+            </Link>
           </>
         )}
 

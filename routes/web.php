@@ -3,6 +3,7 @@
 use App\Http\Controllers\BanController;
 use App\Http\Controllers\BenevoleController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DistributionTourController;
 use App\Http\Controllers\HarvestAssignmentController;
 use App\Http\Controllers\HarvestRequestController;
 use App\Http\Controllers\HarvestTourController;
@@ -99,7 +100,18 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
         Route::get('/harvest-tour/create', [HarvestTourController::class, 'create'])->name('harvest.create');
         Route::get('api/harvest-requests/filter', [HarvestRequestController::class, 'filter'])->name('api.harvest-requests.filter');
         Route::get('api/volunteers/filter', [BenevoleController::class, 'filter'])->name('api.volunteers.filter');
-        Route::post('/harvest-tour', [HarvestTourController::class, 'store'])->name('harvest-tours.store');
+        Route::get('api/products/filter', [StockController::class, 'filter'])->name('api.products.filter');
+
+        Route::post('/harvest-tour/', [HarvestTourController::class, 'store'])->name('harvest-tours.store');
+        Route::get('/harvest-tours', [HarvestTourController::class, 'index'])->name('harvest-tours.index');
+        Route::get('/harvest-tours/{id}', [HarvestTourController::class, 'show'])->name('harvest-tours.show');
+        Route::post('/harvest-tours/{id}/update-volunteers', [HarvestTourController::class, 'updateVolunteers'])->name('harvest-tours.updateVolunteers');
+
+        Route::get('/distribution-tours', [DistributionTourController::class, 'index'])->name('distribution-tours.index');
+        Route::get('/distribution-tours/create', [DistributionTourController::class, 'create'])->name('distribution-tours.create');
+        Route::post('/distribution-tours', [DistributionTourController::class, 'store'])->name('distribution-tours.store');
+        Route::get('/distribution-tours/{id}', [DistributionTourController::class, 'show'])->name('distribution-tours.show');
+        Route::post('/distribution-tours/{id}/validate', [DistributionTourController::class, 'validateTour'])->name('distribution-tours.validate');
 
 
     });
@@ -108,6 +120,10 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::post('/harvest/{tour}/validate', [HarvestTourController::class, 'validateTour'])->name('harvest.tour.validate');
+        Route::post('/harvest/{tour}/refuse', [HarvestTourController::class, 'refuseTour'])->name('harvest.tour.refuse');
+        Route::post('/distribution/{tour}/validate', [DistributionTourController::class, 'validateTour'])->name('distribution.tour.validate');
+        Route::post('/distribution/{tour}/refuse', [DistributionTourController::class, 'refuseTour'])->name('distribution.tour.refuse');
 
         Route::get('/benevolat', function () {
             return Inertia::render('Candidature/Info');
@@ -135,6 +151,11 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
         Route::middleware([BenevoleMiddleware::class])->prefix('benevole')->group(function () {
             Route::get('/schedule', [VolunteerScheduleController::class, 'index'])->name('benevole.schedule');
             Route::resource('stock', StockController::class);
+            Route::get('/tours/{type}/{id}/recap', [HarvestTourController::class, 'showRecapForm'])->name('tours.recap.form');
+            Route::post('/harvest-tours/{tour}/complete-recap', [HarvestTourController::class, 'completeRecap'])->name('harvest-tours.completeRecap');
+            Route::post('/distribution-tours/{id}/recap', [DistributionTourController::class, 'completeRecap'])->name('distribution-tours.completeRecap');
+            Route::get('/my-assigned-tours', [BenevoleController::class, 'showMyAssignedTours'])->name('volunteer.assigned-tours');
+
         });
     });
 });

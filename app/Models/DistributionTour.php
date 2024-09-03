@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HarvestTour extends Model
+class DistributionTour extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class HarvestTour extends Model
         'period',
         'volunteer_driver_id',
         'volunteer_assistants_ids',
-        'harvest_requests_ids',
+        'address',
         'status',
         'chief_volunteer_id',
         'pdf_link',
@@ -23,7 +23,7 @@ class HarvestTour extends Model
 
     protected $casts = [
         'volunteer_assistants_ids' => 'array',
-        'harvest_requests_ids' => 'array',
+        'product_ids' => 'array',
     ];
 
     public function warehouse()
@@ -38,18 +38,13 @@ class HarvestTour extends Model
 
     public function volunteers()
     {
-        return $this->belongsToMany(User::class, 'harvest_tour_volunteer')
+        return $this->belongsToMany(User::class, 'distribution_tour_volunteer')
             ->withPivot('status')
             ->withTimestamps();
     }
 
-    public function harvestRequests()
+    public function products()
     {
-        return $this->hasMany(HarvestRequest::class, 'id', 'harvest_requests_ids');
-    }
-
-    public function chiefVolunteer()
-    {
-        return $this->belongsTo(User::class, 'chief_volunteer_id');
+        return $this->hasMany(Product::class, 'distribution_tour_id');
     }
 }

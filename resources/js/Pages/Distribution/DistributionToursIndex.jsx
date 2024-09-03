@@ -4,8 +4,7 @@ import { InertiaLink } from '@inertiajs/inertia-react';
 import AdminLayout from '@/Layouts/AdminLayout.jsx';
 import {Link} from "@inertiajs/react";
 
-export default function HarvestRequestsIndex({ requests, warehouses, auth, filters }) {
-    // Utiliser des valeurs par défaut si `filters` ou ses propriétés sont undefined
+export default function DistributionToursIndex({ tours, warehouses, filters, auth }) {
     const [search, setSearch] = useState(filters?.search || '');
     const [selectedWarehouse, setSelectedWarehouse] = useState(filters?.warehouse_id || '');
     const [selectedPeriod, setSelectedPeriod] = useState(filters?.period || '');
@@ -13,7 +12,7 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
 
     const handleSearch = (e) => {
         e.preventDefault();
-        Inertia.get(route('harvest-requests.index'), {
+        Inertia.get(route('distribution-tours.index'), {
             search: search,
             warehouse_id: selectedWarehouse,
             period: selectedPeriod,
@@ -27,9 +26,9 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
     return (
         <AdminLayout user={auth.user}>
             <div className="p-6 bg-gray-100">
-                <h1 className="text-2xl font-bold mb-6">Harvest Requests</h1>
-                <Link href={route('harvest.create')} className="text-blue-600 hover:text-blue-800">
-                    Création de tournée de récolte
+                <h1 className="text-2xl font-bold mb-6">Distribution Tours</h1>
+                <Link href={route('distribution-tours.create')} className="text-blue-600 hover:text-blue-800">
+                    Création de tournée de distribution
                 </Link>
                 <form onSubmit={handleSearch} className="mb-4 flex space-x-4">
                     <input
@@ -82,35 +81,29 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
                 <table className="min-w-full bg-white shadow-md rounded">
                     <thead>
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th className="py-3 px-6 text-left">User</th>
                         <th className="py-3 px-6 text-left">Address</th>
-                        <th className="py-3 px-6 text-left">Quantity</th>
-                        <th className="py-3 px-6 text-left">Preferred Date</th>
+                        <th className="py-3 px-6 text-left">Date</th>
                         <th className="py-3 px-6 text-left">Period</th>
-                        <th className="py-3 px-6 text-left">Sector (City)</th>
+                        <th className="py-3 px-6 text-left">Warehouse</th>
                         <th className="py-3 px-6 text-left">Status</th>
                         <th className="py-3 px-6 text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody className="text-gray-600 text-sm font-light">
-                    {requests.data.map(request => (
-                        <tr key={request.id} className="border-b border-gray-200 hover:bg-gray-100">
-                            <td className="py-3 px-6 text-left">{request.user.name}</td>
-                            <td className="py-3 px-6 text-left">
-                                {request.building_number}, {request.street}, {request.city}, {request.postal_code}, {request.country}
-                            </td>
-                            <td className="py-3 px-6 text-left">{request.quantity}</td>
-                            <td className="py-3 px-6 text-left">{request.preferred_date}</td>
-                            <td className="py-3 px-6 text-left capitalize">{request.period}</td>
-                            <td className="py-3 px-6 text-left">{request.warehouse.city}</td>
-                            <td className="py-3 px-6 text-left">{request.status}</td>
+                    {tours.data.map(tour => (
+                        <tr key={tour.id} className="border-b border-gray-200 hover:bg-gray-100">
+                            <td className="py-3 px-6 text-left">{tour.address}</td>
+                            <td className="py-3 px-6 text-left">{tour.date}</td>
+                            <td className="py-3 px-6 text-left capitalize">{tour.period}</td>
+                            <td className="py-3 px-6 text-left">{tour.warehouse?.name || 'N/A'}</td>
+                            <td className="py-3 px-6 text-left">{tour.status}</td>
                             <td className="py-3 px-6 text-center">
-                                <button
-                                    onClick={() => handleRefuse(request.id)}
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
+                                <InertiaLink
+                                    href={route('distribution-tours.show', tour.id)}
+                                    className="text-blue-500 hover:text-blue-700"
                                 >
-                                    Refuse
-                                </button>
+                                    Details
+                                </InertiaLink>
                             </td>
                         </tr>
                     ))}
@@ -118,7 +111,7 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
                 </table>
 
                 <div className="mt-4">
-                    {requests.links.map((link, index) => (
+                    {tours.links.map((link, index) => (
                         <InertiaLink
                             key={index}
                             href={link.url}
@@ -130,8 +123,4 @@ export default function HarvestRequestsIndex({ requests, warehouses, auth, filte
             </div>
         </AdminLayout>
     );
-
-    function handleRefuse(requestId) {
-        Inertia.post(route('harvest-requests.refuse', requestId));
-    }
 }

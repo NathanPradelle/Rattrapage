@@ -16,6 +16,7 @@ class Product extends Model
         'brand',
         'expiry_date',
         'warehouse_id',
+        'distribution_tour_id',
     ];
     public function stockMovements()
     {
@@ -25,5 +26,10 @@ class Product extends Model
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class);
+    }
+
+    public function distributionTour()
+    {
+        return $this->belongsTo(DistributionTour::class);
     }
 }

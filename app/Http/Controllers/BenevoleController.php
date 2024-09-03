@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Benevole;
+use App\Models\DistributionTour;
 use App\Models\HarvestTour;
 use App\Models\Service;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -325,5 +327,27 @@ class BenevoleController extends Controller
             'assistants' => $availableAssistants->values(),
         ]);
     }
+
+    public function showMyAssignedTours(Request $request)
+    {
+        $user = $request->user();
+
+        // Tournées de récolte où l'utilisateur est chef bénévole
+        $harvestTours = HarvestTour::where('chief_volunteer_id', $user->id)
+            ->where('status', 'assigned')
+            ->with('warehouse')
+            ->get();
+
+        // Tournées de distribution où l'utilisateur est chef bénévole
+        $distributionTours = DistributionTour::where('chief_volunteer_id', $user->id)
+            ->where('status', 'assigned')
+            ->get();
+
+        return Inertia::render('Recap/VolunteerIndex', [
+            'harvestTours' => $harvestTours,
+            'distributionTours' => $distributionTours,
+        ]);
+    }
+
 
 }
