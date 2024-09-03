@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('address'); // Adresse de distribution
             $table->enum('status', ['pending', 'assigned', 'completed', 'cancelled'])->default('pending');
             $table->foreignId('chief_volunteer_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->string('pdf_link')->nullable()->after('status');
+            $table->string('pdf_link')->nullable();
             $table->timestamps();
         });
     }

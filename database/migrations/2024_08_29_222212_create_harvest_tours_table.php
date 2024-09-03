@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('warehouse_id')->constrained()->onDelete('cascade');
             $table->enum('period', ['morning', 'afternoon', 'evening']);
             $table->foreignId('volunteer_driver_id')->constrained('users')->onDelete('cascade');
-            $table->json('volunteer_assistants_ids'); // Stockage des assistants en tant que JSON
-            $table->json('harvest_requests_ids'); // Stockage des demandes de récolte en tant que JSON
+            $table->json('volunteer_assistants_ids');
+            $table->json('harvest_requests_ids');
             $table->enum('status', ['pending', 'assigned', 'completed', 'cancelled'])->default('pending');
             $table->foreignId('chief_volunteer_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->string('pdf_link')->nullable()->after('status');// Nouveau champ pour le bénévole chef
+            $table->string('pdf_link')->nullable(); // Retirer 'after `status`'
             $table->timestamps();
         });
     }
