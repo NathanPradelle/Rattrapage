@@ -27,7 +27,7 @@ const AuthenticatedLayout = ({ headTitle, header, className, children }) => {
       </main>
 
       <footer className='w-full py-16 text-center text-sm text-black dark:text-white/70'>
-        Nathan Pradelle
+        Nathan PRADELLE Ahmad MOULON
       </footer>
     </div>
   );

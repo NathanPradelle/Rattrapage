@@ -17,6 +17,7 @@ class HarvestRequest extends Model
         'postal_code',
         'country',
         'quantity',
+        'phone_number',
         'preferred_date',
         'period',
         'warehouse_id',

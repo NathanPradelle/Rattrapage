@@ -14,12 +14,17 @@ export default function CreateHarvestRequest({ auth, warehouses }) {
         period: '',
         warehouse_id: '', // Utiliser l'ID de l'entrepôt
         note: '',
+        phone_number: '', // Ajout du champ pour le numéro de téléphone
     });
 
     function handleSubmit(e) {
         e.preventDefault();
         post(route('harvest-requests.store'));
     }
+
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + 1);
+    const minDateString = minDate.toISOString().split('T')[0];
 
     return (
         <AuthenticatedLayout
@@ -86,6 +91,20 @@ export default function CreateHarvestRequest({ auth, warehouses }) {
                     </div>
 
                     <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input
+                            type="tel"
+                            value={data.phone_number}
+                            onChange={(e) => setData('phone_number', e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="+1234567890"
+                        />
+                        {errors.phone_number && (
+                            <div className="text-red-500 text-xs mt-2">{errors.phone_number}</div>
+                        )}
+                    </div>
+
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">Quantity</label>
                         <input
                             type="number"
@@ -110,7 +129,7 @@ export default function CreateHarvestRequest({ auth, warehouses }) {
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">Preferred Period</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Preferred Period</label>
                     <select
                         value={data.period}
                         onChange={(e) => setData('period', e.target.value)}

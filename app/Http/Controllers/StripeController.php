@@ -23,11 +23,6 @@ class StripeController extends Controller
 
         $user = Auth::user();
 
-        // Vérifier si l'utilisateur est déjà abonné
-        if ($user->abonnement) {
-            return response()->json(['error' => 'Vous êtes déjà abonné en tant que Particulier+.'], 400);
-        }
-
         // Set the Stripe API key
         Stripe::setApiKey(env('STRIPE_SECRET'));
 

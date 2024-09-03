@@ -20,7 +20,7 @@ const Welcome = ({ auth }) => {
           <div className='w-full h-full bg-light flex items-center'></div>
         </main>
         <footer className='w-full py-16 text-center text-sm text-black dark:text-white/70'>
-          Ahmad Maxime Nathan
+            Nathan PRADELLE Ahmad MOULON
         </footer>
       </div>
     </>

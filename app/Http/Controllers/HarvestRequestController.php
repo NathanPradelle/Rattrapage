@@ -29,6 +29,7 @@ class HarvestRequestController extends Controller
             'city' => 'required|string|max:255',
             'postal_code' => 'required|string|max:10',
             'country' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15', // Validation pour le numéro de téléphone
             'quantity' => 'required|integer|min:1',
             'preferred_date' => 'required|date|after_or_equal:today',
             'period' => 'required|in:morning,afternoon,evening',
@@ -43,6 +44,7 @@ class HarvestRequestController extends Controller
             'city' => $request->city,
             'postal_code' => $request->postal_code,
             'country' => $request->country,
+            'phone_number' => $request->phone_number, // Enregistrement du numéro de téléphone
             'quantity' => $request->quantity,
             'preferred_date' => $request->preferred_date,
             'period' => $request->period,
