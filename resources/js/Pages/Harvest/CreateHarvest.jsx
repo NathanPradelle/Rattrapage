@@ -177,7 +177,7 @@ const CreateHarvestTour = ({ warehouses, auth }) => {
                 {harvestRequests.map((request) => (
                   <tr key={request.id}>
                     <td className='border border-gray-700 px-4 py-2'>
-                      {request.user_name}
+                      {request.user?.name}
                     </td>
                     <td className='border border-gray-700 px-4 py-2'>
                       {request.building_number} {request.street}, {request.city}
