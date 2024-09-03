@@ -70,7 +70,7 @@ const CreateHarvestTour = ({ warehouses, auth }) => {
     e.preventDefault();
 
     if (totalQuantity < 50 || totalQuantity > 500) {
-      alert('La quantité totale doit être comprise entre 50 et 500 kg.');
+      alert('La quantité totale doit être comprise entre 50 et 500 produits.');
       return;
     }
 
