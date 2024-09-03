@@ -36,6 +36,11 @@ const AdminsPage = ({ users, pagination }) => {
         </h2>
       }
     >
+      <div className='flex justify-end mb-1'>
+        <SimpleButton to={route('page.user.creation', PROFILE.ADMIN)}>
+          {t('admin.create')}
+        </SimpleButton>
+      </div>
       <div className='bg-white overflow-hidden shadow-sm sm:rounded-lg'>
         <Table2
           seachInput={

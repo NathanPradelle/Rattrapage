@@ -21,11 +21,11 @@ export const getUserName = (user) => {
 export const getProfileLabel = (profileId) => {
   switch (profileId) {
     case PROFILE.CUSTOMERS:
-      return t('profile.lessor');
+      return t('profile.customer');
     case PROFILE.VOLUNTEER:
-      return t('profile.traveler');
+      return t('profile.volunteer');
     case PROFILE.ADMIN:
-      return t('profile.provider');
+      return t('profile.admin');
     default:
       return 'Autre';
   }

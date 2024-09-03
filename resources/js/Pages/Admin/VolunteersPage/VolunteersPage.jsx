@@ -36,6 +36,11 @@ const VolunteersPage = ({ users, pagination }) => {
         </h2>
       }
     >
+      <div className='flex justify-end mb-1'>
+        <SimpleButton to={route('page.user.creation', PROFILE.VOLUNTEER)}>
+          {t('volunteer.create')}
+        </SimpleButton>
+      </div>
       <div className='bg-white overflow-hidden shadow-sm sm:rounded-lg'>
         <Table2
           seachInput={

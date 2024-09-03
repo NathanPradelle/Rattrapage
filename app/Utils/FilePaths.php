@@ -32,7 +32,9 @@ class FilePaths
     const CUSTOMERS = 'Admin/CustomersPage/CustomersPage';
     const VOLUNTEERS = 'Admin/VolunteersPage/VolunteersPage';
     const ADMINS = 'Admin/AdminsPage/AdminsPage';
+    
     const USER = 'Admin/UserPage/UserPage';
+    const USER_CREATION = 'Admin/UserCreationPage/UserCreationPage';
 
     const SERVICE_CREATION = "Admin/ServiceCreationPage/ServiceCreationPage";
 

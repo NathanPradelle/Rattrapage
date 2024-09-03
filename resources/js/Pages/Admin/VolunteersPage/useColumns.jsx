@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import axios from 'axios';
 import { t } from 'i18next';
 import { useMemo } from 'react';
@@ -27,11 +28,11 @@ const useColumns = () => {
         valueGetter: (row) => row?.email,
         renderCell: (row) => row?.email,
       },
-      // {
-      //   renderCell: (row) => (
-      //     <Link href={route('user', row?.id)}>{t('common.details')}</Link>
-      //   ),
-      // },
+      {
+        renderCell: (row) => (
+          <Link href={route('page.user', row?.id)}>{t('common.details')}</Link>
+        ),
+      },
       {
         renderCell: (row) => (
           <BanUserForm userId={row?.id} className='max-w-xl' />

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Utils\FilePaths;
+use Illuminate\Auth\Events\Registered;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -53,6 +55,13 @@ class UserController extends Controller
 
         return Inertia::render(FilePaths::USER, [
             'user' => $user,
+        ]);
+    }
+
+    public function creationPage(int $id)
+    {
+        return Inertia::render(FilePaths::USER_CREATION, [
+            'profile' => $id,
         ]);
     }
 
@@ -186,6 +195,29 @@ class UserController extends Controller
         ]);
 
         return response()->json(['success' => 'User removed successfully']);
+    }
+
+    /// <summary>
+    /// create new Admin.
+    /// </summary>
+    public function createAdmin(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 2,
+        ]);
+
+        event(new Registered($user));
+
+        return response()->json(['success' => 'User created successfully']);
     }
 
     #endregion

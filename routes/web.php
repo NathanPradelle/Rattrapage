@@ -66,10 +66,14 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
 
         });
 
+
         Route::get('/user/{user}', [UserController::class, 'userPage'])->name('page.user');
         Route::post('/user/exclude/{user}', [UserController::class, 'RGPDUser'])->name('user.exclude');
         Route::post('/users/ban', [BanController::class, 'ban'])->name('user.ban');
         Route::get('/users/ban/list/{user}', [BanController::class, 'banlist'])->name('user.ban.list');
+
+        Route::get('/user/creation/{role}', [UserController::class, 'creationPage'])->name('page.user.creation');
+        Route::post('/user/create/{role}', [UserController::class, 'createAdmin'])->name('user.create');
 
         Route::post('/users/{role}', [UserController::class, 'getAllCustomerP'])->name('users');
         Route::get('/customers', [UserController::class, 'customersPage'])->name('page.customers');
@@ -93,7 +97,7 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
         Route::get('/harvest-tour/create', [HarvestTourController::class, 'create'])->name('harvest.create');
         Route::get('api/harvest-requests/filter', [HarvestRequestController::class, 'filter'])->name('api.harvest-requests.filter');
         Route::get('api/volunteers/filter', [BenevoleController::class, 'filter'])->name('api.volunteers.filter');
-        Route::post('/harvest-tour/', [HarvestTourController::class, 'store'])->name('harvest-tours.store');
+        Route::post('/harvest-tour', [HarvestTourController::class, 'store'])->name('harvest-tours.store');
 
 
     });

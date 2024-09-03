@@ -4,13 +4,14 @@
     "address": "Adresse",
     "back": "Retour",
     "cancel": "Annuler",
-    "client": "Client",
+    "user": "Utilisateur",
     "city": "Ville",
     "chat": "Discussion",
     "close": "Fermer",
     "confirm": "Confirmer",
     "connection": "Se Connecter",
     "country": "Pays",
+    "create": "Créer",
     "date": "Date",
     "dateStart": "Date de début",
     "dateEnd": "Date de fin",
@@ -52,10 +53,8 @@
   },
   "profile": {
     "admin": "Administrateur",
-    "lessor": "Bailleur",
-    "management": "Gestionnaire",
-    "provider": "Prestataire",
-    "traveler": "Voyageur"
+    "volunteer": "Bénévole",
+    "customer": "Particulier"
   },
   "chart": {
     "sign": "Signer la charte",
@@ -143,6 +142,7 @@
   },
   "user": {
     "label": "Utilisateur",
+    "create": "Créer un utilisateur",
     "search": "Recherche par nom ou par e-mail...",
     "ban": {
       "label": "Bannir",
@@ -164,13 +164,16 @@
     }
   },
   "customer": {
-    "list": "Liste des Particuliers"
+    "list": "Liste des Particuliers",
+    "create": "Créer un Particulier"
   },
   "volunteer": {
-    "list": "Liste des Bénévoles"
+    "list": "Liste des Bénévoles",
+    "create": "Créer un Bénévole"
   },
   "admin": {
-    "list": "Liste des Administrateurs"
+    "list": "Liste des Administrateurs",
+    "create": "Créer un Administrateur"
   },
   "tours": {
     "label": "Tournées",

@@ -41,7 +41,7 @@ const UserPage = ({ user }) => {
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      post(route('user.update', data))?.then(() => route('user', user?.id));
+      post(route('user.update', data))?.then(() => route('admin'));
     },
     [data]
   );
