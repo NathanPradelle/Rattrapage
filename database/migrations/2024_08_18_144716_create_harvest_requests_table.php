@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('street')->nullable();
             $table->string('city')->nullable();
             $table->string('postal_code')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('country')->nullable();
             $table->integer('quantity');
             $table->date('preferred_date');
