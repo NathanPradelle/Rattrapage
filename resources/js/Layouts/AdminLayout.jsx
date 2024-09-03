@@ -8,6 +8,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { getCurrentUser } from '@/utils/user';
 
+import ApiLayout from './ApiLayout';
+
 const userList = [
   { label: t('menu.admin.users.customer'), link: 'page.customers' },
   { label: t('menu.admin.users.volunteer'), link: 'page.volunteers' },
@@ -15,6 +17,8 @@ const userList = [
 ];
 
 const AdminLayout = ({ header, className, children }) => {
+  ApiLayout();
+
   const user = getCurrentUser();
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);

@@ -75,6 +75,8 @@ Route::middleware('auth', UserStatusMiddleware::class)->group(function () {
         Route::get('/user/creation/{role}', [UserController::class, 'creationPage'])->name('page.user.creation');
         Route::post('/user/create/{role}', [UserController::class, 'createAdmin'])->name('user.create');
 
+        Route::post('/volunteers/update/{user}', [UserController::class, 'updateVolunteer'])->name('volunteer.update');
+
         Route::post('/users/{role}', [UserController::class, 'getAllCustomerP'])->name('users');
         Route::get('/customers', [UserController::class, 'customersPage'])->name('page.customers');
         Route::get('/volunteers', [UserController::class, 'volunteersPage'])->name('page.volunteers');

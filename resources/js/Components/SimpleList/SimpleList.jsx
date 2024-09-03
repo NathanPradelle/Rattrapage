@@ -31,7 +31,6 @@ const SimpleList = ({
         : options,
     [options, input]
   );
-
   useEffect(() => {
     setSelectedOption(options?.find((option) => option?.value === value));
   }, [value, options]);
@@ -40,7 +39,7 @@ const SimpleList = ({
     if (!open) {
       setInput(selectedOption?.label);
     }
-  }, [open]);
+  }, [open, selectedOption]);
 
   const onClickChange = useCallback(
     (selected) => {

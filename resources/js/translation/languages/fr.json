@@ -2,6 +2,7 @@
   "appName": "No More Waste",
   "common": {
     "address": "Adresse",
+    "age": "Àge",
     "back": "Retour",
     "cancel": "Annuler",
     "user": "Utilisateur",
@@ -26,6 +27,7 @@
     "lang": "Langage",
     "modify": "Modifier",
     "name": "Nom",
+    "nationality": "Nationalité",
     "other": "Autre",
     "password": "Mot de passe",
     "proceedToPayment": "Procéder au payment",

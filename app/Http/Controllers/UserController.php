@@ -198,7 +198,7 @@ class UserController extends Controller
     }
 
     /// <summary>
-    /// create new Admin.
+    /// create new User.
     /// </summary>
     public function createAdmin(Request $request)
     {
@@ -218,6 +218,39 @@ class UserController extends Controller
         event(new Registered($user));
 
         return response()->json(['success' => 'User created successfully']);
+    }
+
+    /// <summary>
+    /// update a Volunteer.
+    /// </summary>
+    public function updateVolunteer(Request $request, int $id)
+    {
+
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'string'],
+            'age' => ['required', 'numeric'],
+            'nationalite' => ['required', 'string'],
+            'service_id' => ['required', 'numeric'],
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+        ]);
+    
+        $volunteer = $user->benevole;
+        $volunteer->update([
+            'phone' => $validatedData['phone'],
+            'age' => $validatedData['age'],
+            'nationalite' => $validatedData['nationalite'],
+            'service_id' => $validatedData['service_id'],
+        ]);
+
+        return response()->json(['success' => 'User updated successfully']);
     }
 
     #endregion

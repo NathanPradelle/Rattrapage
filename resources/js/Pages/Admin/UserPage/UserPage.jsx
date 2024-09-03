@@ -7,11 +7,14 @@ import SimpleButton from '@/Components/Buttons/SimpleButton';
 import LazyPagination from '@/Components/LazyPagination';
 import SimpleField from '@/Components/SimpleField';
 import SimpleList from '@/Components/SimpleList';
-import { PROFILE } from '@/Constants/profiles';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 const UserPage = ({ user }) => {
-  const { data, setData, post, errors } = useForm(user);
+  const { data, setData, errors } = useForm({
+    ...user,
+    ...user?.benevole,
+  });
+
   const [servicesP, setServicesP] = useState([]);
 
   const getServices = useCallback((page) => {
@@ -41,24 +44,27 @@ const UserPage = ({ user }) => {
   const onSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      post(route('user.update', data))?.then(() => route('admin'));
+      axios
+        .post(route('volunteer.update', user?.id), data)
+        ?.then(() => route('admin'));
     },
     [data]
   );
-
   return (
     <AdminLayout
       headTitle='User'
       header={
         <h2 className='font-semibold text-xl text-gray-800 leading-tight'>
-          {t('common.client')}: {user?.name}
+          {t('common.user')}: {user?.name}
         </h2>
       }
     >
-      <div className='flex'>
-        <SimpleButton type='submit'>{t('common.save')}</SimpleButton>
-      </div>
       <form className='flex-col gap-1 my-6' onSubmit={onSubmit}>
+        {user?.benevole && (
+          <div className='flex'>
+            <SimpleButton type='submit'>{t('common.save')}</SimpleButton>
+          </div>
+        )}
         <SimpleField
           id='name'
           setdata={setData}
@@ -78,32 +84,41 @@ const UserPage = ({ user }) => {
           required
         />
 
-        <SimpleField
-          id='phone'
-          type='number'
-          setdata={setData}
-          value={data.phone}
-          label={t('common.phone')}
-          errorMessage={errors.phone}
-          required
-        />
-
-        <SimpleField
-          id='age'
-          type='number'
-          setdata={setData}
-          value={data.age}
-          label={t('common.phone')}
-          errorMessage={errors.age}
-          required
-        />
-
-        {user?.role === PROFILE.VOLUNTEER && (
+        {user?.benevole && (
           <>
-            <SimpleList
-              id='services'
+            <SimpleField
+              id='phone'
+              type='tel'
               setdata={setData}
-              value={data?.service || user?.benevole?.service_id}
+              value={data.phone || user?.benevole?.phone}
+              label={t('common.phone')}
+              errorMessage={errors.phone}
+              required
+            />
+
+            <SimpleField
+              id='age'
+              type='number'
+              setdata={setData}
+              value={data.age || user?.benevole?.age}
+              label={t('common.age')}
+              errorMessage={errors.age}
+              required
+            />
+
+            <SimpleField
+              id='nationalite'
+              setdata={setData}
+              value={data.nationalite || user?.benevole?.nationalite}
+              label={t('common.nationality')}
+              errorMessage={errors.nationalite}
+              required
+            />
+
+            <SimpleList
+              id='service_id'
+              setdata={setData}
+              value={data.service_id || user?.benevole?.service_id}
               label={t('service.list')}
               options={servicesOptions}
             />
