@@ -132,4 +132,19 @@ class StockController extends Controller
 
         return redirect()->route('stock.index')->with('success', 'Product deleted successfully.');
     }
+
+    public function filter(Request $request)
+    {
+        $warehouseId = $request->warehouse;
+
+        // Vérifier que l'ID de l'entrepôt est fourni
+        if (!$warehouseId) {
+            return response()->json(['error' => 'Warehouse ID is required'], 400);
+        }
+
+        // Récupérer tous les produits associés à l'entrepôt sélectionné
+        $products = Product::where('warehouse_id', $warehouseId)->get();
+
+        return response()->json($products);
+    }
 }

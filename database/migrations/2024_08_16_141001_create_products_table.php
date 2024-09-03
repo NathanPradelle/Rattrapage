@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->foreignId('warehouse_id')->constrained()->onDelete('cascade');
             $table->date('expiry_date')->nullable();
+            $table->foreignId('distribution_tour_id')->nullable()->constrained('distribution_tours')->onDelete('cascade')->change();
             $table->timestamps();
         });
     }

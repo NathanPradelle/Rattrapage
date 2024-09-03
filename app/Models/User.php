@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -51,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Benevole::class, 'user_id');
     }
-    
+
     public function harvestRequests()
     {
         return $this->hasMany(HarvestRequest::class);
@@ -103,11 +104,24 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $user;
     }
-    
     public function harvestTours()
     {
         return HarvestTour::where('volunteer_driver_id', $this->id)
             ->orWhereJsonContains('volunteer_assistants_ids', $this->id)
             ->get();
+    }
+
+    public function harvestToursVolunteer(): BelongsToMany
+    {
+        return $this->belongsToMany(HarvestTour::class, 'harvest_tour_volunteer')
+            ->withPivot('status') // Inclure la colonne de statut
+            ->withTimestamps(); // Inclure les timestamps
+    }
+
+    public function distributionTours()
+    {
+        return $this->belongsToMany(DistributionTour::class, 'distribution_tour_volunteer')
+            ->withPivot('status') // Inclure la colonne de statut de la relation
+            ->withTimestamps();   // Inclure les timestamps de la relation
     }
 }

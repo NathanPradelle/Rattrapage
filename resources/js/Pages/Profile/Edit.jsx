@@ -3,8 +3,9 @@ import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
+import { Inertia } from "@inertiajs/inertia";
 
-export default function Edit({ auth, mustVerifyEmail, status, candidature, abonnement }) {
+export default function Edit({ auth, mustVerifyEmail, status, candidature, abonnement, harvestTours, distributionTours }) {
     const getStatusStyle = (validation) => {
         switch (validation) {
             case 1:
@@ -31,6 +32,22 @@ export default function Edit({ auth, mustVerifyEmail, status, candidature, abonn
         }
     };
 
+    const handleValidateHarvest = (tourId) => {
+        Inertia.post(route('harvest.tour.validate', { tour: tourId }));
+    };
+
+    const handleRefuseHarvest = (tourId) => {
+        Inertia.post(route('harvest.tour.refuse', { tour: tourId }));
+    };
+
+    const handleValidateDistribution = (tourId) => {
+        Inertia.post(route('distribution.tour.validate', { tour: tourId }));
+    };
+
+    const handleRefuseDistribution = (tourId) => {
+        Inertia.post(route('distribution.tour.refuse', { tour: tourId }));
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -39,16 +56,13 @@ export default function Edit({ auth, mustVerifyEmail, status, candidature, abonn
             <Head title="Profile" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6 text-gray-800">
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-
                         {abonnement ? (
                             <p className="text-gray-800 text-2xl font-bold text-center">Particulier+</p>
                         ) : (
                             <p className="text-gray-800 text-2xl font-bold text-center">Particulier</p>
                         )}
-
-
                     </div>
 
                     {/* Affichage des informations de candidature uniquement si elles existent */}
@@ -68,6 +82,64 @@ export default function Edit({ auth, mustVerifyEmail, status, candidature, abonn
                                     <p className="text-red-600"><strong>Motif du refus :</strong> {candidature.refus}</p>
                                 )}
                             </div>
+                        </div>
+                    )}
+
+                    {/* Tableau des tournées de récolte assignées */}
+                    {harvestTours.length > 0 && (
+                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <h2 className="text-xl font-bold mb-4">Vos Tournées de Récolte</h2>
+                            <table className="min-w-full bg-white">
+                                <thead>
+                                <tr>
+                                    <th className="px-4 py-2">Date</th>
+                                    <th className="px-4 py-2">Période</th>
+                                    <th className="px-4 py-2">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {harvestTours.map(tour => (
+                                    <tr key={tour.id}>
+                                        <td className="border px-4 py-2">{tour.date}</td>
+                                        <td className="border px-4 py-2">{tour.period}</td>
+                                        <td className="border px-4 py-2">
+                                            <button onClick={() => handleValidateHarvest(tour.id)} className="bg-green-500 text-white px-2 py-1 rounded mr-2">Valider</button>
+                                            <button onClick={() => handleRefuseHarvest(tour.id)} className="bg-red-500 text-white px-2 py-1 rounded">Refuser</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+
+                    {/* Tableau des tournées de distribution assignées */}
+                    {distributionTours.length > 0 && (
+                        <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <h2 className="text-xl font-bold mb-4">Vos Tournées de Distribution</h2>
+                            <table className="min-w-full bg-white">
+                                <thead>
+                                <tr>
+                                    <th className="px-4 py-2">Date</th>
+                                    <th className="px-4 py-2">Période</th>
+                                    <th className="px-4 py-2">Adresse</th>
+                                    <th className="px-4 py-2">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {distributionTours.map(tour => (
+                                    <tr key={tour.id}>
+                                        <td className="border px-4 py-2">{tour.date}</td>
+                                        <td className="border px-4 py-2">{tour.period}</td>
+                                        <td className="border px-4 py-2">{tour.address}</td>
+                                        <td className="border px-4 py-2">
+                                            <button onClick={() => handleValidateDistribution(tour.id)} className="bg-green-500 text-white px-2 py-1 rounded mr-2">Valider</button>
+                                            <button onClick={() => handleRefuseDistribution(tour.id)} className="bg-red-500 text-white px-2 py-1 rounded">Refuser</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
                         </div>
                     )}
 

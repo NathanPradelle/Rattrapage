@@ -2,11 +2,9 @@ import { useState } from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
@@ -27,8 +25,16 @@ export default function Authenticated({ user, header, children }) {
                                     Manage Stock Movements
                                 </NavLink>
 
-                                <NavLink href={route('harvest-requests.index')} active={route().current('stock-movements.index')}>
+                                <NavLink href={route('harvest-requests.index')} active={route().current('harvest-requests.index')}>
                                     Manage Harvest Requests
+                                </NavLink>
+
+                                <NavLink href={route('harvest-tours.index')} active={route().current('harvest-tours.index')}>
+                                    Manage Harvest Tour
+                                </NavLink>
+
+                                <NavLink href={route('distribution-tours.index')} active={route().current('distribution-tours.index')}>
+                                    Manage Distribution Tour
                                 </NavLink>
                             </div>
                         </div>

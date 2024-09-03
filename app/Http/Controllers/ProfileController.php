@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Benevole;
+use App\Models\DistributionTour;
+use App\Models\HarvestTour;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,11 +21,20 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-
         $user = $request->user();
 
         // Récupérer les informations de la candidature du bénévole si elles existent
         $candidature = Benevole::where('user_id', $user->id)->with(['service'])->first();
+
+        // Récupérer les tournées de récolte auxquelles le bénévole est assigné
+        $harvestTours = HarvestTour::whereHas('volunteers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+
+        // Récupérer les tournées de distribution auxquelles le bénévole est assigné
+        $distributionTours = DistributionTour::whereHas('volunteers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -35,8 +46,24 @@ class ProfileController extends Controller
                 'service' => $candidature->service ? $candidature->service->name : null,
                 'refus' => $candidature->refus,
             ] : null,
+            'harvestTours' => $harvestTours->map(function ($tour) {
+                return [
+                    'id' => $tour->id,
+                    'date' => $tour->date,
+                    'period' => $tour->period,
+                ];
+            }),
+            'distributionTours' => $distributionTours->map(function ($tour) {
+                return [
+                    'id' => $tour->id,
+                    'date' => $tour->date,
+                    'period' => $tour->period,
+                    'address' => $tour->address,
+                ];
+            }),
         ]);
     }
+
 
     /**
      * Update the user's profile information.
