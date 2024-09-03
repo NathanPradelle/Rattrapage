@@ -116,13 +116,13 @@ export default function CreateHarvestRequest({ auth, warehouses }) {
                     </div>
                 </div>
 
-                <div className="mb-4">
+		<div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">Preferred Date</label>
                     <input
                         type="date"
                         value={data.preferred_date}
                         onChange={(e) => setData('preferred_date', e.target.value)}
-                        min={new Date().toISOString().split('T')[0]}
+                        min={minDateString}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                     {errors.preferred_date && <div className="text-red-500 text-xs mt-2">{errors.preferred_date}</div>}
