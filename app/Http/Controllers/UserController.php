@@ -229,7 +229,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email'],
-            'phone' => ['required', 'string'],
+            'phone_number' => ['required', 'string'],
             'age' => ['required', 'numeric'],
             'nationalite' => ['required', 'string'],
             'service_id' => ['required', 'numeric'],
@@ -244,7 +244,7 @@ class UserController extends Controller
     
         $volunteer = $user->benevole;
         $volunteer->update([
-            'phone' => $validatedData['phone'],
+            'phone_number' => $validatedData['phone_number'],
             'age' => $validatedData['age'],
             'nationalite' => $validatedData['nationalite'],
             'service_id' => $validatedData['service_id'],

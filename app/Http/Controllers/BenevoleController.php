@@ -116,7 +116,7 @@ class BenevoleController extends Controller
                 'id' => $candidature->id,
                 'name' => $candidature->user->name,
                 'email' => $candidature->user->email,
-                'phone' => $candidature->phone,
+                'phone_number' => $candidature->phone_number,
                 'date_derniere_candidature' => $candidature->date_derniere_candidature,
                 'motif' => $candidature->motif,
                 'service' => $candidature->service ? $candidature->service->name : null,
@@ -140,7 +140,7 @@ class BenevoleController extends Controller
     public function update(Request $request, Benevole $benevole)
     {
         $validated = $request->validate([
-            'phone' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
+            'phone_number' => ['required', 'regex:/^\+?[0-9]{7,15}$/'],
             'motif' => ['required', 'string', 'max:255'],
             'service_id' => ['required', 'integer', 'exists:services,id'], // Un seul service
             'warehouse_id' => ['required', 'integer', 'exists:warehouses,id'], // L'entrepôt associé
@@ -150,7 +150,7 @@ class BenevoleController extends Controller
 
         // Mise à jour de la candidature existante
         $benevole->update([
-            'phone' => $validated['phone'],
+            'phone_number' => $validated['phone_number'],
             'motif' => $validated['motif'],
             'service_id' => $validated['service_id'], // Un seul service
             'warehouse_id' => $validated['warehouse_id'], // ID de l'entrepôt associé

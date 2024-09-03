@@ -87,12 +87,12 @@ const UserPage = ({ user }) => {
         {user?.benevole && (
           <>
             <SimpleField
-              id='phone'
+              id='phone_number'
               type='tel'
               setdata={setData}
-              value={data.phone || user?.benevole?.phone}
+              value={data.phone_number || user?.benevole?.phone_number}
               label={t('common.phone')}
-              errorMessage={errors.phone}
+              errorMessage={errors.phone_number}
               required
             />
 
