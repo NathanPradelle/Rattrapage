@@ -16,7 +16,6 @@ class Benevole extends Model
      */
     protected $fillable = [
         'user_id',
-        'phone',
         'validation',
         'motif',
         'service_id',
