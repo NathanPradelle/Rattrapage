@@ -27,6 +27,13 @@ export default function Index({ products, warehouses, auth, filters }) {
             <div className="p-6 text-gray-800">
                 <h1 className="text-2xl mb-4 text-white">Stock Management</h1>
 
+                {/* Add New Stock Button */}
+                <div className="mb-4">
+                    <InertiaLink href={route('stock.create')} className="btn btn-primary text-white">
+                        Add New Stock
+                    </InertiaLink>
+                </div>
+
                 <form onSubmit={handleSearch} className="mb-4 flex space-x-4">
                     <input
                         type="text"
