@@ -122,6 +122,12 @@ class DistributionTourController extends Controller
             return redirect()->route('profile.edit')->with('error', 'Vous n\'êtes pas autorisé à soumettre le récapitulatif pour cette tournée.');
         }
 
+        // Supprimer les produits de cette distribution des stocks
+        $products = $distributionTour->products; // Assurez-vous que vous avez une relation 'products' dans votre modèle DistributionTour
+        foreach ($products as $product) {
+            $product->delete();
+        }
+
         // Marquer la tournée comme complétée
         $distributionTour->status = 'completed';
         $distributionTour->save();
@@ -139,8 +145,9 @@ class DistributionTourController extends Controller
         $distributionTour->pdf_link = '/storage/' . $fileName;
         $distributionTour->save();
 
-        return redirect()->route('profile.edit')->with('success', 'Récapitulatif validé et PDF généré avec succès.');
+        return redirect()->route('profile.edit')->with('success', 'Récapitulatif validé, produits supprimés du stock, et PDF généré avec succès.');
     }
+
 
     public function validateTour(DistributionTour $tour)
     {

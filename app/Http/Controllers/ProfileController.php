@@ -26,15 +26,15 @@ class ProfileController extends Controller
         // Récupérer les informations de la candidature du bénévole si elles existent
         $candidature = Benevole::where('user_id', $user->id)->with(['service'])->first();
 
-        // Récupérer les tournées de récolte auxquelles le bénévole est assigné
+        // Récupérer les tournées de récolte auxquelles le bénévole est assigné avec statut "pending"
         $harvestTours = HarvestTour::whereHas('volunteers', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->get();
+        })->where('status', 'pending')->get();
 
-        // Récupérer les tournées de distribution auxquelles le bénévole est assigné
+        // Récupérer les tournées de distribution auxquelles le bénévole est assigné avec statut "pending"
         $distributionTours = DistributionTour::whereHas('volunteers', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->get();
+        })->where('status', 'pending')->get();
 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -63,6 +63,7 @@ class ProfileController extends Controller
             }),
         ]);
     }
+
 
 
     /**

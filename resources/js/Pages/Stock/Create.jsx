@@ -17,6 +17,10 @@ export default function Create({ auth, warehouses }) {
         post(route('stock.store'));
     }
 
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + 1);
+    const minDateString = minDate.toISOString().split('T')[0];
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <div className="h-screen p-6">
@@ -74,7 +78,7 @@ export default function Create({ auth, warehouses }) {
                             value={data.expiry_date}
                             onChange={e => setData('expiry_date', e.target.value)}
                             className="form-control text-black bg-white border border-gray-300 rounded p-2"
-                            min={new Date().toISOString().split('T')[0]} // Bloquer les dates passées
+                            min={minDateString} // Bloquer les dates passées
                         />
                         {errors.expiry_date && <div className="text-danger">{errors.expiry_date}</div>}
                     </div>
